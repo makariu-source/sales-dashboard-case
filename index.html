@@ -751,90 +751,6 @@
   }
   .mitigation b { color: var(--accent); }
 
-  .dynamics { padding: 36px; }
-
-  .dynamics-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    flex-wrap: wrap;
-    gap: 16px;
-    margin-bottom: 30px;
-  }
-
-  .dynamics-head h3 { font-size: 1.5rem; }
-  .dynamics-head p { color: var(--muted); font-size: 0.92rem; }
-
-  .timeline-axis {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    color: var(--muted);
-    font-size: 0.82rem;
-  }
-
-  .timeline-axis .line {
-    width: 120px;
-    height: 2px;
-    background: linear-gradient(90deg, rgba(255,255,255,0.1), var(--accent));
-    position: relative;
-  }
-
-  .timeline-axis .line::after {
-    content: '';
-    position: absolute;
-    right: -2px;
-    top: -4px;
-    border-left: 8px solid var(--accent);
-    border-top: 5px solid transparent;
-    border-bottom: 5px solid transparent;
-  }
-
-  .dyn-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-  }
-
-  .dyn-col h4 {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 1.05rem;
-    margin-bottom: 16px;
-  }
-
-  .dyn-col.better h4 { color: var(--accent); }
-  .dyn-col.worse h4 { color: var(--warn); }
-
-  .dyn-row {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 10px 16px;
-    align-items: center;
-    padding: 14px 16px;
-    border-radius: 12px;
-    background: rgba(255,255,255,0.025);
-    border: 1px solid var(--border);
-    margin-bottom: 10px;
-    transition: transform 0.3s var(--ease), border-color 0.3s var(--ease);
-  }
-
-  .dyn-row:hover { transform: translateX(4px); }
-  .better .dyn-row:hover { border-color: rgba(16,185,129,0.35); }
-  .worse .dyn-row:hover { border-color: rgba(245,158,11,0.35); }
-
-  .dyn-row .n { font-weight: 600; font-size: 0.95rem; }
-  .dyn-row .s { color: var(--muted); font-size: 0.84rem; grid-column: 1 / -1; }
-  .dyn-row .trend { font-size: 0.82rem; font-weight: 700; padding: 3px 9px; border-radius: 999px; white-space: nowrap; }
-  .better .trend { background: var(--accent-soft); color: var(--accent); }
-  .worse .trend { background: var(--warn-soft); color: var(--warn); }
-
-  .dyn-bar { grid-column: 1 / -1; height: 5px; border-radius: 999px; background: rgba(255,255,255,0.05); overflow: hidden; }
-  .dyn-bar span { display: block; height: 100%; width: 0; border-radius: 999px; transition: width 1.4s var(--ease); }
-  .better .dyn-bar span { background: linear-gradient(90deg, var(--accent), #34D399); }
-  .worse .dyn-bar span { background: linear-gradient(90deg, var(--warn), #FBBF24); }
-
   .why-popular {
     margin-top: 24px;
     padding: 40px;
@@ -867,43 +783,40 @@
   .trend-card h4 { font-size: 0.98rem; margin-bottom: 6px; }
   .trend-card p { color: var(--muted); font-size: 0.85rem; }
 
-  /* ---------- Competitor table ---------- */
-  .table-card {
-    margin-top: 24px;
-    background: var(--card);
-    border: 1px solid var(--border);
+  /* ---------- How it works ---------- */
+  .how { margin-top: 40px; }
+  .how-title { font-size: 1.5rem; margin-bottom: 20px; }
+  .how-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+
+  .how-step {
+    position: relative;
+    padding: 28px;
     border-radius: var(--radius);
-    padding: 8px 8px 20px;
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    transition: transform 0.35s var(--ease), border-color 0.35s var(--ease);
   }
 
-  .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .how-step:hover { transform: translateY(-6px); border-color: rgba(16,185,129,0.35); }
+  .how-step .icon-box { margin-bottom: 18px; }
+  .how-step h4 { font-size: 1.1rem; margin-bottom: 6px; }
+  .how-step p { color: var(--muted); font-size: 0.93rem; }
 
-  .comp-table { width: 100%; min-width: 560px; border-collapse: collapse; font-size: 0.93rem; }
-
-  .comp-table th, .comp-table td { padding: 14px 18px; text-align: left; border-bottom: 1px solid var(--border); }
-
-  .comp-table thead th {
+  .how-num {
+    position: absolute;
+    top: 20px;
+    right: 24px;
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 0.85rem;
-    color: var(--muted);
-    font-weight: 700;
+    font-size: 2.6rem;
+    font-weight: 800;
+    color: rgba(255,255,255,0.06);
+    line-height: 1;
   }
 
-  .comp-table tbody th { font-weight: 500; color: var(--text); }
-  .comp-table tbody tr:last-child th, .comp-table tbody tr:last-child td { border-bottom: none; }
-  .comp-table tbody tr { transition: background 0.25s var(--ease); }
-  .comp-table tbody tr:hover { background: rgba(255,255,255,0.02); }
-
-  .comp-table .us { background: var(--accent-soft); }
-  .comp-table thead th.us { color: var(--accent); }
-
-  .comp-table .yes, .comp-table .part, .comp-table .no { display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; }
-  .comp-table .yes { color: var(--accent); font-weight: 600; }
-  .comp-table .part { color: var(--warn); }
-  .comp-table .no { color: var(--muted); }
-  .comp-table .yes i, .comp-table .part i, .comp-table .no i { font-size: 0.8rem; }
-
-  .table-note { color: var(--muted); font-size: 0.86rem; padding: 14px 18px 0; }
+  /* ---------- Control ---------- */
+  .control-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .control-card h3 { font-size: 1.12rem; margin-bottom: 8px; }
+  .control-card p { color: var(--muted); font-size: 0.93rem; }
 
   /* ---------- Market & unit economics ---------- */
   .market-grid {
@@ -1307,25 +1220,41 @@
   .addon-text small { color: var(--muted); font-size: 0.78rem; }
   .addon-price { color: var(--muted); font-size: 0.82rem; white-space: nowrap; }
 
-  .ai-reason {
+  .text-input {
+    width: 100%;
+    padding: 15px 16px;
+    border-radius: 12px;
+    border: 1px solid var(--border-strong);
+    background: var(--bg-soft);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 0.97rem;
+    transition: border-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
+  }
+
+  .text-input::placeholder { color: var(--muted); }
+  .text-input:hover { border-color: rgba(16,185,129,0.4); }
+  .text-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px rgba(16,185,129,0.15); }
+
+  .food-card {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
     padding: 16px;
     border-radius: 14px;
     background: rgba(16,185,129,0.05);
-    border: 1px dashed rgba(16,185,129,0.35);
+    border: 1px solid rgba(16,185,129,0.3);
     margin-bottom: 16px;
   }
 
-  .ai-reason-title { font-weight: 600; font-size: 0.88rem; margin-bottom: 10px; display: flex; gap: 8px; align-items: center; }
-  .ai-reason-title i { color: var(--accent); }
+  .food-icon { width: 40px; height: 40px; border-radius: 11px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent); flex-shrink: 0; }
+  .food-label { color: var(--muted); font-size: 0.78rem; }
+  .food-name { font-weight: 600; font-size: 0.95rem; margin: 2px 0; }
+  .food-price { color: var(--accent); font-size: 0.85rem; font-weight: 600; }
 
-  .factor-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
-
-  .fchip { font-size: 0.76rem; font-weight: 600; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--border-strong); color: var(--muted); }
-  .fchip.up { color: var(--warn); border-color: rgba(245,158,11,0.35); background: var(--warn-soft); }
-  .fchip.down { color: var(--accent); border-color: rgba(16,185,129,0.35); background: var(--accent-soft); }
-
-  .ai-food { font-size: 0.85rem; color: var(--muted); display: flex; gap: 8px; }
-  .ai-food i { color: var(--accent); margin-top: 3px; }
+  .calc-cta { width: 100%; justify-content: center; margin-top: 20px; }
+  .subscribe-msg { margin-top: 12px; font-size: 0.88rem; color: var(--accent); min-height: 1.2em; }
+  .subscribe-msg:empty { margin-top: 0; min-height: 0; }
 
   .mini-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 16px; }
 
@@ -1408,6 +1337,7 @@
     .grid-3 .value-card:last-child { grid-column: 1 / -1; }
     .why-popular { grid-template-columns: 1fr; }
     .market-grid { grid-template-columns: 1fr; }
+    .control-grid { grid-template-columns: 1fr 1fr; }
   }
 
   @media (max-width: 860px) {
@@ -1428,7 +1358,7 @@
     .nav-links a { padding: 14px 16px; }
     .burger { display: grid; place-items: center; }
     .nav-cta { display: none; }
-    .split, .panels, .dyn-grid, .calc { grid-template-columns: 1fr; }
+    .split, .panels, .calc, .how-steps { grid-template-columns: 1fr; }
     .roadmap { grid-template-columns: 1fr; }
     .roadmap-step { border-right: none; border-bottom: 1px solid var(--border); }
     .roadmap-step:last-child { border-bottom: none; }
@@ -1443,12 +1373,13 @@
     section { padding: 64px 0; }
     .hero { padding: 48px 0 72px; }
     .grid-3 { grid-template-columns: 1fr; }
-    .card, .panel, .dynamics, .split-card { padding: 24px; }
+    .card, .panel, .split-card { padding: 24px; }
     .calc-form, .calc-result { padding: 26px 20px; }
     .why-popular { padding: 26px; }
     .market { padding: 24px; }
     .stat { grid-template-columns: 1fr; gap: 2px; }
     .trends { grid-template-columns: 1fr; }
+    .control-grid { grid-template-columns: 1fr; }
     .unit-kpis { grid-template-columns: 1fr 1fr; }
     .schedule-list { grid-template-columns: 1fr 1fr; }
     .mini-stats b { font-size: 0.95rem; }
@@ -1457,7 +1388,6 @@
     .hv-float { right: 8px; bottom: -20px; }
     .hv-steps li .time { display: none; }
     .btn { padding: 15px 22px; }
-    .timeline-axis { display: none; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -1479,12 +1409,13 @@
       <span>Зоо<span class="flow">Бокс</span></span>
     </a>
     <ul class="nav-links" id="navLinks">
-      <li><a href="#value">Ценность</a></li>
-      <li><a href="#strategy">Стратегия MVP</a></li>
+      <li><a href="#value">Преимущества</a></li>
+      <li><a href="#strategy">Что в коробке</a></li>
+      <li><a href="#control">Контроль</a></li>
       <li><a href="#analytics">Аналитика</a></li>
-      <li><a href="#calculator">Калькулятор</a></li>
+      <li><a href="#calculator">Собрать коробку</a></li>
     </ul>
-    <a href="#calculator" class="nav-cta"><i class="fa-solid fa-play"></i> Демо MVP</a>
+    <a href="#calculator" class="nav-cta"><i class="fa-solid fa-box-open"></i> Собрать коробку</a>
     <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false"><i class="fa-solid fa-bars"></i></button>
   </div>
 </header>
@@ -1497,25 +1428,25 @@
     <div class="orb" style="width:380px;height:380px;background:rgba(16,185,129,0.1);bottom:-120px;left:-140px;"></div>
     <div class="container hero-grid">
       <div class="reveal">
-        <span class="badge"><span class="dot"></span> Pitch Deck MVP v1.1</span>
+        <span class="badge"><span class="dot"></span> Автоподписка для питомцев · v1.2</span>
         <h1>Больше не нужно помнить. <span class="gradient-text">Бытовые товары по умной автоподписке</span></h1>
         <p class="hero-sub">Мы продаем не доставку, а <strong>свободу от бытовой рутины</strong>. Настроил один раз — коробка приезжает сама.</p>
         <div class="hero-actions">
-          <a href="#calculator" class="btn btn-primary">Посмотреть интерактивный MVP <i class="fa-solid fa-arrow-right"></i></a>
-          <a href="#analytics" class="btn btn-ghost"><i class="fa-solid fa-chart-line"></i> Экономика</a>
+          <a href="#calculator" class="btn btn-primary">Собрать коробку <i class="fa-solid fa-arrow-right"></i></a>
+          <a href="#how" class="btn btn-ghost"><i class="fa-regular fa-circle-play"></i> Как это работает</a>
         </div>
         <div class="hero-stats">
           <div class="hero-stat">
-            <div class="num">79,5<span> млн</span></div>
-            <div class="label">домашних животных в России</div>
+            <div class="num">−7<span>%</span></div>
+            <div class="label">на корм с умным графиком</div>
           </div>
           <div class="hero-stat">
-            <div class="num">487<span> млрд ₽</span></div>
-            <div class="label">рынок кормов, +15,9% за год</div>
+            <div class="num">1<span> клик</span></div>
+            <div class="label">пропустить или сдвинуть доставку</div>
           </div>
           <div class="hero-stat">
-            <div class="num">27<span>×</span></div>
-            <div class="label">в год семья покупает корм</div>
+            <div class="num">≈18<span> ч</span></div>
+            <div class="label">в год без походов за кормом</div>
           </div>
         </div>
       </div>
@@ -1620,118 +1551,88 @@
         </div>
       </div>
 
-      <div class="table-card reveal">
-        <div class="table-scroll">
-          <table class="comp-table">
-            <thead>
-              <tr>
-                <th scope="col">Возможность</th>
-                <th scope="col" class="us">ЗооБокс</th>
-                <th scope="col">Ozon / WB</th>
-                <th scope="col">Петшоп</th>
-                <th scope="col">Самокат</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">Доставка корма</th>
-                <td class="us"><span class="yes"><i class="fa-solid fa-check"></i> да</span></td>
-                <td><span class="yes"><i class="fa-solid fa-check"></i> да</span></td>
-                <td><span class="yes"><i class="fa-solid fa-check"></i> да</span></td>
-                <td><span class="yes"><i class="fa-solid fa-check"></i> да</span></td>
-              </tr>
-              <tr>
-                <th scope="row">Автоповтор заказа</th>
-                <td class="us"><span class="yes"><i class="fa-solid fa-check"></i> да</span></td>
-                <td><span class="part"><i class="fa-solid fa-minus"></i> частично</span></td>
-                <td><span class="part"><i class="fa-solid fa-minus"></i> частично</span></td>
-                <td><span class="no"><i class="fa-solid fa-xmark"></i> нет</span></td>
-              </tr>
-              <tr>
-                <th scope="row">Расчет расхода по питомцу</th>
-                <td class="us"><span class="yes"><i class="fa-solid fa-check"></i> да</span></td>
-                <td><span class="no"><i class="fa-solid fa-xmark"></i> нет</span></td>
-                <td><span class="no"><i class="fa-solid fa-xmark"></i> нет</span></td>
-                <td><span class="no"><i class="fa-solid fa-xmark"></i> нет</span></td>
-              </tr>
-              <tr>
-                <th scope="row">Пропуск / сдвиг даты</th>
-                <td class="us"><span class="yes"><i class="fa-solid fa-check"></i> да</span></td>
-                <td><span class="no"><i class="fa-solid fa-xmark"></i> нет</span></td>
-                <td><span class="no"><i class="fa-solid fa-xmark"></i> нет</span></td>
-                <td><span class="no"><i class="fa-solid fa-xmark"></i> нет</span></td>
-              </tr>
-              <tr>
-                <th scope="row">Коробка «корм + наполнитель»</th>
-                <td class="us"><span class="yes"><i class="fa-solid fa-check"></i> да</span></td>
-                <td><span class="no"><i class="fa-solid fa-xmark"></i> нет</span></td>
-                <td><span class="no"><i class="fa-solid fa-xmark"></i> нет</span></td>
-                <td><span class="no"><i class="fa-solid fa-xmark"></i> нет</span></td>
-              </tr>
-            </tbody>
-          </table>
+      <div class="how reveal" id="how">
+        <h3 class="how-title">Как это работает</h3>
+        <div class="how-steps">
+          <div class="how-step">
+            <span class="how-num">1</span>
+            <div class="icon-box"><i class="fa-solid fa-paw"></i></div>
+            <h4>Расскажите о питомце</h4>
+            <p>Порода, возраст, вес и любимый корм — это займет пару минут.</p>
+          </div>
+          <div class="how-step">
+            <span class="how-num">2</span>
+            <div class="icon-box"><i class="fa-solid fa-scale-balanced"></i></div>
+            <h4>Мы рассчитаем норму</h4>
+            <p>Подберем корм и график доставки так, чтобы запас не заканчивался и не копился.</p>
+          </div>
+          <div class="how-step">
+            <span class="how-num">3</span>
+            <div class="icon-box"><i class="fa-solid fa-truck-fast"></i></div>
+            <h4>Коробка приезжает сама</h4>
+            <p>Привезем к двери. За 3 дня до доставки напомним — можно все поменять.</p>
+          </div>
         </div>
-        <p class="table-note">«Частично» — есть отдельные товары со скидкой за повтор, но график не подстраивается под питомца. Наше преимущество — данные о расходе конкретной семьи и договоры с брендами.</p>
       </div>
     </div>
   </section>
 
-  <!-- ================= 3. STRATEGY ================= -->
+  <!-- ================= 3. WHAT'S IN THE BOX ================= -->
   <section id="strategy">
     <div class="container">
       <div class="section-head reveal">
-        <div class="eyebrow">Стратегия старта</div>
-        <h2>Почему MVP — это <span class="text-accent">зоотовары</span></h2>
-        <p>Выбираем нишу с самым предсказуемым расходом и минимальным оттоком, чтобы быстро доказать юнит-экономику.</p>
+        <div class="eyebrow">Что в коробке</div>
+        <h2>Все для питомца — <span class="text-accent">в одной коробке</span></h2>
+        <p>Собираем коробку под вашего питомца: корм по породе и весу, а для кошек — еще и наполнитель.</p>
       </div>
 
       <div class="split">
         <article class="card split-card active reveal">
-          <i class="fa-solid fa-paw split-watermark" aria-hidden="true"></i>
-          <span class="phase now"><i class="fa-solid fa-rocket"></i> ЭТАП 1 · СТАРТ</span>
-          <h3>Зоотовары: корм + наполнитель</h3>
-          <p>Идеальная категория для подписки: питомец ест каждый день, одинаково и годами.</p>
+          <i class="fa-solid fa-dog split-watermark" aria-hidden="true"></i>
+          <span class="phase now"><i class="fa-solid fa-dog"></i> ДЛЯ СОБАК</span>
+          <h3>Корм, который не нужно таскать</h3>
+          <p>Тяжелые мешки привезем к двери — ровно тогда, когда старый подходит к концу.</p>
           <ul class="reason-list">
             <li>
-              <span class="ri"><i class="fa-solid fa-arrows-rotate"></i></span>
-              <div><h4>Стабильный расход</h4><p>Суточная норма почти не меняется — спрос повторяется как по часам.</p></div>
+              <span class="ri"><i class="fa-solid fa-bowl-food"></i></span>
+              <div><h4>Корм под породу и возраст</h4><p>Для щенков, взрослых и пожилых собак, мини-пород и крупных.</p></div>
             </li>
             <li>
               <span class="ri"><i class="fa-solid fa-weight-scale"></i></span>
-              <div><h4>Расчет по весу животного</h4><p>Норма корма вычисляется по формуле — точный прогноз даты следующей коробки.</p></div>
+              <div><h4>Норма по весу</h4><p>Рассчитаем суточную порцию — питомец не будет голодать или переедать.</p></div>
             </li>
             <li>
-              <span class="ri"><i class="fa-solid fa-heart"></i></span>
-              <div><h4>Жесткая цикличность</h4><p>Владельцы годами не меняют корм, который подошел питомцу, — высокая лояльность.</p></div>
+              <span class="ri"><i class="fa-solid fa-bone"></i></span>
+              <div><h4>Лакомства по желанию</h4><p>Добавьте в коробку вкусности для дрессировки и поощрения.</p></div>
             </li>
             <li>
-              <span class="ri"><i class="fa-solid fa-user-lock"></i></span>
-              <div><h4>Низкий Churn</h4><p>Жизненный цикл питомца — 10–15 лет. Это длинный и предсказуемый LTV.</p></div>
+              <span class="ri"><i class="fa-solid fa-piggy-bank"></i></span>
+              <div><h4>Выгодная фасовка</h4><p>Подбираем размер мешка, при котором килограмм корма дешевле.</p></div>
             </li>
           </ul>
         </article>
 
         <article class="card split-card muted-card reveal">
-          <i class="fa-solid fa-baby-carriage split-watermark" aria-hidden="true"></i>
-          <span class="phase later"><i class="fa-solid fa-hourglass-half"></i> ЭТАП 3 · ОТЛОЖЕНО</span>
-          <h3>Товары для мам и подгузники</h3>
-          <p>Огромный рынок, но на старте он сожжет бюджет. Заходим, когда алгоритмы и логистика будут отлажены.</p>
+          <i class="fa-solid fa-cat split-watermark" aria-hidden="true"></i>
+          <span class="phase later"><i class="fa-solid fa-cat"></i> ДЛЯ КОШЕК</span>
+          <h3>Корм и наполнитель вместе</h3>
+          <p>Две самые частые покупки — в одной коробке, без лишних походов в магазин.</p>
           <ul class="reason-list">
             <li>
-              <span class="ri"><i class="fa-solid fa-chart-area"></i></span>
-              <div><h4>Быстрая смена размеров</h4><p>Дети растут нелинейно: размер подгузника меняется каждые 2–3 месяца — прогноз ломается.</p></div>
+              <span class="ri"><i class="fa-solid fa-box"></i></span>
+              <div><h4>Наполнитель по расходу</h4><p>Комкующийся наполнитель в нужном количестве — больше не нужно носить тяжелые пакеты.</p></div>
             </li>
             <li>
-              <span class="ri"><i class="fa-solid fa-hourglass-end"></i></span>
-              <div><h4>Короткий жизненный цикл</h4><p>Потребность в подгузниках заканчивается через 2–3 года — LTV ограничен.</p></div>
+              <span class="ri"><i class="fa-solid fa-bowl-food"></i></span>
+              <div><h4>Корм под породу</h4><p>Для британцев, вислоухих, мейн-кунов, стерилизованных и котят.</p></div>
             </li>
             <li>
-              <span class="ri"><i class="fa-solid fa-tags"></i></span>
-              <div><h4>Жесткие ценовые войны</h4><p>Подгузники — товар-приманка: маркетплейсы демпингуют ниже себестоимости.</p></div>
+              <span class="ri"><i class="fa-solid fa-fish"></i></span>
+              <div><h4>Лакомства по желанию</h4><p>Подушечки, паштеты и витаминные лакомства — по вашему выбору.</p></div>
             </li>
             <li>
-              <span class="ri"><i class="fa-solid fa-store-slash"></i></span>
-              <div><h4>Демпинг маркетплейсов</h4><p>Конкурировать ценой с Ozon и WB без масштаба закупок — путь к кассовому разрыву.</p></div>
+              <span class="ri"><i class="fa-solid fa-house"></i></span>
+              <div><h4>Одна доставка вместо трех</h4><p>Все, что нужно кошке на месяц, приезжает одной коробкой.</p></div>
             </li>
           </ul>
         </article>
@@ -1739,19 +1640,87 @@
 
       <div class="roadmap reveal">
         <div class="roadmap-step current">
-          <div class="q">Этап 1 · сейчас</div>
-          <div class="t">Корм и наполнитель</div>
-          <div class="d">1 город, без своего склада — через дистрибьютора, сайт и чат-бот вместо приложения</div>
+          <div class="q">Уже сейчас</div>
+          <div class="t">Корм, наполнитель, лакомства</div>
+          <div class="d">Для собак и кошек, с доставкой к двери</div>
         </div>
         <div class="roadmap-step">
-          <div class="q">Этап 2</div>
-          <div class="t">Лакомства и ветаптека</div>
-          <div class="d">Расширение коробки и выход в новые города</div>
+          <div class="q">Скоро</div>
+          <div class="t">Ветаптека и новые города</div>
+          <div class="d">Витамины и средства от блох и клещей — в той же коробке</div>
         </div>
         <div class="roadmap-step">
-          <div class="q">Этап 3</div>
-          <div class="t">Товары для детей и бытовая химия</div>
-          <div class="d">Когда алгоритмы прогноза и логистика отлажены</div>
+          <div class="q">В планах</div>
+          <div class="t">Бытовая химия и товары для детей</div>
+          <div class="d">Одна коробка для всей семьи</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CONTROL ================= -->
+  <section id="control">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="eyebrow">Вы все контролируете</div>
+        <h2>Подписка, которая <span class="text-accent">подстраивается под вас</span></h2>
+        <p>Никаких неожиданных списаний и лишних запасов: вы заранее видите каждую доставку и меняете ее в один клик.</p>
+      </div>
+
+      <div class="control-grid">
+        <article class="card control-card reveal">
+          <div class="icon-box"><i class="fa-solid fa-bell"></i></div>
+          <h3>Напоминание за 3 дня</h3>
+          <p>Перед каждой доставкой пришлем уведомление: что в коробке, сколько стоит и когда приедет.</p>
+        </article>
+        <article class="card control-card reveal">
+          <div class="icon-box"><i class="fa-solid fa-forward"></i></div>
+          <h3>Пропустить месяц</h3>
+          <p>Накопился запас? Пропустите доставку одной кнопкой — график подстроится сам.</p>
+        </article>
+        <article class="card control-card reveal">
+          <div class="icon-box"><i class="fa-regular fa-calendar-days"></i></div>
+          <h3>Сдвинуть дату</h3>
+          <p>Уезжаете в отпуск или переезжаете — перенесите коробку на удобный день.</p>
+        </article>
+        <article class="card control-card reveal">
+          <div class="icon-box"><i class="fa-solid fa-arrows-rotate"></i></div>
+          <h3>Поменять состав</h3>
+          <p>Смените корм, добавьте лакомства или наполнитель до отправки коробки.</p>
+        </article>
+        <article class="card control-card reveal">
+          <div class="icon-box"><i class="fa-solid fa-receipt"></i></div>
+          <h3>Прозрачная оплата</h3>
+          <p>Цена известна заранее, оплата списывается только после напоминания.</p>
+        </article>
+        <article class="card control-card reveal">
+          <div class="icon-box"><i class="fa-regular fa-circle-xmark"></i></div>
+          <h3>Отмена в любой момент</h3>
+          <p>Без звонков в поддержку: отключить подписку можно в пару кликов.</p>
+        </article>
+      </div>
+
+      <div class="why-popular reveal">
+        <div>
+          <h3>Больше времени <span class="text-accent">на то, что важно</span></h3>
+          <p>Мы берем на себя рутину — а вы проводите время с питомцем, а не в очереди в зоомагазине.</p>
+        </div>
+        <div class="trends">
+          <div class="trend-card">
+            <i class="fa-solid fa-bowl-food"></i>
+            <h4>Корм не закончится внезапно</h4>
+            <p>Коробка приезжает до того, как опустеет миска.</p>
+          </div>
+          <div class="trend-card">
+            <i class="fa-regular fa-clock"></i>
+            <h4>≈18 часов в год</h4>
+            <p>Столько уходит на походы за кормом. Теперь они не нужны.</p>
+          </div>
+          <div class="trend-card">
+            <i class="fa-solid fa-paw"></i>
+            <h4>Забота без перекорма</h4>
+            <p>Норма рассчитана по породе, возрасту и весу питомца.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -1851,83 +1820,6 @@
         </article>
       </div>
 
-      <article class="card dynamics reveal" id="dynamics">
-        <div class="dynamics-head">
-          <div>
-            <h3>Динамика во времени</h3>
-            <p>Как меняются ключевые факторы по мере масштабирования</p>
-          </div>
-          <div class="timeline-axis"><span>Старт</span><span class="line"></span><span>Масштаб</span></div>
-        </div>
-        <div class="dyn-grid">
-          <div class="dyn-col better">
-            <h4><i class="fa-solid fa-arrow-trend-up"></i> Со временем станет лучше</h4>
-            <div class="dyn-row">
-              <span class="n">Эффект масштаба</span><span class="trend">↑ сильно</span>
-              <span class="s">Больше подписчиков — плотнее маршруты и ниже стоимость одной доставки</span>
-              <div class="dyn-bar"><span data-w="88%"></span></div>
-            </div>
-            <div class="dyn-row">
-              <span class="n">Закупочные цены</span><span class="trend">↓ падают</span>
-              <span class="s">Гарантированный объем дает скидки от брендов и дистрибьюторов</span>
-              <div class="dyn-bar"><span data-w="72%"></span></div>
-            </div>
-            <div class="dyn-row">
-              <span class="n">Точность данных AI</span><span class="trend">↑ растет</span>
-              <span class="s">Каждый цикл доставки дообучает модель прогноза расхода</span>
-              <div class="dyn-bar"><span data-w="92%"></span></div>
-            </div>
-            <div class="dyn-row">
-              <span class="n">Churn Rate</span><span class="trend">↓ падает</span>
-              <span class="s">Старые когорты становятся самыми лояльными — привычка закрепляется</span>
-              <div class="dyn-bar"><span data-w="78%"></span></div>
-            </div>
-          </div>
-          <div class="dyn-col worse">
-            <h4><i class="fa-solid fa-arrow-trend-down"></i> Со временем станет сложнее</h4>
-            <div class="dyn-row">
-              <span class="n">Рост CAC</span><span class="trend">↑ дороже</span>
-              <span class="s">Ранние адепты закончатся: массовый рынок сложнее и дороже убедить подписаться</span>
-              <div class="dyn-bar"><span data-w="70%"></span></div>
-            </div>
-            <div class="dyn-row">
-              <span class="n">Удержание фокуса</span><span class="trend">⚠ риск</span>
-              <span class="s">Соблазн быстро расширять категории может размыть продукт и ухудшить сервис</span>
-              <div class="dyn-bar"><span data-w="58%"></span></div>
-            </div>
-            <div class="dyn-row">
-              <span class="n">Реакция крупных игроков</span><span class="trend">↑ давление</span>
-              <span class="s">Успех модели привлечет внимание маркетплейсов — нужно быстро копить данные-преимущество</span>
-              <div class="dyn-bar"><span data-w="62%"></span></div>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <div class="why-popular reveal">
-        <div>
-          <div class="eyebrow">Почему это взлетит</div>
-          <h3>Люди готовы платить за то, чтобы <span class="text-accent">не думать</span></h3>
-          <p>Подписки уже победили в музыке, кино и софте. Следующий шаг — физические товары ежедневного спроса. А питомцы — категория, на которой не экономят.</p>
-        </div>
-        <div class="trends">
-          <div class="trend-card">
-            <i class="fa-solid fa-robot"></i>
-            <h4>Автоматизация жизни</h4>
-            <p>Умный дом, автоплатежи, автоинвестиции — рутина уходит в фон.</p>
-          </div>
-          <div class="trend-card">
-            <i class="fa-regular fa-clock"></i>
-            <h4>Экономия времени</h4>
-            <p>Время стало самой дорогой валютой городского жителя.</p>
-          </div>
-          <div class="trend-card">
-            <i class="fa-solid fa-paw"></i>
-            <h4>Любовь к питомцам</h4>
-            <p>Питомец — член семьи: владельцы выбирают премиум и заботу.</p>
-          </div>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -1935,15 +1827,20 @@
   <section id="calculator" class="calc-section">
     <div class="container">
       <div class="section-head reveal">
-        <div class="eyebrow">Интерактивный MVP</div>
-        <h2>Симулятор подписки ЗооБокс</h2>
-        <p>Выберите питомца, породу, возраст и вес. ИИ рассчитает суточную норму, подберет корм под породу, цикл доставки и стоимость коробки в реальном времени.</p>
+        <div class="eyebrow">Подбор коробки</div>
+        <h2>Соберите коробку <span class="text-accent">для своего питомца</span></h2>
+        <p>Расскажите о питомце — мы подберем корм, рассчитаем суточную норму, график доставки и стоимость коробки.</p>
       </div>
 
       <div class="calc reveal">
         <form class="calc-form" id="calcForm" onsubmit="return false;">
           <h3>Профиль питомца</h3>
           <p>Настройте один раз — дальше коробка приезжает сама.</p>
+
+          <div class="field">
+            <label class="field-label" for="petName">Кличка питомца <span class="hint">необязательно</span></label>
+            <input type="text" id="petName" class="text-input" maxlength="20" placeholder="Например, Бакс" autocomplete="off">
+          </div>
 
           <div class="field">
             <label class="field-label" for="petType">Категория питомца <span class="hint">премиум сухой корм</span></label>
@@ -1998,7 +1895,7 @@
             <label class="field-label" for="frequency">Частота доставки</label>
             <div class="select-wrap">
               <select id="frequency" name="frequency">
-                <option value="ai" selected>Автоматически (ИИ-прогноз)</option>
+                <option value="ai" selected>Автоматически (умный график, −7%)</option>
                 <option value="30">Фиксированно: каждые 30 дней</option>
                 <option value="45">Фиксированно: каждые 45 дней</option>
               </select>
@@ -2027,8 +1924,8 @@
 
         <div class="calc-result" aria-live="polite">
           <div class="rh">
-            <h3>Ваша подписка</h3>
-            <span class="mode-chip" id="modeChip"><i class="fa-solid fa-wand-magic-sparkles"></i> ИИ-режим</span>
+            <h3 id="resultTitle">Ваша коробка</h3>
+            <span class="mode-chip" id="modeChip"><i class="fa-solid fa-wand-magic-sparkles"></i> Умный график</span>
           </div>
 
           <div class="result-tiles">
@@ -2044,10 +1941,13 @@
             </div>
           </div>
 
-          <div class="ai-reason">
-            <div class="ai-reason-title"><i class="fa-solid fa-wand-magic-sparkles"></i> Как ИИ посчитал</div>
-            <div class="factor-chips" id="factorChips"></div>
-            <p class="ai-food"><i class="fa-solid fa-bowl-food"></i> <span id="aiFood">—</span></p>
+          <div class="food-card">
+            <div class="food-icon"><i class="fa-solid fa-bowl-food"></i></div>
+            <div>
+              <div class="food-label">Подобранный корм</div>
+              <div class="food-name" id="aiFood">—</div>
+              <div class="food-price" id="foodPrice">—</div>
+            </div>
           </div>
 
           <ul class="breakdown" id="breakdown">
@@ -2071,7 +1971,10 @@
             <div class="schedule-list" id="schedule"></div>
           </div>
 
-          <div class="calc-foot"><i class="fa-solid fa-circle-info"></i> <span>Норма ∝ вес<sup>0,75</sup> × коэффициенты породы, возраста и активности. «Время в год»: 27 покупок корма в год (РОМИР) × ~40 минут. Цены демонстрационные.</span></div>
+          <button type="button" class="btn btn-primary calc-cta" id="subscribeBtn">Оформить подписку <i class="fa-solid fa-arrow-right"></i></button>
+          <div class="subscribe-msg" id="subscribeMsg" role="status" aria-live="polite"></div>
+
+          <div class="calc-foot"><i class="fa-solid fa-circle-info"></i> <span>Цены примерные и зависят от выбранного бренда. «Время в год»: в среднем 27 покупок корма в год × ~40 минут.</span></div>
         </div>
       </div>
     </div>
@@ -2079,10 +1982,10 @@
 
   <section class="final-cta">
     <div class="container reveal">
-      <span class="badge"><span class="dot"></span> Готовы к пилоту</span>
+      <span class="badge"><span class="dot"></span> Пара минут на настройку</span>
       <h2 style="margin-top:22px;">Настроил один раз — <span class="gradient-text">коробка приезжает сама</span></h2>
-      <p>ЗооБокс превращает разовые покупки в предсказуемую подписочную выручку и возвращает клиентам время.</p>
-      <a href="#top" class="btn btn-ghost"><i class="fa-solid fa-arrow-up"></i> К началу презентации</a>
+      <p>Корм и наполнитель будут приезжать вовремя, а вы — проводить время с питомцем, а не в магазине.</p>
+      <a href="#calculator" class="btn btn-primary">Собрать коробку <i class="fa-solid fa-arrow-right"></i></a>
     </div>
   </section>
 
@@ -2166,22 +2069,6 @@
     }, 28);
   }, 500);
 
-  /* ---------- Dynamics bars ---------- */
-  var dynamics = document.getElementById('dynamics');
-  function fillDynBars() {
-    dynamics.querySelectorAll('.dyn-bar span').forEach(function (bar) {
-      bar.style.width = bar.getAttribute('data-w');
-    });
-  }
-  if ('IntersectionObserver' in window) {
-    var dynObserver = new IntersectionObserver(function (entries) {
-      if (entries[0].isIntersecting) { fillDynBars(); dynObserver.disconnect(); }
-    }, { threshold: 0.25 });
-    dynObserver.observe(dynamics);
-  } else {
-    fillDynBars();
-  }
-
   /* ---------- Calculator ---------- */
   function formatDate(d) {
     return d.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long' });
@@ -2210,7 +2097,11 @@
   var cycleSub = document.getElementById('cycleSub');
   var priceOut = document.getElementById('priceOut');
   var priceSub = document.getElementById('priceSub');
-  var factorChips = document.getElementById('factorChips');
+  var foodPrice = document.getElementById('foodPrice');
+  var petName = document.getElementById('petName');
+  var resultTitle = document.getElementById('resultTitle');
+  var subscribeBtn = document.getElementById('subscribeBtn');
+  var subscribeMsg = document.getElementById('subscribeMsg');
   var aiFood = document.getElementById('aiFood');
   var bDaily = document.getElementById('bDaily');
   var bKg = document.getElementById('bKg');
@@ -2472,10 +2363,6 @@
     });
   }
 
-  function chip(text, kind) {
-    return '<span class="fchip ' + kind + '">' + text + '</span>';
-  }
-
   function calculate() {
     var pet = PETS[state.pet];
     var breed = currentBreed();
@@ -2489,9 +2376,9 @@
 
     var subText;
     if (freq === 'ai') {
-      subText = 'ИИ подобрал фасовку ' + num1.format(cur.boxKg) + ' кг' +
+      subText = 'Выгодная фасовка ' + num1.format(cur.boxKg) + ' кг' +
         (cur.bagCount > 1 ? ' (' + cur.bagCount + ' ' + pluralBags(cur.bagCount) + ' по ' + num1.format(cur.bagSize) + ' кг)' : '');
-      modeChip.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles"></i> ИИ-режим · −7%';
+      modeChip.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles"></i> Умный график · −7%';
     } else {
       subText = 'Фиксированный график, корм отмеряется точно по норме';
       modeChip.innerHTML = '<i class="fa-regular fa-calendar"></i> Фиксированный график';
@@ -2505,19 +2392,13 @@
     if (cur.treats > 0) parts.push('лакомства');
     priceSub.textContent = parts.join(' + ') + ' + сервисный сбор';
 
-    var chips = [];
-    var bf = Math.round((breed.factor - 1) * 100);
-    chips.push(chip(breed.reason, bf < 0 ? 'down' : (bf > 0 ? 'up' : 'neutral')));
-    if (AGES[state.age].chip) chips.push(chip(AGES[state.age].chip, state.age === 'young' ? 'up' : 'down'));
-    if (ACTIVITY[state.activity].chip) chips.push(chip(ACTIVITY[state.activity].chip, state.activity === 'high' ? 'up' : 'down'));
-    if (breed.priceMult > 1) chips.push(chip('Корм под породу +' + Math.round((breed.priceMult - 1) * 100) + '% к цене', 'neutral'));
-    if (freq === 'ai') {
-      chips.push(chip('Цикл ' + AI_MIN_DAYS + '–' + AGES[state.age].maxDays + ' дн.', 'neutral'));
-      if (state.age === 'young') chips.push(chip('Норма пересчитывается каждый месяц', 'neutral'));
-      chips.push(chip('ИИ-скидка −7%', 'down'));
-    }
-    factorChips.innerHTML = chips.join('');
-    aiFood.textContent = 'Рекомендуем: ' + breed.food + ' — ' + rub.format(Math.round(cur.pricePerKg)) + '/кг';
+    aiFood.textContent = breed.food.charAt(0).toUpperCase() + breed.food.slice(1);
+    foodPrice.textContent = rub.format(Math.round(cur.pricePerKg)) + ' за кг' + (freq === 'ai' ? ' · со скидкой 7% — ' + rub.format(Math.round(cur.pricePerKg * (1 - AI_DISCOUNT))) : '');
+
+    var name = petName.value.trim();
+    resultTitle.textContent = name ? 'Ваша коробка · ' + name : 'Ваша коробка';
+    lastBox = { name: name, box: cur.box, cycle: cur.cycle };
+    subscribeMsg.textContent = '';
 
     bDaily.textContent = Math.round(cur.daily * 1000) + ' г/день';
     bKg.textContent = num1.format(cur.boxKg) + ' кг';
@@ -2543,7 +2424,7 @@
       sSaving.textContent = rub.format(Math.round(cur.discount * cur.perYear));
     } else {
       var diff = Math.round((cur.monthly - ai.monthly) * 12);
-      sSavingLabel.textContent = 'С ИИ-режимом';
+      sSavingLabel.textContent = 'С умным графиком';
       sSaving.textContent = diff > 0 ? '−' + rub.format(diff) + '/год' : 'без разницы';
     }
 
@@ -2566,6 +2447,7 @@
     }
   }
 
+  var lastBox = null;
   var lastValues = {};
   function setValue(el, text) {
     if (lastValues[el.id] === text) return;
@@ -2613,6 +2495,13 @@
   setupSegmented(ageGroup, 'age');
   setupSegmented(activityGroup, 'activity');
   freqSelect.addEventListener('change', calculate);
+  petName.addEventListener('input', calculate);
+  subscribeBtn.addEventListener('click', function () {
+    if (!lastBox) return;
+    subscribeMsg.textContent = 'Готово! Коробка' + (lastBox.name ? ' для питомца по кличке ' + lastBox.name : '') + ' собрана: ' +
+      rub.format(lastBox.box) + ' каждые ' + lastBox.cycle + ' ' + pluralDays(lastBox.cycle) +
+      '. Оформление подписки откроется при запуске сервиса.';
+  });
   addonFiller.addEventListener('change', calculate);
   addonTreats.addEventListener('change', calculate);
 
