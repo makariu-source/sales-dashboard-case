@@ -1,0 +1,2306 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BoxFlow — умная автоподписка</title>
+<meta name="description" content="BoxFlow — сервис умной автоподписки на бытовые товары. MVP стартует с зоотоваров.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+  :root {
+    --bg: #0B0F17;
+    --bg-soft: #0F1520;
+    --card: #151D2A;
+    --card-hover: #1A2434;
+    --border: rgba(255, 255, 255, 0.07);
+    --border-strong: rgba(255, 255, 255, 0.12);
+    --text: #E6EAF2;
+    --muted: #8C97AB;
+    --accent: #10B981;
+    --accent-soft: rgba(16, 185, 129, 0.12);
+    --accent-glow: rgba(16, 185, 129, 0.35);
+    --warn: #F59E0B;
+    --warn-soft: rgba(245, 158, 11, 0.12);
+    --danger: #F43F5E;
+    --danger-soft: rgba(244, 63, 94, 0.12);
+    --radius: 20px;
+    --radius-sm: 12px;
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --container: 1180px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  .container {
+    width: 100%;
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  section { padding: 110px 0; position: relative; }
+
+  /* ---------- Background decor ---------- */
+  .bg-grid {
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse at 50% 0%, #000 20%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse at 50% 0%, #000 20%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  main, header, footer { position: relative; z-index: 1; }
+
+  /* ---------- Navigation ---------- */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    background: rgba(11, 15, 23, 0.72);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s var(--ease), background 0.3s var(--ease);
+  }
+
+  .nav.scrolled { border-bottom-color: var(--border); background: rgba(11, 15, 23, 0.9); }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 72px;
+    gap: 16px;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 1.35rem;
+    letter-spacing: -0.03em;
+  }
+
+  .logo-mark {
+    width: 38px;
+    height: 38px;
+    border-radius: 11px;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, var(--accent), #059669);
+    color: #04130D;
+    font-size: 1rem;
+    box-shadow: 0 0 24px var(--accent-glow);
+  }
+
+  .logo span.flow { color: var(--accent); }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    padding: 8px 14px;
+    border-radius: 999px;
+    color: var(--muted);
+    font-size: 0.92rem;
+    font-weight: 500;
+    transition: color 0.25s var(--ease), background 0.25s var(--ease);
+  }
+
+  .nav-links a:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+
+  .nav-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border-radius: 999px;
+    border: 1px solid rgba(16,185,129,0.4);
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.25s var(--ease);
+    white-space: nowrap;
+  }
+
+  .nav-cta:hover { background: var(--accent); color: #04130D; box-shadow: 0 0 24px var(--accent-glow); }
+
+  .burger {
+    display: none;
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 1.1rem;
+    cursor: pointer;
+  }
+
+  /* ---------- Common ---------- */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 14px;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    border: 1px solid rgba(16,185,129,0.3);
+    color: var(--accent);
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  .badge .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 10px var(--accent);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.45; transform: scale(0.8); }
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+
+  .eyebrow::before {
+    content: '';
+    width: 24px;
+    height: 2px;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+
+  .section-head { max-width: 760px; margin-bottom: 56px; }
+
+  .section-head h2 {
+    font-size: clamp(2rem, 4vw, 2.9rem);
+    font-weight: 800;
+    margin-bottom: 16px;
+  }
+
+  .section-head p { color: var(--muted); font-size: 1.08rem; }
+
+  .text-accent { color: var(--accent); }
+
+  .gradient-text {
+    background: linear-gradient(120deg, #34D399 0%, var(--accent) 45%, #A7F3D0 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 17px 30px;
+    border-radius: 14px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 700;
+    font-size: 1.02rem;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), background 0.3s var(--ease);
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #04130D;
+    box-shadow: 0 10px 30px -8px var(--accent-glow), 0 0 0 1px rgba(16,185,129,0.5);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 18px 40px -8px rgba(16,185,129,0.6), 0 0 40px rgba(16,185,129,0.35);
+  }
+
+  .btn-primary i { transition: transform 0.3s var(--ease); }
+  .btn-primary:hover i { transform: translateX(4px); }
+
+  .btn-ghost {
+    background: rgba(255,255,255,0.04);
+    color: var(--text);
+    border: 1px solid var(--border-strong);
+  }
+
+  .btn-ghost:hover { transform: translateY(-3px); background: rgba(255,255,255,0.08); }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px;
+    transition: transform 0.35s var(--ease), border-color 0.35s var(--ease), box-shadow 0.35s var(--ease), background 0.35s var(--ease);
+  }
+
+  .card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(16,185,129,0.35);
+    background: var(--card-hover);
+    box-shadow: 0 24px 50px -20px rgba(0,0,0,0.7), 0 0 36px -10px var(--accent-glow);
+  }
+
+  .icon-box {
+    width: 54px;
+    height: 54px;
+    border-radius: 14px;
+    display: grid;
+    place-items: center;
+    font-size: 1.3rem;
+    background: var(--accent-soft);
+    color: var(--accent);
+    border: 1px solid rgba(16,185,129,0.25);
+    margin-bottom: 22px;
+  }
+
+  .icon-box.warn { background: var(--warn-soft); color: var(--warn); border-color: rgba(245,158,11,0.25); }
+  .icon-box.danger { background: var(--danger-soft); color: var(--danger); border-color: rgba(244,63,94,0.25); }
+
+  /* ---------- Reveal on scroll ---------- */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+  }
+
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    padding: 90px 0 110px;
+    min-height: calc(100vh - 72px);
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.4rem, 5.4vw, 4.3rem);
+    font-weight: 800;
+    margin: 26px 0 24px;
+  }
+
+  .hero-sub {
+    font-size: clamp(1.05rem, 1.6vw, 1.22rem);
+    color: var(--muted);
+    max-width: 580px;
+    margin-bottom: 40px;
+  }
+
+  .hero-sub strong { color: var(--text); font-weight: 600; }
+
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 48px; }
+
+  .hero-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 36px;
+    padding-top: 30px;
+    border-top: 1px solid var(--border);
+  }
+
+  .hero-stat .num {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.9rem;
+    font-weight: 800;
+    color: var(--text);
+  }
+
+  .hero-stat .num span { color: var(--accent); }
+
+  .hero-stat .label { color: var(--muted); font-size: 0.88rem; }
+
+  /* Hero visual: subscription timeline */
+  .hero-visual {
+    position: relative;
+    background: linear-gradient(160deg, rgba(21,29,42,0.95), rgba(15,21,32,0.95));
+    border: 1px solid var(--border-strong);
+    border-radius: 26px;
+    padding: 28px;
+    box-shadow: 0 40px 80px -30px rgba(0,0,0,0.8), 0 0 60px -20px var(--accent-glow);
+  }
+
+  .hv-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+
+  .hv-head .title { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; }
+  .hv-head .status {
+    font-size: 0.78rem;
+    color: var(--accent);
+    background: var(--accent-soft);
+    padding: 5px 10px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .hv-pet {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    margin-bottom: 20px;
+  }
+
+  .hv-pet .avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, #F59E0B, #D97706);
+    color: #1B1206;
+    font-size: 1.25rem;
+  }
+
+  .hv-pet .name { font-weight: 600; }
+  .hv-pet .meta { color: var(--muted); font-size: 0.85rem; }
+
+  .hv-progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .hv-progress-label b { color: var(--text); font-weight: 600; }
+
+  .hv-bar {
+    height: 10px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 999px;
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+
+  .hv-bar-fill {
+    height: 100%;
+    width: 0;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--accent), #34D399);
+    box-shadow: 0 0 16px var(--accent-glow);
+    transition: width 1.8s var(--ease);
+  }
+
+  .hv-steps { list-style: none; display: grid; gap: 12px; }
+
+  .hv-steps li {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 0.92rem;
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border);
+  }
+
+  .hv-steps li i {
+    width: 30px;
+    height: 30px;
+    border-radius: 9px;
+    display: grid;
+    place-items: center;
+    font-size: 0.8rem;
+    background: var(--accent-soft);
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .hv-steps li.pending i { background: rgba(255,255,255,0.05); color: var(--muted); }
+  .hv-steps li.pending { color: var(--muted); }
+  .hv-steps li .time { margin-left: auto; color: var(--muted); font-size: 0.8rem; white-space: nowrap; }
+
+  .hv-float {
+    position: absolute;
+    right: -18px;
+    bottom: -22px;
+    background: var(--card);
+    border: 1px solid rgba(16,185,129,0.35);
+    border-radius: 14px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.85rem;
+    box-shadow: 0 20px 40px -12px rgba(0,0,0,0.8);
+    animation: float 4s ease-in-out infinite;
+  }
+
+  .hv-float i { color: var(--accent); }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  /* ---------- VALUE ---------- */
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .value-card h3 { font-size: 1.35rem; margin-bottom: 6px; }
+
+  .value-card .kicker {
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    margin-bottom: 14px;
+    display: block;
+  }
+
+  .value-card p { color: var(--muted); margin-bottom: 20px; }
+
+  .value-card ul { list-style: none; display: grid; gap: 10px; }
+
+  .value-card li {
+    display: flex;
+    gap: 10px;
+    font-size: 0.93rem;
+    color: var(--text);
+  }
+
+  .value-card li i { color: var(--accent); margin-top: 5px; font-size: 0.8rem; }
+
+  .value-card .big-num {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 14px;
+  }
+
+  .compare {
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 20px;
+    align-items: stretch;
+  }
+
+  .compare-col {
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 26px 28px;
+  }
+
+  .compare-col.win { border-color: rgba(16,185,129,0.35); background: linear-gradient(160deg, rgba(16,185,129,0.08), rgba(16,185,129,0.01)); }
+
+  .compare-col h4 { font-size: 1.05rem; margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+
+  .compare-col ol { list-style: none; display: grid; gap: 8px; counter-reset: step; }
+
+  .compare-col ol li {
+    counter-increment: step;
+    display: flex;
+    gap: 12px;
+    color: var(--muted);
+    font-size: 0.93rem;
+  }
+
+  .compare-col ol li::before {
+    content: counter(step);
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+    border-radius: 6px;
+    display: grid;
+    place-items: center;
+    font-size: 0.72rem;
+    font-weight: 700;
+    background: rgba(255,255,255,0.06);
+    color: var(--text);
+  }
+
+  .compare-col.win ol li::before { background: var(--accent-soft); color: var(--accent); }
+  .compare-col.win ol li { color: var(--text); }
+
+  .compare-vs {
+    display: grid;
+    place-items: center;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    color: var(--muted);
+  }
+
+  .compare-vs span {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--border-strong);
+    background: var(--card);
+  }
+
+  /* ---------- STRATEGY ---------- */
+  .split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .split-card { position: relative; overflow: hidden; padding: 40px; }
+
+  .split-card .phase {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 6px 12px;
+    border-radius: 999px;
+    margin-bottom: 22px;
+    letter-spacing: 0.04em;
+  }
+
+  .phase.now { background: var(--accent-soft); color: var(--accent); border: 1px solid rgba(16,185,129,0.35); }
+  .phase.later { background: var(--warn-soft); color: var(--warn); border: 1px solid rgba(245,158,11,0.35); }
+
+  .split-card h3 { font-size: 1.7rem; margin-bottom: 12px; }
+  .split-card > p { color: var(--muted); margin-bottom: 28px; }
+
+  .split-card.active {
+    border-color: rgba(16,185,129,0.35);
+    background: linear-gradient(165deg, rgba(16,185,129,0.09) 0%, var(--card) 45%);
+  }
+
+  .split-card.muted-card { background: linear-gradient(165deg, rgba(245,158,11,0.06) 0%, var(--card) 45%); }
+  .split-card.muted-card:hover { border-color: rgba(245,158,11,0.35); box-shadow: 0 24px 50px -20px rgba(0,0,0,0.7), 0 0 36px -10px rgba(245,158,11,0.3); }
+
+  .reason-list { list-style: none; display: grid; gap: 16px; }
+
+  .reason-list li { display: flex; gap: 16px; align-items: flex-start; }
+
+  .reason-list .ri {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: 11px;
+    display: grid;
+    place-items: center;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-size: 0.95rem;
+  }
+
+  .muted-card .reason-list .ri { background: var(--warn-soft); color: var(--warn); }
+
+  .reason-list h4 { font-size: 1rem; margin-bottom: 3px; }
+  .reason-list p { color: var(--muted); font-size: 0.92rem; }
+
+  .split-watermark {
+    position: absolute;
+    right: -20px;
+    top: -20px;
+    font-size: 9rem;
+    opacity: 0.04;
+    pointer-events: none;
+  }
+
+  .roadmap {
+    margin-top: 32px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .roadmap-step { padding: 22px 24px; border-right: 1px solid var(--border); position: relative; }
+  .roadmap-step:last-child { border-right: none; }
+  .roadmap-step .q { font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; }
+  .roadmap-step .t { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; margin: 6px 0 4px; }
+  .roadmap-step .d { color: var(--muted); font-size: 0.87rem; }
+  .roadmap-step.current { background: var(--accent-soft); }
+  .roadmap-step.current .q { color: var(--accent); }
+
+  /* ---------- FAQ / ACCORDION ---------- */
+  .faq-wrap {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 56px;
+    align-items: start;
+  }
+
+  .faq-aside { position: sticky; top: 110px; }
+  .faq-aside .section-head { margin-bottom: 28px; }
+
+  .honesty {
+    display: flex;
+    gap: 14px;
+    padding: 20px;
+    border-radius: 16px;
+    background: var(--card);
+    border: 1px dashed rgba(16,185,129,0.35);
+    color: var(--muted);
+    font-size: 0.92rem;
+  }
+
+  .honesty i { color: var(--accent); font-size: 1.2rem; margin-top: 2px; }
+
+  .accordion { display: grid; gap: 14px; }
+
+  .acc-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    overflow: hidden;
+    transition: border-color 0.3s var(--ease), box-shadow 0.3s var(--ease), transform 0.3s var(--ease);
+  }
+
+  .acc-item:hover { border-color: rgba(16,185,129,0.25); transform: translateY(-2px); }
+
+  .acc-item.open {
+    border-color: rgba(16,185,129,0.45);
+    box-shadow: 0 0 40px -14px var(--accent-glow);
+  }
+
+  .acc-trigger {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 22px 24px;
+    background: none;
+    border: none;
+    color: var(--text);
+    text-align: left;
+    cursor: pointer;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.08rem;
+    font-weight: 700;
+  }
+
+  .acc-num {
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+    background: rgba(255,255,255,0.05);
+    color: var(--muted);
+    font-size: 0.85rem;
+    transition: all 0.3s var(--ease);
+  }
+
+  .acc-item.open .acc-num { background: var(--accent); color: #04130D; }
+
+  .acc-q { flex: 1; }
+  .acc-q small {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.78rem;
+    color: var(--muted);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    margin-bottom: 2px;
+    text-transform: uppercase;
+  }
+
+  .acc-arrow {
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--border-strong);
+    color: var(--muted);
+    transition: transform 0.45s var(--ease), color 0.3s, border-color 0.3s, background 0.3s;
+  }
+
+  .acc-item.open .acc-arrow {
+    transform: rotate(180deg);
+    color: var(--accent);
+    border-color: rgba(16,185,129,0.5);
+    background: var(--accent-soft);
+  }
+
+  .acc-panel {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s var(--ease);
+  }
+
+  .acc-body {
+    padding: 0 24px 26px 80px;
+    color: var(--muted);
+  }
+
+  .acc-body p { margin-bottom: 14px; }
+  .acc-body p strong { color: var(--text); }
+
+  .acc-points { list-style: none; display: grid; gap: 10px; }
+
+  .acc-points li {
+    display: flex;
+    gap: 12px;
+    padding: 12px 14px;
+    background: rgba(255,255,255,0.025);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    font-size: 0.93rem;
+  }
+
+  .acc-points li i { color: var(--accent); margin-top: 4px; }
+  .acc-points li b { color: var(--text); font-weight: 600; }
+
+  .push-demo {
+    margin-top: 14px;
+    max-width: 380px;
+    background: #0E141F;
+    border: 1px solid var(--border-strong);
+    border-radius: 16px;
+    padding: 14px;
+  }
+
+  .push-demo .ph { display: flex; align-items: center; gap: 10px; font-size: 0.8rem; color: var(--muted); margin-bottom: 8px; }
+  .push-demo .ph .app { width: 22px; height: 22px; border-radius: 6px; background: var(--accent); color: #04130D; display: grid; place-items: center; font-size: 0.65rem; }
+  .push-demo .pt { color: var(--text); font-weight: 600; font-size: 0.92rem; }
+  .push-demo .pd { font-size: 0.86rem; margin: 2px 0 12px; }
+  .push-demo .pb { display: flex; gap: 8px; flex-wrap: wrap; }
+  .push-demo button {
+    flex: 1;
+    min-width: 120px;
+    padding: 9px 10px;
+    border-radius: 10px;
+    border: 1px solid var(--border-strong);
+    background: rgba(255,255,255,0.04);
+    color: var(--text);
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.25s var(--ease);
+  }
+  .push-demo button:hover { transform: translateY(-2px); border-color: var(--accent); color: var(--accent); }
+  .push-demo .pr { margin-top: 10px; font-size: 0.82rem; color: var(--accent); min-height: 1.2em; }
+
+  /* ---------- ANALYTICS ---------- */
+  .panels {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 24px;
+  }
+
+  .panel { padding: 36px; }
+
+  .panel-head {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 26px;
+  }
+
+  .panel-head .icon-box { margin-bottom: 0; }
+  .panel-head h3 { font-size: 1.4rem; }
+  .panel-head p { color: var(--muted); font-size: 0.88rem; }
+
+  .panel.pros:hover { border-color: rgba(16,185,129,0.4); }
+  .panel.cons:hover { border-color: rgba(244,63,94,0.4); box-shadow: 0 24px 50px -20px rgba(0,0,0,0.7), 0 0 36px -10px rgba(244,63,94,0.3); }
+
+  .main-point {
+    padding: 20px;
+    border-radius: 14px;
+    margin-bottom: 18px;
+  }
+
+  .pros .main-point { background: var(--accent-soft); border: 1px solid rgba(16,185,129,0.3); }
+  .cons .main-point { background: var(--danger-soft); border: 1px solid rgba(244,63,94,0.3); }
+
+  .main-point .tag { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; }
+  .pros .main-point .tag { color: var(--accent); }
+  .cons .main-point .tag { color: var(--danger); }
+  .main-point h4 { font-size: 1.12rem; margin: 6px 0; }
+  .main-point p { color: var(--muted); font-size: 0.92rem; }
+
+  .point-list { list-style: none; display: grid; gap: 12px; }
+
+  .point-list li { display: flex; gap: 12px; font-size: 0.94rem; color: var(--muted); }
+  .point-list li b { color: var(--text); font-weight: 600; }
+  .pros .point-list li i { color: var(--accent); margin-top: 5px; }
+  .cons .point-list li i { color: var(--danger); margin-top: 5px; }
+
+  .mitigation {
+    margin-top: 18px;
+    font-size: 0.86rem;
+    color: var(--muted);
+    padding-top: 16px;
+    border-top: 1px dashed var(--border-strong);
+  }
+  .mitigation b { color: var(--accent); }
+
+  .dynamics { padding: 36px; }
+
+  .dynamics-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 30px;
+  }
+
+  .dynamics-head h3 { font-size: 1.5rem; }
+  .dynamics-head p { color: var(--muted); font-size: 0.92rem; }
+
+  .timeline-axis {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+
+  .timeline-axis .line {
+    width: 120px;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(255,255,255,0.1), var(--accent));
+    position: relative;
+  }
+
+  .timeline-axis .line::after {
+    content: '';
+    position: absolute;
+    right: -2px;
+    top: -4px;
+    border-left: 8px solid var(--accent);
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+  }
+
+  .dyn-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .dyn-col h4 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.05rem;
+    margin-bottom: 16px;
+  }
+
+  .dyn-col.better h4 { color: var(--accent); }
+  .dyn-col.worse h4 { color: var(--warn); }
+
+  .dyn-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px 16px;
+    align-items: center;
+    padding: 14px 16px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.025);
+    border: 1px solid var(--border);
+    margin-bottom: 10px;
+    transition: transform 0.3s var(--ease), border-color 0.3s var(--ease);
+  }
+
+  .dyn-row:hover { transform: translateX(4px); }
+  .better .dyn-row:hover { border-color: rgba(16,185,129,0.35); }
+  .worse .dyn-row:hover { border-color: rgba(245,158,11,0.35); }
+
+  .dyn-row .n { font-weight: 600; font-size: 0.95rem; }
+  .dyn-row .s { color: var(--muted); font-size: 0.84rem; grid-column: 1 / -1; }
+  .dyn-row .trend { font-size: 0.82rem; font-weight: 700; padding: 3px 9px; border-radius: 999px; white-space: nowrap; }
+  .better .trend { background: var(--accent-soft); color: var(--accent); }
+  .worse .trend { background: var(--warn-soft); color: var(--warn); }
+
+  .dyn-bar { grid-column: 1 / -1; height: 5px; border-radius: 999px; background: rgba(255,255,255,0.05); overflow: hidden; }
+  .dyn-bar span { display: block; height: 100%; width: 0; border-radius: 999px; transition: width 1.4s var(--ease); }
+  .better .dyn-bar span { background: linear-gradient(90deg, var(--accent), #34D399); }
+  .worse .dyn-bar span { background: linear-gradient(90deg, var(--warn), #FBBF24); }
+
+  .why-popular {
+    margin-top: 24px;
+    padding: 40px;
+    border-radius: var(--radius);
+    background:
+      radial-gradient(ellipse at 0% 0%, rgba(16,185,129,0.18), transparent 55%),
+      var(--card);
+    border: 1px solid rgba(16,185,129,0.25);
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 40px;
+    align-items: center;
+  }
+
+  .why-popular h3 { font-size: clamp(1.5rem, 2.6vw, 2rem); margin-bottom: 12px; }
+  .why-popular > div > p { color: var(--muted); }
+
+  .trends { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+
+  .trend-card {
+    padding: 20px;
+    border-radius: 16px;
+    background: rgba(11,15,23,0.6);
+    border: 1px solid var(--border);
+    transition: transform 0.3s var(--ease), border-color 0.3s var(--ease);
+  }
+
+  .trend-card:hover { transform: translateY(-5px); border-color: rgba(16,185,129,0.4); }
+  .trend-card i { color: var(--accent); font-size: 1.3rem; margin-bottom: 12px; display: block; }
+  .trend-card h4 { font-size: 0.98rem; margin-bottom: 6px; }
+  .trend-card p { color: var(--muted); font-size: 0.85rem; }
+
+  /* ---------- CALCULATOR ---------- */
+  .calc-section {
+    background: linear-gradient(180deg, transparent, rgba(16,185,129,0.04) 40%, transparent);
+  }
+
+  .calc {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    background: var(--card);
+    border: 1px solid rgba(16,185,129,0.3);
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow: 0 40px 90px -40px rgba(0,0,0,0.9), 0 0 80px -30px var(--accent-glow);
+  }
+
+  .calc-form { padding: 44px; border-right: 1px solid var(--border); }
+  .calc-form h3 { font-size: 1.4rem; margin-bottom: 6px; }
+  .calc-form > p { color: var(--muted); font-size: 0.92rem; margin-bottom: 32px; }
+
+  .field { margin-bottom: 28px; }
+
+  .field-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 600;
+    font-size: 0.92rem;
+    margin-bottom: 12px;
+  }
+
+  .field-label span.hint { color: var(--muted); font-weight: 400; font-size: 0.82rem; }
+
+  .pet-toggle { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+
+  .pet-toggle button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px;
+    border-radius: 12px;
+    border: 1px solid var(--border-strong);
+    background: rgba(255,255,255,0.03);
+    color: var(--muted);
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.25s var(--ease);
+  }
+
+  .pet-toggle button:hover { transform: translateY(-2px); color: var(--text); }
+
+  .pet-toggle button.active {
+    background: var(--accent-soft);
+    border-color: var(--accent);
+    color: var(--accent);
+    box-shadow: 0 0 20px -6px var(--accent-glow);
+  }
+
+  .select-wrap { position: relative; }
+
+  .select-wrap select {
+    width: 100%;
+    appearance: none;
+    -webkit-appearance: none;
+    padding: 15px 46px 15px 16px;
+    border-radius: 12px;
+    border: 1px solid var(--border-strong);
+    background: var(--bg-soft);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 0.97rem;
+    cursor: pointer;
+    transition: border-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
+  }
+
+  .select-wrap select:hover { border-color: rgba(16,185,129,0.4); }
+  .select-wrap select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px rgba(16,185,129,0.15); }
+  .select-wrap select option { background: var(--card); color: var(--text); }
+
+  .select-wrap i {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted);
+    pointer-events: none;
+    font-size: 0.85rem;
+  }
+
+  .weight-display {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--accent);
+    text-shadow: 0 0 20px var(--accent-glow);
+    min-width: 90px;
+    text-align: right;
+  }
+
+  .weight-display small { font-size: 0.9rem; color: var(--muted); font-weight: 600; text-shadow: none; }
+
+  input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 8px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--accent) 0%, var(--accent) var(--fill, 20%), rgba(255,255,255,0.08) var(--fill, 20%));
+    outline: none;
+    cursor: pointer;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: #fff;
+    border: 5px solid var(--accent);
+    box-shadow: 0 0 0 6px rgba(16,185,129,0.18), 0 0 20px var(--accent-glow);
+    transition: transform 0.2s var(--ease);
+  }
+
+  input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.12); }
+
+  input[type="range"]::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #fff;
+    border: 5px solid var(--accent);
+    box-shadow: 0 0 0 6px rgba(16,185,129,0.18), 0 0 20px var(--accent-glow);
+  }
+
+  input[type="range"]:focus-visible { box-shadow: 0 0 0 4px rgba(16,185,129,0.25); }
+
+  .range-scale {
+    display: flex;
+    justify-content: space-between;
+    color: var(--muted);
+    font-size: 0.78rem;
+    margin-top: 10px;
+  }
+
+  .calc-note {
+    font-size: 0.82rem;
+    color: var(--warn);
+    margin-top: 10px;
+    min-height: 1.3em;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .calc-result {
+    padding: 44px;
+    background: linear-gradient(170deg, rgba(16,185,129,0.07), transparent 55%), var(--bg-soft);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .calc-result .rh { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; gap: 10px; flex-wrap: wrap; }
+  .calc-result .rh h3 { font-size: 1.2rem; }
+
+  .mode-chip {
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .result-tiles { display: grid; gap: 16px; margin-bottom: 20px; }
+
+  .tile {
+    padding: 26px;
+    border-radius: 18px;
+    background: var(--card);
+    border: 1px solid var(--border-strong);
+    transition: transform 0.3s var(--ease), border-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
+  }
+
+  .tile:hover { transform: translateY(-4px); border-color: rgba(16,185,129,0.4); }
+
+  .tile.primary {
+    border-color: rgba(16,185,129,0.45);
+    box-shadow: inset 0 0 40px -18px var(--accent-glow);
+  }
+
+  .tile-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--muted);
+    font-size: 0.86rem;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  .tile-label i { color: var(--accent); }
+
+  .tile-value {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: clamp(2.2rem, 4vw, 3rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    transition: transform 0.2s var(--ease), color 0.2s;
+  }
+
+  .tile-value.bump { transform: scale(1.04); color: var(--accent); }
+
+  .tile.primary .tile-value { color: var(--accent); text-shadow: 0 0 30px var(--accent-glow); }
+
+  .tile-sub { color: var(--muted); font-size: 0.86rem; margin-top: 6px; }
+
+  .breakdown {
+    list-style: none;
+    display: grid;
+    gap: 2px;
+    font-size: 0.88rem;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .breakdown li {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 11px 16px;
+    background: rgba(255,255,255,0.02);
+    color: var(--muted);
+  }
+
+  .breakdown li b { color: var(--text); font-weight: 600; white-space: nowrap; }
+  .breakdown li.total { background: rgba(16,185,129,0.06); }
+  .breakdown li.total b { color: var(--accent); }
+
+  .calc-foot { margin-top: 16px; font-size: 0.78rem; color: var(--muted); display: flex; gap: 8px; }
+
+  /* ---------- FOOTER ---------- */
+  .final-cta {
+    text-align: center;
+    padding: 90px 0 70px;
+  }
+
+  .final-cta h2 { font-size: clamp(1.9rem, 4vw, 2.8rem); margin-bottom: 14px; }
+  .final-cta p { color: var(--muted); max-width: 560px; margin: 0 auto 32px; }
+
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 32px 0;
+    color: var(--muted);
+    font-size: 0.86rem;
+  }
+
+  .footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+
+  .to-top {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background: var(--card);
+    border: 1px solid rgba(16,185,129,0.4);
+    color: var(--accent);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(16px);
+    transition: all 0.3s var(--ease);
+    z-index: 60;
+  }
+
+  .to-top.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
+  .to-top:hover { background: var(--accent); color: #04130D; box-shadow: 0 0 24px var(--accent-glow); transform: translateY(-3px); }
+
+  /* ---------- Projector / large screens ---------- */
+  @media (min-width: 1600px) {
+    :root { --container: 1380px; }
+    body { font-size: 18px; }
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 1080px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 56px; }
+    .hero { min-height: auto; }
+    .hero-visual { max-width: 560px; }
+    .grid-3 { grid-template-columns: 1fr 1fr; }
+    .grid-3 .value-card:last-child { grid-column: 1 / -1; }
+    .faq-wrap { grid-template-columns: 1fr; gap: 32px; }
+    .faq-aside { position: static; }
+    .why-popular { grid-template-columns: 1fr; }
+    .roadmap { grid-template-columns: 1fr 1fr; }
+    .roadmap-step:nth-child(2) { border-right: none; }
+    .roadmap-step:nth-child(-n+2) { border-bottom: 1px solid var(--border); }
+  }
+
+  @media (max-width: 860px) {
+    section { padding: 80px 0; }
+    .nav-links {
+      position: absolute;
+      top: 72px;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      align-items: stretch;
+      padding: 12px 16px 20px;
+      background: rgba(11,15,23,0.97);
+      border-bottom: 1px solid var(--border);
+      display: none;
+    }
+    .nav-links.open { display: flex; }
+    .nav-links a { padding: 14px 16px; }
+    .burger { display: grid; place-items: center; }
+    .nav-cta { display: none; }
+    .split, .panels, .dyn-grid, .calc { grid-template-columns: 1fr; }
+    .calc-form { border-right: none; border-bottom: 1px solid var(--border); }
+    .compare { grid-template-columns: 1fr; }
+    .compare-vs span { width: 44px; height: 44px; }
+    .trends { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 600px) {
+    .container { padding: 0 16px; }
+    section { padding: 64px 0; }
+    .hero { padding: 48px 0 72px; }
+    .grid-3 { grid-template-columns: 1fr; }
+    .card, .panel, .dynamics, .split-card { padding: 24px; }
+    .calc-form, .calc-result { padding: 26px 20px; }
+    .why-popular { padding: 26px; }
+    .trends { grid-template-columns: 1fr; }
+    .roadmap { grid-template-columns: 1fr; }
+    .roadmap-step { border-right: none; border-bottom: 1px solid var(--border); }
+    .roadmap-step:last-child { border-bottom: none; }
+    .acc-trigger { padding: 18px; gap: 12px; font-size: 0.98rem; }
+    .acc-body { padding: 0 18px 22px 18px; }
+    .hero-actions .btn { width: 100%; justify-content: center; }
+    .hero-stats { gap: 22px; }
+    .hv-float { right: 8px; bottom: -20px; }
+    .hv-steps li .time { display: none; }
+    .btn { padding: 15px 22px; }
+    .timeline-axis { display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    html { scroll-behavior: auto; }
+    .reveal { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-grid" aria-hidden="true"></div>
+
+<!-- ================= NAV ================= -->
+<header class="nav" id="nav">
+  <div class="container nav-inner">
+    <a href="#top" class="logo" aria-label="BoxFlow — на главную">
+      <span class="logo-mark"><i class="fa-solid fa-box-open"></i></span>
+      <span>Box<span class="flow">Flow</span></span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#value">Ценность</a></li>
+      <li><a href="#strategy">Стратегия MVP</a></li>
+      <li><a href="#faq">Вопросы жюри</a></li>
+      <li><a href="#analytics">Аналитика</a></li>
+      <li><a href="#calculator">Калькулятор</a></li>
+    </ul>
+    <a href="#calculator" class="nav-cta"><i class="fa-solid fa-play"></i> Демо MVP</a>
+    <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false"><i class="fa-solid fa-bars"></i></button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ================= 1. HERO ================= -->
+  <section class="hero">
+    <div class="orb" style="width:520px;height:520px;background:rgba(16,185,129,0.22);top:-160px;right:-120px;"></div>
+    <div class="orb" style="width:380px;height:380px;background:rgba(16,185,129,0.1);bottom:-120px;left:-140px;"></div>
+    <div class="container hero-grid">
+      <div class="reveal">
+        <span class="badge"><span class="dot"></span> Pitch Deck MVP v1.0</span>
+        <h1>Больше не нужно помнить. <span class="gradient-text">Бытовые товары по умной автоподписке</span></h1>
+        <p class="hero-sub">Мы продаем не доставку, а <strong>свободу от бытовой рутины</strong>. Настроил один раз — коробка приезжает сама.</p>
+        <div class="hero-actions">
+          <a href="#calculator" class="btn btn-primary">Посмотреть интерактивный MVP <i class="fa-solid fa-arrow-right"></i></a>
+          <a href="#faq" class="btn btn-ghost"><i class="fa-regular fa-circle-question"></i> Слабые места</a>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <div class="num">0<span>%</span></div>
+            <div class="label">ментальной нагрузки</div>
+          </div>
+          <div class="hero-stat">
+            <div class="num">1<span>×</span></div>
+            <div class="label">настройка на весь цикл</div>
+          </div>
+          <div class="hero-stat">
+            <div class="num">MRR</div>
+            <div class="label">предсказуемая выручка</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual reveal" aria-label="Пример активной подписки">
+        <div class="hv-head">
+          <span class="title">Моя подписка</span>
+          <span class="status"><i class="fa-solid fa-circle" style="font-size:0.5rem"></i> Активна</span>
+        </div>
+        <div class="hv-pet">
+          <div class="avatar"><i class="fa-solid fa-dog"></i></div>
+          <div>
+            <div class="name">Бакс · лабрадор</div>
+            <div class="meta">28 кг · премиум сухой корм</div>
+          </div>
+        </div>
+        <div class="hv-progress-label">
+          <span>Запас корма в миске-трекере</span>
+          <b id="hvPercent">0%</b>
+        </div>
+        <div class="hv-bar"><div class="hv-bar-fill" id="hvBar"></div></div>
+        <ul class="hv-steps">
+          <li><i class="fa-solid fa-brain"></i> ИИ пересчитал расход по весу <span class="time">сегодня</span></li>
+          <li><i class="fa-solid fa-bell"></i> Push: «Коробка уйдет через 3 дня» <span class="time">через 9 дн.</span></li>
+          <li class="pending"><i class="fa-solid fa-truck-fast"></i> Доставка — без единого клика <span class="time">через 12 дн.</span></li>
+        </ul>
+        <div class="hv-float"><i class="fa-solid fa-circle-check"></i> Коробка №7 доставлена</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 2. VALUE ================= -->
+  <section id="value">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="eyebrow">Суть и ценность</div>
+        <h2>Почему это не «еще один Самокат»</h2>
+        <p>Классический e-commerce конкурирует за каждую покупку заново. BoxFlow выигрывает выбор один раз — и дальше работает в фоне жизни клиента.</p>
+      </div>
+
+      <div class="grid-3">
+        <article class="card value-card reveal">
+          <div class="icon-box"><i class="fa-solid fa-brain"></i></div>
+          <span class="kicker">Для клиента</span>
+          <div class="big-num gradient-text">0%</div>
+          <h3>Ментальной нагрузки</h3>
+          <p>Обычная доставка заставляет вспоминать и каждый раз собирать корзину. Мы решаем проблему забывчивости.</p>
+          <ul>
+            <li><i class="fa-solid fa-check"></i> Никаких «ой, корм закончился» в 23:00</li>
+            <li><i class="fa-solid fa-check"></i> Не нужно собирать корзину заново</li>
+            <li><i class="fa-solid fa-check"></i> Полная автоматизация цикла пополнения</li>
+          </ul>
+        </article>
+
+        <article class="card value-card reveal">
+          <div class="icon-box"><i class="fa-solid fa-chart-line"></i></div>
+          <span class="kicker">Для инвестора и жюри</span>
+          <div class="big-num gradient-text">MRR</div>
+          <h3>Экономика предсказуемости</h3>
+          <p>Predictable Recurring Revenue: мы знаем выручку следующего месяца уже сегодня. Именно это ценят фонды.</p>
+          <ul>
+            <li><i class="fa-solid fa-check"></i> Стабильная ежемесячная выручка</li>
+            <li><i class="fa-solid fa-check"></i> Удержание когорт вместо разовых чеков</li>
+            <li><i class="fa-solid fa-check"></i> Бенчмарк: Chewy (США) — большая часть выручки идет через Autoship</li>
+          </ul>
+        </article>
+
+        <article class="card value-card reveal">
+          <div class="icon-box"><i class="fa-solid fa-scale-balanced"></i></div>
+          <span class="kicker">Юнит-экономика</span>
+          <div class="big-num gradient-text">LTV ↑ CAC ↓</div>
+          <h3>Идеальный LTV/CAC</h3>
+          <p>Автоподписка снижает стоимость повторного привлечения клиента почти до нуля и максимизирует его жизненный цикл с первых месяцев.</p>
+          <ul>
+            <li><i class="fa-solid fa-check"></i> Повторная покупка без затрат на ретаргетинг</li>
+            <li><i class="fa-solid fa-check"></i> Окупаемость CAC за считанные циклы</li>
+            <li><i class="fa-solid fa-check"></i> Рост среднего чека через cross-sell в коробку</li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="compare reveal">
+        <div class="compare-col">
+          <h4><i class="fa-solid fa-cart-shopping" style="color:var(--muted)"></i> Классический маркетплейс</h4>
+          <ol>
+            <li>Вспомнить, что корм заканчивается</li>
+            <li>Открыть приложение, найти товар</li>
+            <li>Сравнить цены у 3–4 конкурентов</li>
+            <li>Собрать корзину и оплатить</li>
+            <li>Повторять каждый месяц</li>
+          </ol>
+        </div>
+        <div class="compare-vs"><span>VS</span></div>
+        <div class="compare-col win">
+          <h4><i class="fa-solid fa-box-open" style="color:var(--accent)"></i> BoxFlow</h4>
+          <ol>
+            <li>Один раз указать питомца и его вес</li>
+            <li>ИИ рассчитывает расход и дату доставки</li>
+            <li>Коробка приезжает сама — всегда вовремя</li>
+            <li>Конкуренты исключены из цепочки выбора</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 3. STRATEGY ================= -->
+  <section id="strategy">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="eyebrow">Стратегия старта</div>
+        <h2>Почему MVP — это <span class="text-accent">зоотовары</span></h2>
+        <p>Выбираем нишу с самым предсказуемым расходом и минимальным оттоком, чтобы быстро доказать юнит-экономику.</p>
+      </div>
+
+      <div class="split">
+        <article class="card split-card active reveal">
+          <i class="fa-solid fa-paw split-watermark" aria-hidden="true"></i>
+          <span class="phase now"><i class="fa-solid fa-rocket"></i> ЭТАП 1 · СТАРТ</span>
+          <h3>Зоотовары: корм + наполнитель</h3>
+          <p>Идеальная категория для подписки: питомец ест каждый день, одинаково и годами.</p>
+          <ul class="reason-list">
+            <li>
+              <span class="ri"><i class="fa-solid fa-arrows-rotate"></i></span>
+              <div><h4>Стабильный расход</h4><p>Суточная норма почти не меняется — спрос повторяется как по часам.</p></div>
+            </li>
+            <li>
+              <span class="ri"><i class="fa-solid fa-weight-scale"></i></span>
+              <div><h4>Расчет по весу животного</h4><p>Норма корма вычисляется по формуле — точный прогноз даты следующей коробки.</p></div>
+            </li>
+            <li>
+              <span class="ri"><i class="fa-solid fa-heart"></i></span>
+              <div><h4>Жесткая цикличность</h4><p>Владельцы годами не меняют корм, который подошел питомцу, — высокая лояльность.</p></div>
+            </li>
+            <li>
+              <span class="ri"><i class="fa-solid fa-user-lock"></i></span>
+              <div><h4>Низкий Churn</h4><p>Жизненный цикл питомца — 10–15 лет. Это длинный и предсказуемый LTV.</p></div>
+            </li>
+          </ul>
+        </article>
+
+        <article class="card split-card muted-card reveal">
+          <i class="fa-solid fa-baby-carriage split-watermark" aria-hidden="true"></i>
+          <span class="phase later"><i class="fa-solid fa-hourglass-half"></i> ЭТАП 2 · ОТЛОЖЕНО</span>
+          <h3>Товары для мам и подгузники</h3>
+          <p>Огромный рынок, но на старте он сожжет бюджет. Заходим, когда алгоритмы и логистика будут отлажены.</p>
+          <ul class="reason-list">
+            <li>
+              <span class="ri"><i class="fa-solid fa-chart-area"></i></span>
+              <div><h4>Быстрая смена размеров</h4><p>Дети растут нелинейно: размер подгузника меняется каждые 2–3 месяца — прогноз ломается.</p></div>
+            </li>
+            <li>
+              <span class="ri"><i class="fa-solid fa-hourglass-end"></i></span>
+              <div><h4>Короткий жизненный цикл</h4><p>Потребность в подгузниках заканчивается через 2–3 года — LTV ограничен.</p></div>
+            </li>
+            <li>
+              <span class="ri"><i class="fa-solid fa-tags"></i></span>
+              <div><h4>Жесткие ценовые войны</h4><p>Подгузники — товар-приманка: маркетплейсы демпингуют ниже себестоимости.</p></div>
+            </li>
+            <li>
+              <span class="ri"><i class="fa-solid fa-store-slash"></i></span>
+              <div><h4>Демпинг маркетплейсов</h4><p>Конкурировать ценой с Ozon и WB без масштаба закупок — путь к кассовому разрыву.</p></div>
+            </li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="roadmap reveal">
+        <div class="roadmap-step current">
+          <div class="q">0–6 мес · сейчас</div>
+          <div class="t">MVP: корм и наполнитель</div>
+          <div class="d">1 город, кошки и собаки, премиум-сегмент</div>
+        </div>
+        <div class="roadmap-step">
+          <div class="q">6–12 мес</div>
+          <div class="t">ИИ-прогноз + бренды</div>
+          <div class="d">Data-driven sampling, прямые контракты</div>
+        </div>
+        <div class="roadmap-step">
+          <div class="q">12–18 мес</div>
+          <div class="t">Бытовая химия</div>
+          <div class="d">Порошки, губки, бумага в ту же коробку</div>
+        </div>
+        <div class="roadmap-step">
+          <div class="q">18+ мес</div>
+          <div class="t">Товары для мам</div>
+          <div class="d">С отлаженной логистикой и данными</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 4. FAQ ================= -->
+  <section id="faq">
+    <div class="container faq-wrap">
+      <div class="faq-aside reveal">
+        <div class="section-head">
+          <div class="eyebrow">Для жюри</div>
+          <h2>Ответы на неудобные вопросы</h2>
+          <p>Честно о слабых местах модели и о том, как мы их закрываем.</p>
+        </div>
+        <div class="honesty">
+          <i class="fa-solid fa-shield-halved"></i>
+          <span>Мы специально вынесли риски в отдельный блок: сильный стартап знает свои уязвимости раньше инвестора.</span>
+        </div>
+      </div>
+
+      <div class="accordion reveal" id="accordion">
+
+        <div class="acc-item">
+          <button class="acc-trigger" aria-expanded="false" aria-controls="acc-1" id="acc-btn-1">
+            <span class="acc-num">01</span>
+            <span class="acc-q"><small>Конкуренция</small>Чем вы лучше Ozon и Самоката?</span>
+            <span class="acc-arrow"><i class="fa-solid fa-chevron-down"></i></span>
+          </button>
+          <div class="acc-panel" id="acc-1" role="region" aria-labelledby="acc-btn-1">
+            <div class="acc-body">
+              <p>Маркетплейсы продают <strong>товар</strong>, мы — <strong>автоматизацию потребления</strong>. У них нет стимула знать, когда закончится ваш корм: им выгодно, чтобы вы заходили и видели рекламу.</p>
+              <ul class="acc-points">
+                <li><i class="fa-solid fa-database"></i><span><b>Уникальные данные расхода семьи.</b> Мы знаем вес питомца, его рацион и реальный темп потребления — такой датасет не собирает ни один маркетплейс.</span></li>
+                <li><i class="fa-solid fa-microchip"></i><span><b>ИИ-прогнозирование.</b> Модель уточняет дату следующей коробки по фактическим пропускам и сдвигам — точность растет с каждым циклом.</span></li>
+                <li><i class="fa-solid fa-handshake"></i><span><b>Прямые контракты с брендами.</b> Data-driven sampling: бренды платят за точечную доставку пробников именно той аудитории, которая переключится на их продукт.</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-trigger" aria-expanded="false" aria-controls="acc-2" id="acc-btn-2">
+            <span class="acc-num">02</span>
+            <span class="acc-q"><small>Логистика</small>Доставка тяжелых товаров вас не разорит?</span>
+            <span class="acc-arrow"><i class="fa-solid fa-chevron-down"></i></span>
+          </button>
+          <div class="acc-panel" id="acc-2" role="region" aria-labelledby="acc-btn-2">
+            <div class="acc-body">
+              <p>Риск реальный: 15 кг дешевого корма могут съесть всю маржу. Поэтому мы <strong>сознательно ограничиваем ассортимент</strong> на старте.</p>
+              <ul class="acc-points">
+                <li><i class="fa-solid fa-ban"></i><span><b>Отказ от дешевых тяжелых позиций.</b> На старте — только премиум и суперпремиум корма, где маржа на килограмм покрывает логистику.</span></li>
+                <li><i class="fa-solid fa-route"></i><span><b>Кластеризация маршрутов на 2 недели вперед.</b> Мы заранее знаем, куда и когда поедет каждая коробка, и собираем плотные маршруты вместо срочных единичных доставок.</span></li>
+                <li><i class="fa-solid fa-truck-ramp-box"></i><span><b>Плановая, а не экспресс-доставка.</b> Никаких «за 15 минут» — клиенту важна надежность, а нам это дает дешевый слот доставки.</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-trigger" aria-expanded="false" aria-controls="acc-3" id="acc-btn-3">
+            <span class="acc-num">03</span>
+            <span class="acc-q"><small>Пользовательский опыт</small>Что, если у клиента скопятся запасы?</span>
+            <span class="acc-arrow"><i class="fa-solid fa-chevron-down"></i></span>
+          </button>
+          <div class="acc-panel" id="acc-3" role="region" aria-labelledby="acc-btn-3">
+            <div class="acc-body">
+              <p>Накопление запасов — главная причина отписок в подписочных сервисах. Мы <strong>даем контроль, не забирая автоматизацию</strong>.</p>
+              <ul class="acc-points">
+                <li><i class="fa-solid fa-bell"></i><span><b>Push-уведомление за 3 дня до отправки</b> с кнопками прямо в интерфейсе — никаких звонков в поддержку.</span></li>
+                <li><i class="fa-solid fa-forward"></i><span><b>«Пропустить месяц» и «Сдвинуть дату»</b> — одно нажатие, а ИИ учитывает это при следующем прогнозе.</span></li>
+              </ul>
+              <div class="push-demo" aria-label="Демо push-уведомления">
+                <div class="ph"><span class="app"><i class="fa-solid fa-box-open"></i></span> BoxFlow · сейчас</div>
+                <div class="pt">Коробка для Бакса уедет через 3 дня</div>
+                <div class="pd">Премиум-корм 12 кг · 5 890 ₽</div>
+                <div class="pb">
+                  <button type="button" data-push="skip"><i class="fa-solid fa-forward"></i> Пропустить месяц</button>
+                  <button type="button" data-push="shift"><i class="fa-regular fa-calendar"></i> Сдвинуть дату</button>
+                </div>
+                <div class="pr" id="pushResult" aria-live="polite"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-trigger" aria-expanded="false" aria-controls="acc-4" id="acc-btn-4">
+            <span class="acc-num">04</span>
+            <span class="acc-q"><small>CAPEX</small>Где склад? Без него вы не масштабируетесь</span>
+            <span class="acc-arrow"><i class="fa-solid fa-chevron-down"></i></span>
+          </button>
+          <div class="acc-panel" id="acc-4" role="region" aria-labelledby="acc-btn-4">
+            <div class="acc-body">
+              <p>Нам не нужен свой склад на старте. Мы работаем по <strong>Asset-Light модели</strong> — как технологическая надстройка.</p>
+              <ul class="acc-points">
+                <li><i class="fa-solid fa-plug"></i><span><b>Интеграция с готовым дистрибьютором по API.</b> Хранение и сборку коробок делает партнер, мы управляем спросом, данными и клиентом.</span></li>
+                <li><i class="fa-solid fa-coins"></i><span><b>Минимальный CAPEX.</b> Деньги идут в продукт и привлечение, а не в стеллажи и аренду.</span></li>
+                <li><i class="fa-solid fa-building"></i><span><b>B2B-монетизация.</b> Дистрибьютор получает гарантированный предсказуемый объем, бренды — аналитику и sampling. Это второй поток выручки.</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 5. ANALYTICS ================= -->
+  <section id="analytics">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="eyebrow">Аналитика</div>
+        <h2>Плюсы, минусы и динамика во времени</h2>
+        <p>Трезвая оценка модели: что работает на нас сразу, что мешает и как баланс сил меняется по мере роста.</p>
+      </div>
+
+      <div class="panels">
+        <article class="card panel pros reveal">
+          <div class="panel-head">
+            <div class="icon-box"><i class="fa-solid fa-thumbs-up"></i></div>
+            <div><h3>Ключевые преимущества</h3><p>Что делает модель сильной</p></div>
+          </div>
+          <div class="main-point">
+            <span class="tag">Главный плюс</span>
+            <h4>Высокий Retention и исключение конкурентов из цепочки выбора</h4>
+            <p>Клиент больше не сравнивает цены каждый месяц — повторная покупка происходит автоматически, без контакта с конкурентами.</p>
+          </div>
+          <ul class="point-list">
+            <li><i class="fa-solid fa-circle-check"></i><span><b>Предсказуемая выручка (MRR)</b> — удобно планировать закупки и финансирование.</span></li>
+            <li><i class="fa-solid fa-circle-check"></i><span><b>Точный прогноз спроса</b> — минимум неликвида и оптимальные закупки.</span></li>
+            <li><i class="fa-solid fa-circle-check"></i><span><b>Эмоциональная ценность</b> — забота о питомце без усилий.</span></li>
+            <li><i class="fa-solid fa-circle-check"></i><span><b>Два потока дохода</b> — B2C-подписка и B2B-данные для брендов.</span></li>
+          </ul>
+        </article>
+
+        <article class="card panel cons reveal">
+          <div class="panel-head">
+            <div class="icon-box danger"><i class="fa-solid fa-triangle-exclamation"></i></div>
+            <div><h3>Слабые стороны</h3><p>Что нужно преодолеть</p></div>
+          </div>
+          <div class="main-point">
+            <span class="tag">Главный риск</span>
+            <h4>Сложность первичного вовлечения и недоверие к автосписаниям</h4>
+            <p>Люди опасаются «подписочных ловушек» и неожиданных списаний с карты — первый шаг требует доверия.</p>
+          </div>
+          <ul class="point-list">
+            <li><i class="fa-solid fa-circle-xmark"></i><span><b>Высокий порог входа</b> — нужно заполнить профиль питомца.</span></li>
+            <li><i class="fa-solid fa-circle-xmark"></i><span><b>Страх автосписаний</b> — негативный опыт с другими подписками.</span></li>
+            <li><i class="fa-solid fa-circle-xmark"></i><span><b>Зависимость от партнера-дистрибьютора</b> на старте.</span></li>
+          </ul>
+          <div class="mitigation"><b><i class="fa-solid fa-wrench"></i> Как закрываем:</b> первая коробка со скидкой, отмена в 1 клик, push за 3 дня до каждого списания и прозрачная история платежей.</div>
+        </article>
+      </div>
+
+      <article class="card dynamics reveal" id="dynamics">
+        <div class="dynamics-head">
+          <div>
+            <h3>Динамика во времени</h3>
+            <p>Как меняются ключевые факторы по мере масштабирования</p>
+          </div>
+          <div class="timeline-axis"><span>Старт</span><span class="line"></span><span>Масштаб</span></div>
+        </div>
+        <div class="dyn-grid">
+          <div class="dyn-col better">
+            <h4><i class="fa-solid fa-arrow-trend-up"></i> Со временем станет лучше</h4>
+            <div class="dyn-row">
+              <span class="n">Эффект масштаба</span><span class="trend">↑ сильно</span>
+              <span class="s">Больше подписчиков — плотнее маршруты и ниже стоимость одной доставки</span>
+              <div class="dyn-bar"><span data-w="88%"></span></div>
+            </div>
+            <div class="dyn-row">
+              <span class="n">Закупочные цены</span><span class="trend">↓ падают</span>
+              <span class="s">Гарантированный объем дает скидки от брендов и дистрибьюторов</span>
+              <div class="dyn-bar"><span data-w="72%"></span></div>
+            </div>
+            <div class="dyn-row">
+              <span class="n">Точность данных AI</span><span class="trend">↑ растет</span>
+              <span class="s">Каждый цикл доставки дообучает модель прогноза расхода</span>
+              <div class="dyn-bar"><span data-w="92%"></span></div>
+            </div>
+            <div class="dyn-row">
+              <span class="n">Churn Rate</span><span class="trend">↓ падает</span>
+              <span class="s">Старые когорты становятся самыми лояльными — привычка закрепляется</span>
+              <div class="dyn-bar"><span data-w="78%"></span></div>
+            </div>
+          </div>
+          <div class="dyn-col worse">
+            <h4><i class="fa-solid fa-arrow-trend-down"></i> Со временем станет сложнее</h4>
+            <div class="dyn-row">
+              <span class="n">Рост CAC</span><span class="trend">↑ дороже</span>
+              <span class="s">Ранние адепты закончатся: массовый рынок сложнее и дороже убедить подписаться</span>
+              <div class="dyn-bar"><span data-w="70%"></span></div>
+            </div>
+            <div class="dyn-row">
+              <span class="n">Удержание фокуса</span><span class="trend">⚠ риск</span>
+              <span class="s">Соблазн быстро расширять категории может размыть продукт и ухудшить сервис</span>
+              <div class="dyn-bar"><span data-w="58%"></span></div>
+            </div>
+            <div class="dyn-row">
+              <span class="n">Реакция крупных игроков</span><span class="trend">↑ давление</span>
+              <span class="s">Успех модели привлечет внимание маркетплейсов — нужно быстро копить данные-преимущество</span>
+              <div class="dyn-bar"><span data-w="62%"></span></div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <div class="why-popular reveal">
+        <div>
+          <div class="eyebrow">Почему это взлетит</div>
+          <h3>Люди готовы платить за то, чтобы <span class="text-accent">не думать</span></h3>
+          <p>Подписки уже победили в музыке, кино и софте. Следующий шаг — физические товары ежедневного спроса. А питомцы — категория, на которой не экономят.</p>
+        </div>
+        <div class="trends">
+          <div class="trend-card">
+            <i class="fa-solid fa-robot"></i>
+            <h4>Автоматизация жизни</h4>
+            <p>Умный дом, автоплатежи, автоинвестиции — рутина уходит в фон.</p>
+          </div>
+          <div class="trend-card">
+            <i class="fa-regular fa-clock"></i>
+            <h4>Экономия времени</h4>
+            <p>Время стало самой дорогой валютой городского жителя.</p>
+          </div>
+          <div class="trend-card">
+            <i class="fa-solid fa-paw"></i>
+            <h4>Любовь к питомцам</h4>
+            <p>Питомец — член семьи: владельцы выбирают премиум и заботу.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 6. CALCULATOR ================= -->
+  <section id="calculator" class="calc-section">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="eyebrow">Интерактивный MVP</div>
+        <h2>Симулятор подписки BoxFlow</h2>
+        <p>Выберите питомца и его вес — алгоритм рассчитает суточную норму, цикл доставки и стоимость коробки в реальном времени.</p>
+      </div>
+
+      <div class="calc reveal">
+        <form class="calc-form" id="calcForm" onsubmit="return false;">
+          <h3>Профиль питомца</h3>
+          <p>Настройте один раз — дальше коробка приезжает сама.</p>
+
+          <div class="field">
+            <label class="field-label" for="petType">Категория питомца <span class="hint">премиум сухой корм</span></label>
+            <div class="pet-toggle" role="group" aria-label="Быстрый выбор питомца">
+              <button type="button" class="active" data-pet="dog"><i class="fa-solid fa-dog"></i> Собака</button>
+              <button type="button" data-pet="cat"><i class="fa-solid fa-cat"></i> Кошка</button>
+            </div>
+            <div class="select-wrap">
+              <select id="petType" name="petType">
+                <option value="dog" selected>Собака (Сухой премиум-корм)</option>
+                <option value="cat">Кошка (Сухой премиум-корм)</option>
+              </select>
+              <i class="fa-solid fa-chevron-down"></i>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="field-label">
+              <label for="weight">Вес животного</label>
+              <output class="weight-display" id="weightOut" for="weight">10 <small>кг</small></output>
+            </div>
+            <input type="range" id="weight" name="weight" min="1" max="50" step="1" value="10" aria-describedby="weightNote">
+            <div class="range-scale"><span>1 кг</span><span>25 кг</span><span>50 кг</span></div>
+            <div class="calc-note" id="weightNote" aria-live="polite"></div>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="frequency">Частота доставки</label>
+            <div class="select-wrap">
+              <select id="frequency" name="frequency">
+                <option value="ai" selected>Автоматически (ИИ-прогноз)</option>
+                <option value="30">Фиксированно: каждые 30 дней</option>
+                <option value="45">Фиксированно: каждые 45 дней</option>
+              </select>
+              <i class="fa-solid fa-chevron-down"></i>
+            </div>
+          </div>
+        </form>
+
+        <div class="calc-result" aria-live="polite">
+          <div class="rh">
+            <h3>Ваша подписка</h3>
+            <span class="mode-chip" id="modeChip"><i class="fa-solid fa-wand-magic-sparkles"></i> ИИ-режим</span>
+          </div>
+
+          <div class="result-tiles">
+            <div class="tile">
+              <div class="tile-label"><i class="fa-solid fa-arrows-rotate"></i> Цикл подписки</div>
+              <div class="tile-value" id="cycleOut">—</div>
+              <div class="tile-sub" id="cycleSub">—</div>
+            </div>
+            <div class="tile primary">
+              <div class="tile-label"><i class="fa-solid fa-box-open"></i> Стоимость коробки</div>
+              <div class="tile-value" id="priceOut">—</div>
+              <div class="tile-sub" id="priceSub">—</div>
+            </div>
+          </div>
+
+          <ul class="breakdown" id="breakdown">
+            <li><span>Суточная норма корма</span><b id="bDaily">—</b></li>
+            <li><span>Корма в коробке</span><b id="bKg">—</b></li>
+            <li><span>Корм (цена за кг × вес)</span><b id="bFood">—</b></li>
+            <li><span>Сервисный сбор</span><b id="bFee">—</b></li>
+            <li class="total"><span>В среднем в месяц</span><b id="bMonth">—</b></li>
+          </ul>
+
+          <div class="calc-foot"><i class="fa-solid fa-circle-info"></i> Расчет по метаболической формуле: норма ∝ вес<sup>0,75</sup>. Цены демонстрационные.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="final-cta">
+    <div class="container reveal">
+      <span class="badge"><span class="dot"></span> Готовы к пилоту</span>
+      <h2 style="margin-top:22px;">Настроил один раз — <span class="gradient-text">коробка приезжает сама</span></h2>
+      <p>BoxFlow превращает разовые покупки в предсказуемую подписочную выручку и возвращает клиентам время.</p>
+      <a href="#top" class="btn btn-ghost"><i class="fa-solid fa-arrow-up"></i> К началу презентации</a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container footer-inner">
+    <a href="#top" class="logo" style="font-size:1.1rem;">
+      <span class="logo-mark" style="width:30px;height:30px;font-size:0.8rem;"><i class="fa-solid fa-box-open"></i></span>
+      <span>Box<span class="flow">Flow</span></span>
+    </a>
+    <span>Pitch Deck MVP v1.0 · Бизнес-кейс умной автоподписки</span>
+  </div>
+</footer>
+
+<button class="to-top" id="toTop" aria-label="Наверх"><i class="fa-solid fa-arrow-up"></i></button>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---------- Navigation ---------- */
+  var nav = document.getElementById('nav');
+  var burger = document.getElementById('burger');
+  var navLinks = document.getElementById('navLinks');
+  var toTop = document.getElementById('toTop');
+
+  function onScroll() {
+    var y = window.scrollY || window.pageYOffset;
+    nav.classList.toggle('scrolled', y > 10);
+    toTop.classList.toggle('show', y > 700);
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  burger.addEventListener('click', function () {
+    var open = navLinks.classList.toggle('open');
+    burger.setAttribute('aria-expanded', String(open));
+    burger.innerHTML = open ? '<i class="fa-solid fa-xmark"></i>' : '<i class="fa-solid fa-bars"></i>';
+  });
+
+  navLinks.querySelectorAll('a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      navLinks.classList.remove('open');
+      burger.setAttribute('aria-expanded', 'false');
+      burger.innerHTML = '<i class="fa-solid fa-bars"></i>';
+    });
+  });
+
+  toTop.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  /* ---------- Reveal on scroll ---------- */
+  var revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var revealObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(function (el) { revealObserver.observe(el); });
+  } else {
+    revealEls.forEach(function (el) { el.classList.add('visible'); });
+  }
+
+  /* ---------- Hero progress bar ---------- */
+  var hvBar = document.getElementById('hvBar');
+  var hvPercent = document.getElementById('hvPercent');
+  setTimeout(function () {
+    var target = 64;
+    hvBar.style.width = target + '%';
+    var current = 0;
+    var timer = setInterval(function () {
+      current += 2;
+      if (current >= target) { current = target; clearInterval(timer); }
+      hvPercent.textContent = current + '%';
+    }, 28);
+  }, 500);
+
+  /* ---------- Dynamics bars ---------- */
+  var dynamics = document.getElementById('dynamics');
+  function fillDynBars() {
+    dynamics.querySelectorAll('.dyn-bar span').forEach(function (bar) {
+      bar.style.width = bar.getAttribute('data-w');
+    });
+  }
+  if ('IntersectionObserver' in window) {
+    var dynObserver = new IntersectionObserver(function (entries) {
+      if (entries[0].isIntersecting) { fillDynBars(); dynObserver.disconnect(); }
+    }, { threshold: 0.25 });
+    dynObserver.observe(dynamics);
+  } else {
+    fillDynBars();
+  }
+
+  /* ---------- Accordion ---------- */
+  var accItems = document.querySelectorAll('.acc-item');
+
+  function closeItem(item) {
+    var panel = item.querySelector('.acc-panel');
+    var trigger = item.querySelector('.acc-trigger');
+    panel.style.maxHeight = panel.scrollHeight + 'px';
+    requestAnimationFrame(function () { panel.style.maxHeight = '0px'; });
+    item.classList.remove('open');
+    trigger.setAttribute('aria-expanded', 'false');
+  }
+
+  function openItem(item) {
+    var panel = item.querySelector('.acc-panel');
+    var trigger = item.querySelector('.acc-trigger');
+    item.classList.add('open');
+    trigger.setAttribute('aria-expanded', 'true');
+    panel.style.maxHeight = panel.scrollHeight + 'px';
+  }
+
+  accItems.forEach(function (item) {
+    var trigger = item.querySelector('.acc-trigger');
+    trigger.addEventListener('click', function () {
+      var isOpen = item.classList.contains('open');
+      accItems.forEach(function (other) {
+        if (other !== item && other.classList.contains('open')) closeItem(other);
+      });
+      if (isOpen) { closeItem(item); } else { openItem(item); }
+    });
+  });
+
+  window.addEventListener('resize', function () {
+    document.querySelectorAll('.acc-item.open .acc-panel').forEach(function (panel) {
+      panel.style.maxHeight = panel.scrollHeight + 'px';
+    });
+  });
+
+  /* ---------- Push demo inside accordion ---------- */
+  var pushResult = document.getElementById('pushResult');
+  document.querySelectorAll('[data-push]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var action = btn.getAttribute('data-push');
+      var date = new Date();
+      if (action === 'skip') {
+        date.setDate(date.getDate() + 33);
+        pushResult.innerHTML = '<i class="fa-solid fa-check"></i> Месяц пропущен. Следующая коробка: ' + formatDate(date);
+      } else {
+        date.setDate(date.getDate() + 10);
+        pushResult.innerHTML = '<i class="fa-solid fa-check"></i> Дата сдвинута на +7 дней: ' + formatDate(date);
+      }
+      var openPanel = document.querySelector('.acc-item.open .acc-panel');
+      if (openPanel) openPanel.style.maxHeight = openPanel.scrollHeight + 'px';
+    });
+  });
+
+  function formatDate(d) {
+    return d.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long' });
+  }
+
+  /* ---------- Calculator ---------- */
+  var petSelect = document.getElementById('petType');
+  var petButtons = document.querySelectorAll('.pet-toggle button');
+  var weightInput = document.getElementById('weight');
+  var weightOut = document.getElementById('weightOut');
+  var weightNote = document.getElementById('weightNote');
+  var freqSelect = document.getElementById('frequency');
+  var modeChip = document.getElementById('modeChip');
+
+  var cycleOut = document.getElementById('cycleOut');
+  var cycleSub = document.getElementById('cycleSub');
+  var priceOut = document.getElementById('priceOut');
+  var priceSub = document.getElementById('priceSub');
+  var bDaily = document.getElementById('bDaily');
+  var bKg = document.getElementById('bKg');
+  var bFood = document.getElementById('bFood');
+  var bFee = document.getElementById('bFee');
+  var bMonth = document.getElementById('bMonth');
+
+  /*
+    Модель потребления:
+    - Суточная энергия (ккал) = коэффициент × вес^0.75 (метаболическая масса).
+      Собака: 110, кошка: 65 — средняя активность, взрослое животное.
+    - Калорийность премиум сухого корма: собака ~3700 ккал/кг, кошка ~3900 ккал/кг.
+    - Цена премиум корма за кг и доступные фасовки мешков.
+    - ИИ-режим: подбирает самую выгодную фасовку, которой хватит на 21–45 дней,
+      и дает скидку за оптимальный объем.
+  */
+  var PETS = {
+    dog: {
+      label: 'собаки',
+      kcalCoef: 110,
+      kcalPerKg: 3700,
+      pricePerKg: 690,
+      bags: [2, 4, 7, 12, 15, 20],
+      typicalMax: 50
+    },
+    cat: {
+      label: 'кошки',
+      kcalCoef: 65,
+      kcalPerKg: 3900,
+      pricePerKg: 980,
+      bags: [0.4, 1.5, 2, 4, 7, 10],
+      typicalMax: 12
+    }
+  };
+
+  var SERVICE_FEE = 149;
+  var AI_DISCOUNT = 0.07;
+  var AI_MIN_DAYS = 21;
+  var AI_MAX_DAYS = 45;
+  var DAYS_IN_MONTH = 30.4;
+
+  var rub = new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB', maximumFractionDigits: 0 });
+  var num1 = new Intl.NumberFormat('ru-RU', { maximumFractionDigits: 1 });
+
+  function pluralDays(n) {
+    var mod10 = n % 10;
+    var mod100 = n % 100;
+    if (mod10 === 1 && mod100 !== 11) return 'день';
+    if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return 'дня';
+    return 'дней';
+  }
+
+  function dailyFoodKg(pet, weight) {
+    var kcal = pet.kcalCoef * Math.pow(weight, 0.75);
+    return kcal / pet.kcalPerKg;
+  }
+
+  function pickAiBag(pet, daily) {
+    var best = null;
+    for (var i = pet.bags.length - 1; i >= 0; i--) {
+      var days = pet.bags[i] / daily;
+      if (days >= AI_MIN_DAYS && days <= AI_MAX_DAYS) { best = { kg: pet.bags[i], count: 1 }; break; }
+    }
+    if (best) return best;
+    var largest = pet.bags[pet.bags.length - 1];
+    if (largest / daily < AI_MIN_DAYS) {
+      var count = Math.ceil((daily * AI_MIN_DAYS) / largest);
+      while ((count * largest) / daily > AI_MAX_DAYS && count > 1) count--;
+      return { kg: largest * count, count: count };
+    }
+    return { kg: pet.bags[0], count: 1 };
+  }
+
+  function calculate() {
+    var petKey = petSelect.value;
+    var pet = PETS[petKey];
+    var weight = parseInt(weightInput.value, 10);
+    var freq = freqSelect.value;
+
+    var daily = dailyFoodKg(pet, weight);
+    var cycleDays, boxKg, foodCost, discount = 0, subText;
+
+    if (freq === 'ai') {
+      var bag = pickAiBag(pet, daily);
+      boxKg = bag.kg;
+      cycleDays = Math.max(7, Math.floor(boxKg / daily));
+      foodCost = boxKg * pet.pricePerKg;
+      discount = foodCost * AI_DISCOUNT;
+      subText = 'ИИ подобрал оптимальную фасовку ' + num1.format(boxKg) + ' кг' + (bag.count > 1 ? ' (' + bag.count + ' мешка)' : '');
+      modeChip.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles"></i> ИИ-режим · −7%';
+    } else {
+      cycleDays = parseInt(freq, 10);
+      boxKg = daily * cycleDays;
+      foodCost = boxKg * pet.pricePerKg;
+      subText = 'Фиксированный график, корм отмеряется точно по норме';
+      modeChip.innerHTML = '<i class="fa-regular fa-calendar"></i> Фиксированный график';
+    }
+
+    var boxPrice = Math.round(foodCost - discount + SERVICE_FEE);
+    var perMonth = Math.round(boxPrice * DAYS_IN_MONTH / cycleDays);
+
+    var next = new Date();
+    next.setDate(next.getDate() + cycleDays);
+
+    setValue(cycleOut, cycleDays + ' ' + pluralDays(cycleDays));
+    cycleSub.textContent = subText + ' · след. коробка ' + formatDate(next);
+    setValue(priceOut, rub.format(boxPrice));
+    priceSub.textContent = num1.format(boxKg) + ' кг премиум корма для ' + pet.label + ' + сервисный сбор';
+
+    bDaily.textContent = Math.round(daily * 1000) + ' г/день';
+    bKg.textContent = num1.format(boxKg) + ' кг';
+    bFood.textContent = rub.format(Math.round(foodCost - discount)) + (discount > 0 ? ' (−' + rub.format(Math.round(discount)) + ')' : '');
+    bFee.textContent = rub.format(SERVICE_FEE);
+    bMonth.textContent = rub.format(perMonth);
+
+    if (weight > pet.typicalMax) {
+      weightNote.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Нетипичный вес для кошки — рекомендуем консультацию ветеринара';
+    } else if (petKey === 'dog' && weight >= 40) {
+      weightNote.innerHTML = '<i class="fa-solid fa-circle-info"></i> Крупная порода: корм для гигантских пород в комплекте';
+    } else {
+      weightNote.textContent = '';
+    }
+  }
+
+  var lastValues = {};
+  function setValue(el, text) {
+    if (lastValues[el.id] === text) return;
+    lastValues[el.id] = text;
+    el.textContent = text;
+    el.classList.add('bump');
+    clearTimeout(el._bumpTimer);
+    el._bumpTimer = setTimeout(function () { el.classList.remove('bump'); }, 180);
+  }
+
+  function updateWeightUI() {
+    var v = parseInt(weightInput.value, 10);
+    var min = parseInt(weightInput.min, 10);
+    var max = parseInt(weightInput.max, 10);
+    var pct = ((v - min) / (max - min)) * 100;
+    weightInput.style.setProperty('--fill', pct + '%');
+    weightOut.innerHTML = v + ' <small>кг</small>';
+  }
+
+  function syncPetButtons() {
+    petButtons.forEach(function (b) {
+      b.classList.toggle('active', b.getAttribute('data-pet') === petSelect.value);
+    });
+  }
+
+  weightInput.addEventListener('input', function () {
+    updateWeightUI();
+    calculate();
+  });
+
+  petSelect.addEventListener('change', function () {
+    syncPetButtons();
+    if (petSelect.value === 'cat' && parseInt(weightInput.value, 10) > 12) {
+      weightInput.value = 4;
+      updateWeightUI();
+    }
+    calculate();
+  });
+
+  petButtons.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      petSelect.value = btn.getAttribute('data-pet');
+      petSelect.dispatchEvent(new Event('change'));
+    });
+  });
+
+  freqSelect.addEventListener('change', calculate);
+
+  updateWeightUI();
+  calculate();
+})();
+</script>
+</body>
+</html>
