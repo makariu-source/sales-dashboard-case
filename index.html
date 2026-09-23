@@ -696,169 +696,6 @@
   .roadmap-step.current { background: var(--accent-soft); }
   .roadmap-step.current .q { color: var(--accent); }
 
-  /* ---------- FAQ / ACCORDION ---------- */
-  .faq-wrap {
-    display: grid;
-    grid-template-columns: 0.8fr 1.2fr;
-    gap: 56px;
-    align-items: start;
-  }
-
-  .faq-aside { position: sticky; top: 110px; }
-  .faq-aside .section-head { margin-bottom: 28px; }
-
-  .honesty {
-    display: flex;
-    gap: 14px;
-    padding: 20px;
-    border-radius: 16px;
-    background: var(--card);
-    border: 1px dashed rgba(16,185,129,0.35);
-    color: var(--muted);
-    font-size: 0.92rem;
-  }
-
-  .honesty i { color: var(--accent); font-size: 1.2rem; margin-top: 2px; }
-
-  .accordion { display: grid; gap: 14px; }
-
-  .acc-item {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 18px;
-    overflow: hidden;
-    transition: border-color 0.3s var(--ease), box-shadow 0.3s var(--ease), transform 0.3s var(--ease);
-  }
-
-  .acc-item:hover { border-color: rgba(16,185,129,0.25); transform: translateY(-2px); }
-
-  .acc-item.open {
-    border-color: rgba(16,185,129,0.45);
-    box-shadow: 0 0 40px -14px var(--accent-glow);
-  }
-
-  .acc-trigger {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    padding: 22px 24px;
-    background: none;
-    border: none;
-    color: var(--text);
-    text-align: left;
-    cursor: pointer;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 1.08rem;
-    font-weight: 700;
-  }
-
-  .acc-num {
-    width: 38px;
-    height: 38px;
-    flex-shrink: 0;
-    border-radius: 10px;
-    display: grid;
-    place-items: center;
-    background: rgba(255,255,255,0.05);
-    color: var(--muted);
-    font-size: 0.85rem;
-    transition: all 0.3s var(--ease);
-  }
-
-  .acc-item.open .acc-num { background: var(--accent); color: #04130D; }
-
-  .acc-q { flex: 1; }
-  .acc-q small {
-    display: block;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.78rem;
-    color: var(--muted);
-    font-weight: 500;
-    letter-spacing: 0.04em;
-    margin-bottom: 2px;
-    text-transform: uppercase;
-  }
-
-  .acc-arrow {
-    width: 34px;
-    height: 34px;
-    flex-shrink: 0;
-    border-radius: 50%;
-    display: grid;
-    place-items: center;
-    border: 1px solid var(--border-strong);
-    color: var(--muted);
-    transition: transform 0.45s var(--ease), color 0.3s, border-color 0.3s, background 0.3s;
-  }
-
-  .acc-item.open .acc-arrow {
-    transform: rotate(180deg);
-    color: var(--accent);
-    border-color: rgba(16,185,129,0.5);
-    background: var(--accent-soft);
-  }
-
-  .acc-panel {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.5s var(--ease);
-  }
-
-  .acc-body {
-    padding: 0 24px 26px 80px;
-    color: var(--muted);
-  }
-
-  .acc-body p { margin-bottom: 14px; }
-  .acc-body p strong { color: var(--text); }
-
-  .acc-points { list-style: none; display: grid; gap: 10px; }
-
-  .acc-points li {
-    display: flex;
-    gap: 12px;
-    padding: 12px 14px;
-    background: rgba(255,255,255,0.025);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    font-size: 0.93rem;
-  }
-
-  .acc-points li i { color: var(--accent); margin-top: 4px; }
-  .acc-points li b { color: var(--text); font-weight: 600; }
-
-  .push-demo {
-    margin-top: 14px;
-    max-width: 380px;
-    background: #0E141F;
-    border: 1px solid var(--border-strong);
-    border-radius: 16px;
-    padding: 14px;
-  }
-
-  .push-demo .ph { display: flex; align-items: center; gap: 10px; font-size: 0.8rem; color: var(--muted); margin-bottom: 8px; }
-  .push-demo .ph .app { width: 22px; height: 22px; border-radius: 6px; background: var(--accent); color: #04130D; display: grid; place-items: center; font-size: 0.65rem; }
-  .push-demo .pt { color: var(--text); font-weight: 600; font-size: 0.92rem; }
-  .push-demo .pd { font-size: 0.86rem; margin: 2px 0 12px; }
-  .push-demo .pb { display: flex; gap: 8px; flex-wrap: wrap; }
-  .push-demo button {
-    flex: 1;
-    min-width: 120px;
-    padding: 9px 10px;
-    border-radius: 10px;
-    border: 1px solid var(--border-strong);
-    background: rgba(255,255,255,0.04);
-    color: var(--text);
-    font-size: 0.82rem;
-    font-weight: 600;
-    cursor: pointer;
-    font-family: inherit;
-    transition: all 0.25s var(--ease);
-  }
-  .push-demo button:hover { transform: translateY(-2px); border-color: var(--accent); color: var(--accent); }
-  .push-demo .pr { margin-top: 10px; font-size: 0.82rem; color: var(--accent); min-height: 1.2em; }
-
   /* ---------- ANALYTICS ---------- */
   .panels {
     display: grid;
@@ -1395,6 +1232,126 @@
 
   .calc-foot { margin-top: 16px; font-size: 0.78rem; color: var(--muted); display: flex; gap: 8px; }
 
+  .two-col { display: grid; grid-template-columns: 1fr; gap: 22px; }
+  .field-last { margin-bottom: 0; }
+
+  .breed-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+  .breed-card {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    text-align: left;
+    padding: 13px 14px;
+    border-radius: 12px;
+    border: 1px solid var(--border-strong);
+    background: rgba(255,255,255,0.03);
+    color: var(--text);
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.25s var(--ease);
+  }
+
+  .breed-card:hover { transform: translateY(-2px); border-color: rgba(16,185,129,0.4); }
+  .breed-card .breed-name { font-weight: 600; font-size: 0.92rem; display: flex; gap: 8px; align-items: baseline; }
+  .breed-card .breed-name i { color: var(--muted); font-size: 0.8rem; }
+  .breed-card .breed-meta { color: var(--muted); font-size: 0.78rem; }
+  .breed-card.active { background: var(--accent-soft); border-color: var(--accent); box-shadow: 0 0 20px -6px var(--accent-glow); }
+  .breed-card.active .breed-name, .breed-card.active .breed-name i { color: var(--accent); }
+
+  .segmented {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+    padding: 4px;
+    border-radius: 12px;
+    background: var(--bg-soft);
+    border: 1px solid var(--border-strong);
+  }
+
+  .segmented button {
+    padding: 10px 6px;
+    border-radius: 9px;
+    border: none;
+    background: transparent;
+    color: var(--muted);
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s var(--ease);
+  }
+
+  .segmented button:hover { color: var(--text); }
+  .segmented button.active { background: var(--accent); color: #04130D; box-shadow: 0 0 16px -4px var(--accent-glow); }
+
+  .addons { display: grid; gap: 10px; }
+
+  .addon {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 13px 14px;
+    border-radius: 12px;
+    border: 1px solid var(--border-strong);
+    background: rgba(255,255,255,0.03);
+    cursor: pointer;
+    transition: all 0.25s var(--ease);
+  }
+
+  .addon:hover { border-color: rgba(16,185,129,0.4); }
+  .addon:has(input:checked) { background: var(--accent-soft); border-color: rgba(16,185,129,0.5); }
+  .addon input { width: 18px; height: 18px; accent-color: var(--accent); flex-shrink: 0; cursor: pointer; }
+  .addon-icon { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: rgba(255,255,255,0.05); color: var(--accent); flex-shrink: 0; }
+  .addon-text { flex: 1; display: flex; flex-direction: column; font-size: 0.92rem; }
+  .addon-text small { color: var(--muted); font-size: 0.78rem; }
+  .addon-price { color: var(--muted); font-size: 0.82rem; white-space: nowrap; }
+
+  .ai-reason {
+    padding: 16px;
+    border-radius: 14px;
+    background: rgba(16,185,129,0.05);
+    border: 1px dashed rgba(16,185,129,0.35);
+    margin-bottom: 16px;
+  }
+
+  .ai-reason-title { font-weight: 600; font-size: 0.88rem; margin-bottom: 10px; display: flex; gap: 8px; align-items: center; }
+  .ai-reason-title i { color: var(--accent); }
+
+  .factor-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+
+  .fchip { font-size: 0.76rem; font-weight: 600; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--border-strong); color: var(--muted); }
+  .fchip.up { color: var(--warn); border-color: rgba(245,158,11,0.35); background: var(--warn-soft); }
+  .fchip.down { color: var(--accent); border-color: rgba(16,185,129,0.35); background: var(--accent-soft); }
+
+  .ai-food { font-size: 0.85rem; color: var(--muted); display: flex; gap: 8px; }
+  .ai-food i { color: var(--accent); margin-top: 3px; }
+
+  .mini-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 16px; }
+
+  .mini-stats div { padding: 12px; border-radius: 12px; background: var(--card); border: 1px solid var(--border); }
+  .mini-stats span { display: block; color: var(--muted); font-size: 0.76rem; }
+  .mini-stats b { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.05rem; white-space: nowrap; }
+
+  .schedule { margin-top: 16px; }
+  .schedule-title { font-size: 0.86rem; font-weight: 600; margin-bottom: 10px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .schedule-title i { color: var(--accent); }
+  .schedule-title span { color: var(--muted); font-weight: 400; font-size: 0.78rem; }
+  .schedule-list { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+
+  .sched {
+    padding: 10px;
+    border-radius: 10px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .sched:first-child { border-color: rgba(16,185,129,0.45); color: var(--accent); }
+  .sched small { display: block; color: var(--muted); font-weight: 400; font-size: 0.72rem; }
+
   /* ---------- FOOTER ---------- */
   .final-cta {
     text-align: center;
@@ -1449,8 +1406,6 @@
     .hero-visual { max-width: 560px; }
     .grid-3 { grid-template-columns: 1fr 1fr; }
     .grid-3 .value-card:last-child { grid-column: 1 / -1; }
-    .faq-wrap { grid-template-columns: 1fr; gap: 32px; }
-    .faq-aside { position: static; }
     .why-popular { grid-template-columns: 1fr; }
     .market-grid { grid-template-columns: 1fr; }
   }
@@ -1495,8 +1450,8 @@
     .stat { grid-template-columns: 1fr; gap: 2px; }
     .trends { grid-template-columns: 1fr; }
     .unit-kpis { grid-template-columns: 1fr 1fr; }
-    .acc-trigger { padding: 18px; gap: 12px; font-size: 0.98rem; }
-    .acc-body { padding: 0 18px 22px 18px; }
+    .schedule-list { grid-template-columns: 1fr 1fr; }
+    .mini-stats b { font-size: 0.95rem; }
     .hero-actions .btn { width: 100%; justify-content: center; }
     .hero-stats { gap: 22px; }
     .hv-float { right: 8px; bottom: -20px; }
@@ -1526,7 +1481,6 @@
     <ul class="nav-links" id="navLinks">
       <li><a href="#value">Ценность</a></li>
       <li><a href="#strategy">Стратегия MVP</a></li>
-      <li><a href="#faq">Вопросы жюри</a></li>
       <li><a href="#analytics">Аналитика</a></li>
       <li><a href="#calculator">Калькулятор</a></li>
     </ul>
@@ -1548,7 +1502,7 @@
         <p class="hero-sub">Мы продаем не доставку, а <strong>свободу от бытовой рутины</strong>. Настроил один раз — коробка приезжает сама.</p>
         <div class="hero-actions">
           <a href="#calculator" class="btn btn-primary">Посмотреть интерактивный MVP <i class="fa-solid fa-arrow-right"></i></a>
-          <a href="#faq" class="btn btn-ghost"><i class="fa-regular fa-circle-question"></i> Слабые места</a>
+          <a href="#analytics" class="btn btn-ghost"><i class="fa-solid fa-chart-line"></i> Экономика</a>
         </div>
         <div class="hero-stats">
           <div class="hero-stat">
@@ -1803,109 +1757,7 @@
     </div>
   </section>
 
-  <!-- ================= 4. FAQ ================= -->
-  <section id="faq">
-    <div class="container faq-wrap">
-      <div class="faq-aside reveal">
-        <div class="section-head">
-          <div class="eyebrow">Для жюри</div>
-          <h2>Ответы на неудобные вопросы</h2>
-          <p>Честно о слабых местах модели и о том, как мы их закрываем.</p>
-        </div>
-        <div class="honesty">
-          <i class="fa-solid fa-shield-halved"></i>
-          <span>Мы специально вынесли риски в отдельный блок: сильный стартап знает свои уязвимости раньше инвестора.</span>
-        </div>
-      </div>
-
-      <div class="accordion reveal" id="accordion">
-
-        <div class="acc-item">
-          <button class="acc-trigger" aria-expanded="false" aria-controls="acc-1" id="acc-btn-1">
-            <span class="acc-num">01</span>
-            <span class="acc-q"><small>Конкуренция</small>Чем вы лучше Ozon и Самоката?</span>
-            <span class="acc-arrow"><i class="fa-solid fa-chevron-down"></i></span>
-          </button>
-          <div class="acc-panel" id="acc-1" role="region" aria-labelledby="acc-btn-1">
-            <div class="acc-body">
-              <p>Маркетплейсы продают <strong>товар</strong>, мы — <strong>автоматизацию потребления</strong>. У них нет стимула знать, когда закончится ваш корм: им выгодно, чтобы вы заходили и видели рекламу.</p>
-              <ul class="acc-points">
-                <li><i class="fa-solid fa-database"></i><span><b>Уникальные данные расхода семьи.</b> Мы знаем вес питомца, его рацион и реальный темп потребления — такой датасет не собирает ни один маркетплейс.</span></li>
-                <li><i class="fa-solid fa-microchip"></i><span><b>ИИ-прогнозирование.</b> Модель уточняет дату следующей коробки по фактическим пропускам и сдвигам — точность растет с каждым циклом.</span></li>
-                <li><i class="fa-solid fa-handshake"></i><span><b>Прямые контракты с брендами.</b> Data-driven sampling: бренды платят за точечную доставку пробников именно той аудитории, которая переключится на их продукт.</span></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="acc-item">
-          <button class="acc-trigger" aria-expanded="false" aria-controls="acc-2" id="acc-btn-2">
-            <span class="acc-num">02</span>
-            <span class="acc-q"><small>Логистика</small>Доставка тяжелых товаров вас не разорит?</span>
-            <span class="acc-arrow"><i class="fa-solid fa-chevron-down"></i></span>
-          </button>
-          <div class="acc-panel" id="acc-2" role="region" aria-labelledby="acc-btn-2">
-            <div class="acc-body">
-              <p>Риск реальный: 15 кг дешевого корма могут съесть всю маржу. Поэтому мы <strong>сознательно ограничиваем ассортимент</strong> на старте.</p>
-              <ul class="acc-points">
-                <li><i class="fa-solid fa-ban"></i><span><b>Отказ от дешевых тяжелых позиций.</b> На старте — только премиум и суперпремиум корма, где маржа на килограмм покрывает логистику.</span></li>
-                <li><i class="fa-solid fa-route"></i><span><b>Кластеризация маршрутов на 2 недели вперед.</b> Мы заранее знаем, куда и когда поедет каждая коробка, и собираем плотные маршруты вместо срочных единичных доставок.</span></li>
-                <li><i class="fa-solid fa-truck-ramp-box"></i><span><b>Плановая, а не экспресс-доставка.</b> Никаких «за 15 минут» — клиенту важна надежность, а нам это дает дешевый слот доставки.</span></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="acc-item">
-          <button class="acc-trigger" aria-expanded="false" aria-controls="acc-3" id="acc-btn-3">
-            <span class="acc-num">03</span>
-            <span class="acc-q"><small>Пользовательский опыт</small>Что, если у клиента скопятся запасы?</span>
-            <span class="acc-arrow"><i class="fa-solid fa-chevron-down"></i></span>
-          </button>
-          <div class="acc-panel" id="acc-3" role="region" aria-labelledby="acc-btn-3">
-            <div class="acc-body">
-              <p>Накопление запасов — главная причина отписок в подписочных сервисах. Мы <strong>даем контроль, не забирая автоматизацию</strong>.</p>
-              <ul class="acc-points">
-                <li><i class="fa-solid fa-bell"></i><span><b>Push-уведомление за 3 дня до отправки</b> с кнопками прямо в интерфейсе — никаких звонков в поддержку.</span></li>
-                <li><i class="fa-solid fa-forward"></i><span><b>«Пропустить месяц» и «Сдвинуть дату»</b> — одно нажатие, а ИИ учитывает это при следующем прогнозе.</span></li>
-              </ul>
-              <div class="push-demo" aria-label="Демо push-уведомления">
-                <div class="ph"><span class="app"><i class="fa-solid fa-box-open"></i></span> ЗооБокс · сейчас</div>
-                <div class="pt">Коробка для Бакса уедет через 3 дня</div>
-                <div class="pd">Премиум-корм 12 кг · 5 890 ₽</div>
-                <div class="pb">
-                  <button type="button" data-push="skip"><i class="fa-solid fa-forward"></i> Пропустить месяц</button>
-                  <button type="button" data-push="shift"><i class="fa-regular fa-calendar"></i> Сдвинуть дату</button>
-                </div>
-                <div class="pr" id="pushResult" aria-live="polite"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="acc-item">
-          <button class="acc-trigger" aria-expanded="false" aria-controls="acc-4" id="acc-btn-4">
-            <span class="acc-num">04</span>
-            <span class="acc-q"><small>CAPEX</small>Где склад? Без него вы не масштабируетесь</span>
-            <span class="acc-arrow"><i class="fa-solid fa-chevron-down"></i></span>
-          </button>
-          <div class="acc-panel" id="acc-4" role="region" aria-labelledby="acc-btn-4">
-            <div class="acc-body">
-              <p>Нам не нужен свой склад на старте. Мы работаем по <strong>Asset-Light модели</strong> — как технологическая надстройка.</p>
-              <ul class="acc-points">
-                <li><i class="fa-solid fa-plug"></i><span><b>Интеграция с готовым дистрибьютором по API.</b> Хранение и сборку коробок делает партнер, мы управляем спросом, данными и клиентом.</span></li>
-                <li><i class="fa-solid fa-coins"></i><span><b>Минимальный CAPEX.</b> Деньги идут в продукт и привлечение, а не в стеллажи и аренду.</span></li>
-                <li><i class="fa-solid fa-building"></i><span><b>B2B-монетизация.</b> Дистрибьютор получает гарантированный предсказуемый объем, бренды — аналитику и sampling. Это второй поток выручки.</span></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= 5. ANALYTICS ================= -->
+  <!-- ================= 4. ANALYTICS ================= -->
   <section id="analytics">
     <div class="container">
       <div class="section-head reveal">
@@ -2079,13 +1931,13 @@
     </div>
   </section>
 
-  <!-- ================= 6. CALCULATOR ================= -->
+  <!-- ================= 5. CALCULATOR ================= -->
   <section id="calculator" class="calc-section">
     <div class="container">
       <div class="section-head reveal">
         <div class="eyebrow">Интерактивный MVP</div>
         <h2>Симулятор подписки ЗооБокс</h2>
-        <p>Выберите питомца и его вес — алгоритм рассчитает суточную норму, цикл доставки и стоимость коробки в реальном времени.</p>
+        <p>Выберите питомца, породу, возраст и вес. ИИ рассчитает суточную норму, подберет корм под породу, цикл доставки и стоимость коробки в реальном времени.</p>
       </div>
 
       <div class="calc reveal">
@@ -2109,12 +1961,36 @@
           </div>
 
           <div class="field">
+            <div class="field-label"><span id="breedLabel">Порода</span> <span class="hint">топ-3 популярных в России</span></div>
+            <div class="breed-grid" id="breedGrid" role="radiogroup" aria-labelledby="breedLabel"></div>
+          </div>
+
+          <div class="field two-col">
+            <div>
+              <div class="field-label"><span id="ageLabel">Возраст</span></div>
+              <div class="segmented" id="ageGroup" role="radiogroup" aria-labelledby="ageLabel">
+                <button type="button" role="radio" aria-checked="false" data-value="young" id="ageYoung">Щенок</button>
+                <button type="button" role="radio" aria-checked="true" data-value="adult" class="active">Взрослый</button>
+                <button type="button" role="radio" aria-checked="false" data-value="senior">7+ лет</button>
+              </div>
+            </div>
+            <div>
+              <div class="field-label"><span id="activityLabel">Активность</span></div>
+              <div class="segmented" id="activityGroup" role="radiogroup" aria-labelledby="activityLabel">
+                <button type="button" role="radio" aria-checked="false" data-value="low">Низкая</button>
+                <button type="button" role="radio" aria-checked="true" data-value="normal" class="active">Средняя</button>
+                <button type="button" role="radio" aria-checked="false" data-value="high">Высокая</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
             <div class="field-label">
               <label for="weight">Вес животного</label>
-              <output class="weight-display" id="weightOut" for="weight">10 <small>кг</small></output>
+              <output class="weight-display" id="weightOut" for="weight">30 <small>кг</small></output>
             </div>
-            <input type="range" id="weight" name="weight" min="1" max="50" step="1" value="10" aria-describedby="weightNote">
-            <div class="range-scale"><span>1 кг</span><span>25 кг</span><span>50 кг</span></div>
+            <input type="range" id="weight" name="weight" min="1" max="50" step="1" value="30" aria-describedby="weightNote">
+            <div class="range-scale"><span>1 кг</span><span id="breedRange">норма породы: 25–36 кг</span><span>50 кг</span></div>
             <div class="calc-note" id="weightNote" aria-live="polite"></div>
           </div>
 
@@ -2127,6 +2003,24 @@
                 <option value="45">Фиксированно: каждые 45 дней</option>
               </select>
               <i class="fa-solid fa-chevron-down"></i>
+            </div>
+          </div>
+
+          <div class="field field-last">
+            <div class="field-label"><span>Добавить в коробку</span></div>
+            <div class="addons">
+              <label class="addon" id="fillerWrap">
+                <input type="checkbox" id="addonFiller" checked>
+                <span class="addon-icon"><i class="fa-solid fa-box"></i></span>
+                <span class="addon-text"><b>Наполнитель</b><small id="fillerDesc">комкующийся, по расходу</small></span>
+                <span class="addon-price" id="fillerPrice"></span>
+              </label>
+              <label class="addon">
+                <input type="checkbox" id="addonTreats">
+                <span class="addon-icon"><i class="fa-solid fa-bone"></i></span>
+                <span class="addon-text"><b>Лакомства</b><small>подобраны под породу</small></span>
+                <span class="addon-price" id="treatsPrice"></span>
+              </label>
             </div>
           </div>
         </form>
@@ -2150,15 +2044,34 @@
             </div>
           </div>
 
+          <div class="ai-reason">
+            <div class="ai-reason-title"><i class="fa-solid fa-wand-magic-sparkles"></i> Как ИИ посчитал</div>
+            <div class="factor-chips" id="factorChips"></div>
+            <p class="ai-food"><i class="fa-solid fa-bowl-food"></i> <span id="aiFood">—</span></p>
+          </div>
+
           <ul class="breakdown" id="breakdown">
             <li><span>Суточная норма корма</span><b id="bDaily">—</b></li>
             <li><span>Корма в коробке</span><b id="bKg">—</b></li>
             <li><span>Корм (цена за кг × вес)</span><b id="bFood">—</b></li>
+            <li id="rowFiller"><span>Наполнитель</span><b id="bFiller">—</b></li>
+            <li id="rowTreats"><span>Лакомства</span><b id="bTreats">—</b></li>
             <li><span>Сервисный сбор</span><b id="bFee">—</b></li>
             <li class="total"><span>В среднем в месяц</span><b id="bMonth">—</b></li>
           </ul>
 
-          <div class="calc-foot"><i class="fa-solid fa-circle-info"></i> Расчет по метаболической формуле: норма ∝ вес<sup>0,75</sup>. Цены демонстрационные.</div>
+          <div class="mini-stats">
+            <div><span>Доставок в год</span><b id="sDeliveries">—</b></div>
+            <div><span id="sSavingLabel">Экономия в год</span><b id="sSaving">—</b></div>
+            <div><span>Время в год</span><b>≈ 18 ч</b></div>
+          </div>
+
+          <div class="schedule">
+            <div class="schedule-title"><i class="fa-regular fa-calendar"></i> Ближайшие доставки <span>push за 3 дня до каждой</span></div>
+            <div class="schedule-list" id="schedule"></div>
+          </div>
+
+          <div class="calc-foot"><i class="fa-solid fa-circle-info"></i> <span>Норма ∝ вес<sup>0,75</sup> × коэффициенты породы, возраста и активности. «Время в год»: 27 покупок корма в год (РОМИР) × ~40 минут. Цены демонстрационные.</span></div>
         </div>
       </div>
     </div>
@@ -2269,117 +2182,161 @@
     fillDynBars();
   }
 
-  /* ---------- Accordion ---------- */
-  var accItems = document.querySelectorAll('.acc-item');
-
-  function closeItem(item) {
-    var panel = item.querySelector('.acc-panel');
-    var trigger = item.querySelector('.acc-trigger');
-    panel.style.maxHeight = panel.scrollHeight + 'px';
-    requestAnimationFrame(function () { panel.style.maxHeight = '0px'; });
-    item.classList.remove('open');
-    trigger.setAttribute('aria-expanded', 'false');
-  }
-
-  function openItem(item) {
-    var panel = item.querySelector('.acc-panel');
-    var trigger = item.querySelector('.acc-trigger');
-    item.classList.add('open');
-    trigger.setAttribute('aria-expanded', 'true');
-    panel.style.maxHeight = panel.scrollHeight + 'px';
-  }
-
-  accItems.forEach(function (item) {
-    var trigger = item.querySelector('.acc-trigger');
-    trigger.addEventListener('click', function () {
-      var isOpen = item.classList.contains('open');
-      accItems.forEach(function (other) {
-        if (other !== item && other.classList.contains('open')) closeItem(other);
-      });
-      if (isOpen) { closeItem(item); } else { openItem(item); }
-    });
-  });
-
-  window.addEventListener('resize', function () {
-    document.querySelectorAll('.acc-item.open .acc-panel').forEach(function (panel) {
-      panel.style.maxHeight = panel.scrollHeight + 'px';
-    });
-  });
-
-  /* ---------- Push demo inside accordion ---------- */
-  var pushResult = document.getElementById('pushResult');
-  document.querySelectorAll('[data-push]').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      var action = btn.getAttribute('data-push');
-      var date = new Date();
-      if (action === 'skip') {
-        date.setDate(date.getDate() + 33);
-        pushResult.innerHTML = '<i class="fa-solid fa-check"></i> Месяц пропущен. Следующая коробка: ' + formatDate(date);
-      } else {
-        date.setDate(date.getDate() + 10);
-        pushResult.innerHTML = '<i class="fa-solid fa-check"></i> Дата сдвинута на +7 дней: ' + formatDate(date);
-      }
-      var openPanel = document.querySelector('.acc-item.open .acc-panel');
-      if (openPanel) openPanel.style.maxHeight = openPanel.scrollHeight + 'px';
-    });
-  });
-
+  /* ---------- Calculator ---------- */
   function formatDate(d) {
     return d.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long' });
   }
 
-  /* ---------- Calculator ---------- */
   var petSelect = document.getElementById('petType');
   var petButtons = document.querySelectorAll('.pet-toggle button');
+  var breedGrid = document.getElementById('breedGrid');
+  var ageGroup = document.getElementById('ageGroup');
+  var ageYoung = document.getElementById('ageYoung');
+  var activityGroup = document.getElementById('activityGroup');
   var weightInput = document.getElementById('weight');
   var weightOut = document.getElementById('weightOut');
   var weightNote = document.getElementById('weightNote');
+  var breedRange = document.getElementById('breedRange');
   var freqSelect = document.getElementById('frequency');
+  var addonFiller = document.getElementById('addonFiller');
+  var addonTreats = document.getElementById('addonTreats');
+  var fillerWrap = document.getElementById('fillerWrap');
+  var fillerDesc = document.getElementById('fillerDesc');
+  var fillerPrice = document.getElementById('fillerPrice');
+  var treatsPrice = document.getElementById('treatsPrice');
   var modeChip = document.getElementById('modeChip');
 
   var cycleOut = document.getElementById('cycleOut');
   var cycleSub = document.getElementById('cycleSub');
   var priceOut = document.getElementById('priceOut');
   var priceSub = document.getElementById('priceSub');
+  var factorChips = document.getElementById('factorChips');
+  var aiFood = document.getElementById('aiFood');
   var bDaily = document.getElementById('bDaily');
   var bKg = document.getElementById('bKg');
   var bFood = document.getElementById('bFood');
+  var bFiller = document.getElementById('bFiller');
+  var bTreats = document.getElementById('bTreats');
+  var rowFiller = document.getElementById('rowFiller');
+  var rowTreats = document.getElementById('rowTreats');
   var bFee = document.getElementById('bFee');
   var bMonth = document.getElementById('bMonth');
+  var sDeliveries = document.getElementById('sDeliveries');
+  var sSaving = document.getElementById('sSaving');
+  var sSavingLabel = document.getElementById('sSavingLabel');
+  var scheduleEl = document.getElementById('schedule');
 
   /*
     Модель потребления:
-    - Суточная энергия (ккал) = коэффициент × вес^0.75 (метаболическая масса).
-      Собака: 110, кошка: 65 — средняя активность, взрослое животное.
+    - Суточная энергия (ккал) = коэффициент вида × вес^0.75 (метаболическая масса)
+      × коэффициент породы × коэффициент возраста × коэффициент активности.
     - Калорийность премиум сухого корма: собака ~3700 ккал/кг, кошка ~3900 ккал/кг.
-    - Цена премиум корма за кг и доступные фасовки мешков.
-    - ИИ-режим: подбирает самую выгодную фасовку, которой хватит на 21–45 дней,
+    - Порода меняет норму, линейку корма (и цену за кг) и размер фасовок.
+    - ИИ-режим: подбирает самую выгодную фасовку, которой хватит на 21–45 дней
+      (для растущих питомцев — до 30 дней, т.к. норма меняется каждый месяц),
       и дает скидку за оптимальный объем.
   */
   var PETS = {
     dog: {
       label: 'собаки',
+      youngLabel: 'Щенок',
       kcalCoef: 110,
       kcalPerKg: 3700,
       pricePerKg: 690,
-      bags: [2, 4, 7, 12, 15, 20],
-      typicalMax: 50
+      treatsPerMonth: 390,
+      icon: 'fa-dog',
+      breeds: [
+        {
+          id: 'labrador', name: 'Лабрадор-ретривер', min: 25, max: 36, def: 30,
+          factor: 0.9, priceMult: 1.05, bags: [3, 7, 12, 15],
+          tag: 'склонен к полноте',
+          food: 'корм для крупных пород с L-карнитином для контроля веса',
+          reason: 'Порода −10%'
+        },
+        {
+          id: 'shepherd', name: 'Немецкая овчарка', min: 22, max: 40, def: 32,
+          factor: 1.1, priceMult: 1.1, bags: [3, 7, 12, 15],
+          tag: 'рабочая порода',
+          food: 'корм для активных крупных пород с глюкозамином для суставов',
+          reason: 'Порода +10%'
+        },
+        {
+          id: 'yorkie', name: 'Йоркширский терьер', min: 2, max: 4, def: 3,
+          factor: 1.15, priceMult: 1.2, bags: [0.5, 1.5, 3],
+          tag: 'мини-порода',
+          food: 'корм для мини-пород: мелкая гранула и забота о зубах',
+          reason: 'Порода +15%'
+        },
+        {
+          id: 'mixed', name: 'Метис / другая', min: 1, max: 50, def: 15,
+          factor: 1, priceMult: 1, bags: [2, 4, 7, 12, 15, 20],
+          tag: 'стандартная норма',
+          food: 'сбалансированный корм для собак, размер гранулы по весу',
+          reason: 'Порода: стандарт'
+        }
+      ]
     },
     cat: {
       label: 'кошки',
+      youngLabel: 'Котенок',
       kcalCoef: 65,
       kcalPerKg: 3900,
       pricePerKg: 980,
-      bags: [0.4, 1.5, 2, 4, 7, 10],
-      typicalMax: 12
+      treatsPerMonth: 290,
+      fillerKgPerMonth: 4.5,
+      fillerPricePerKg: 95,
+      icon: 'fa-cat',
+      breeds: [
+        {
+          id: 'british', name: 'Британская короткошерстная', min: 4, max: 8, def: 5,
+          factor: 0.9, priceMult: 1.05, fillerMult: 1, bags: [0.4, 2, 4, 10],
+          tag: 'малоактивная',
+          food: 'корм для британцев: контроль веса и здоровье шерсти',
+          reason: 'Порода −10%'
+        },
+        {
+          id: 'scottish', name: 'Шотландская вислоухая', min: 3, max: 6, def: 4,
+          factor: 0.95, priceMult: 1.12, fillerMult: 1, bags: [0.4, 2, 4, 10],
+          tag: 'чувствительные суставы',
+          food: 'корм с глюкозамином и хондроитином для суставов',
+          reason: 'Порода −5%'
+        },
+        {
+          id: 'mainecoon', name: 'Мейн-кун', min: 6, max: 12, def: 8,
+          factor: 1.1, priceMult: 1.1, fillerMult: 1.3, bags: [2, 3, 4, 10],
+          tag: 'крупная порода',
+          food: 'корм для крупных кошек: крупная гранула и поддержка сердца',
+          reason: 'Порода +10%'
+        },
+        {
+          id: 'other', name: 'Беспородная / другая', min: 2, max: 8, def: 4,
+          factor: 1, priceMult: 1, fillerMult: 1, bags: [0.4, 1.5, 2, 4, 7, 10],
+          tag: 'стандартная норма',
+          food: 'сбалансированный корм для взрослых кошек',
+          reason: 'Порода: стандарт'
+        }
+      ]
     }
+  };
+
+  var AGES = {
+    young: { factor: 1.5, maxDays: 30, chip: 'Растущий организм +50%' },
+    adult: { factor: 1, maxDays: 45, chip: '' },
+    senior: { factor: 0.85, maxDays: 45, chip: 'Возраст 7+ −15%' }
+  };
+
+  var ACTIVITY = {
+    low: { factor: 0.85, chip: 'Низкая активность −15%' },
+    normal: { factor: 1, chip: '' },
+    high: { factor: 1.2, chip: 'Высокая активность +20%' }
   };
 
   var SERVICE_FEE = 149;
   var AI_DISCOUNT = 0.07;
   var AI_MIN_DAYS = 21;
-  var AI_MAX_DAYS = 45;
   var DAYS_IN_MONTH = 30.4;
+
+  var state = { pet: 'dog', breed: 'labrador', age: 'adult', activity: 'normal' };
 
   var rub = new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB', maximumFractionDigits: 0 });
   var num1 = new Intl.NumberFormat('ru-RU', { maximumFractionDigits: 1 });
@@ -2392,73 +2349,218 @@
     return 'дней';
   }
 
-  function dailyFoodKg(pet, weight) {
-    var kcal = pet.kcalCoef * Math.pow(weight, 0.75);
-    return kcal / pet.kcalPerKg;
+  function pluralBags(n) {
+    var mod10 = n % 10;
+    var mod100 = n % 100;
+    if (mod10 === 1 && mod100 !== 11) return 'мешок';
+    if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return 'мешка';
+    return 'мешков';
   }
 
-  function pickAiBag(pet, daily) {
-    var best = null;
-    for (var i = pet.bags.length - 1; i >= 0; i--) {
-      var days = pet.bags[i] / daily;
-      if (days >= AI_MIN_DAYS && days <= AI_MAX_DAYS) { best = { kg: pet.bags[i], count: 1 }; break; }
+  function currentBreed() {
+    var list = PETS[state.pet].breeds;
+    for (var i = 0; i < list.length; i++) {
+      if (list[i].id === state.breed) return list[i];
     }
-    if (best) return best;
-    var largest = pet.bags[pet.bags.length - 1];
+    return list[0];
+  }
+
+  function pickAiBag(bags, daily, maxDays) {
+    for (var i = bags.length - 1; i >= 0; i--) {
+      var days = bags[i] / daily;
+      if (days >= AI_MIN_DAYS && days <= maxDays) return { kg: bags[i], count: 1 };
+    }
+    var largest = bags[bags.length - 1];
     if (largest / daily < AI_MIN_DAYS) {
       var count = Math.ceil((daily * AI_MIN_DAYS) / largest);
-      while ((count * largest) / daily > AI_MAX_DAYS && count > 1) count--;
+      while ((count * largest) / daily > maxDays && count > 1) count--;
       return { kg: largest * count, count: count };
     }
-    return { kg: pet.bags[0], count: 1 };
+    for (var j = 0; j < bags.length; j++) {
+      if (bags[j] / daily >= AI_MIN_DAYS) return { kg: bags[j], count: 1 };
+    }
+    return { kg: bags[0], count: 1 };
+  }
+
+  function scenario(freq) {
+    var pet = PETS[state.pet];
+    var breed = currentBreed();
+    var age = AGES[state.age];
+    var act = ACTIVITY[state.activity];
+    var weight = parseInt(weightInput.value, 10);
+
+    var kcal = pet.kcalCoef * Math.pow(weight, 0.75) * breed.factor * age.factor * act.factor;
+    var daily = kcal / pet.kcalPerKg;
+    var pricePerKg = pet.pricePerKg * breed.priceMult;
+    var r = { daily: daily, pricePerKg: pricePerKg, discount: 0, bagCount: 1 };
+
+    if (freq === 'ai') {
+      var bag = pickAiBag(breed.bags, daily, age.maxDays);
+      r.boxKg = bag.kg;
+      r.bagCount = bag.count;
+      r.bagSize = bag.kg / bag.count;
+      r.cycle = Math.max(7, Math.floor(r.boxKg / daily));
+      r.food = r.boxKg * pricePerKg;
+      r.discount = r.food * AI_DISCOUNT;
+    } else {
+      r.cycle = parseInt(freq, 10);
+      r.boxKg = daily * r.cycle;
+      r.food = r.boxKg * pricePerKg;
+    }
+
+    r.fillerKg = 0;
+    r.filler = 0;
+    if (state.pet === 'cat' && addonFiller.checked) {
+      r.fillerKg = pet.fillerKgPerMonth * breed.fillerMult / DAYS_IN_MONTH * r.cycle;
+      r.filler = r.fillerKg * pet.fillerPricePerKg;
+    }
+    r.treats = addonTreats.checked ? pet.treatsPerMonth / DAYS_IN_MONTH * r.cycle : 0;
+
+    r.box = Math.round(r.food - r.discount + r.filler + r.treats + SERVICE_FEE);
+    r.monthly = r.box * DAYS_IN_MONTH / r.cycle;
+    r.perYear = 365 / r.cycle;
+    return r;
+  }
+
+  function renderBreeds() {
+    var pet = PETS[state.pet];
+    breedGrid.innerHTML = '';
+    pet.breeds.forEach(function (b) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'breed-card' + (b.id === state.breed ? ' active' : '');
+      btn.setAttribute('role', 'radio');
+      btn.setAttribute('aria-checked', b.id === state.breed ? 'true' : 'false');
+      btn.setAttribute('data-breed', b.id);
+      btn.innerHTML =
+        '<span class="breed-name"><i class="fa-solid ' + pet.icon + '"></i> ' + b.name + '</span>' +
+        '<span class="breed-meta">' + (b.id === 'mixed' || b.id === 'other' ? 'любой вес' : b.min + '–' + b.max + ' кг') + ' · ' + b.tag + '</span>';
+      btn.addEventListener('click', function () { selectBreed(b.id, true); });
+      breedGrid.appendChild(btn);
+    });
+  }
+
+  function selectBreed(id, resetWeight) {
+    state.breed = id;
+    var breed = currentBreed();
+    breedGrid.querySelectorAll('.breed-card').forEach(function (c) {
+      var on = c.getAttribute('data-breed') === id;
+      c.classList.toggle('active', on);
+      c.setAttribute('aria-checked', on ? 'true' : 'false');
+    });
+    if (resetWeight) {
+      weightInput.value = breed.def;
+      updateWeightUI();
+    }
+    breedRange.textContent = (breed.id === 'mixed' || breed.id === 'other')
+      ? 'норма породы: любой вес'
+      : 'норма породы: ' + breed.min + '–' + breed.max + ' кг';
+    calculate();
+  }
+
+  function setupSegmented(group, key) {
+    group.querySelectorAll('button').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        state[key] = btn.getAttribute('data-value');
+        group.querySelectorAll('button').forEach(function (b) {
+          var on = b === btn;
+          b.classList.toggle('active', on);
+          b.setAttribute('aria-checked', on ? 'true' : 'false');
+        });
+        calculate();
+      });
+    });
+  }
+
+  function chip(text, kind) {
+    return '<span class="fchip ' + kind + '">' + text + '</span>';
   }
 
   function calculate() {
-    var petKey = petSelect.value;
-    var pet = PETS[petKey];
-    var weight = parseInt(weightInput.value, 10);
+    var pet = PETS[state.pet];
+    var breed = currentBreed();
     var freq = freqSelect.value;
+    var weight = parseInt(weightInput.value, 10);
+    var cur = scenario(freq);
+    var ai = freq === 'ai' ? cur : scenario('ai');
 
-    var daily = dailyFoodKg(pet, weight);
-    var cycleDays, boxKg, foodCost, discount = 0, subText;
+    var next = new Date();
+    next.setDate(next.getDate() + cur.cycle);
 
+    var subText;
     if (freq === 'ai') {
-      var bag = pickAiBag(pet, daily);
-      boxKg = bag.kg;
-      cycleDays = Math.max(7, Math.floor(boxKg / daily));
-      foodCost = boxKg * pet.pricePerKg;
-      discount = foodCost * AI_DISCOUNT;
-      subText = 'ИИ подобрал оптимальную фасовку ' + num1.format(boxKg) + ' кг' + (bag.count > 1 ? ' (' + bag.count + ' мешка)' : '');
+      subText = 'ИИ подобрал фасовку ' + num1.format(cur.boxKg) + ' кг' +
+        (cur.bagCount > 1 ? ' (' + cur.bagCount + ' ' + pluralBags(cur.bagCount) + ' по ' + num1.format(cur.bagSize) + ' кг)' : '');
       modeChip.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles"></i> ИИ-режим · −7%';
     } else {
-      cycleDays = parseInt(freq, 10);
-      boxKg = daily * cycleDays;
-      foodCost = boxKg * pet.pricePerKg;
       subText = 'Фиксированный график, корм отмеряется точно по норме';
       modeChip.innerHTML = '<i class="fa-regular fa-calendar"></i> Фиксированный график';
     }
 
-    var boxPrice = Math.round(foodCost - discount + SERVICE_FEE);
-    var perMonth = Math.round(boxPrice * DAYS_IN_MONTH / cycleDays);
-
-    var next = new Date();
-    next.setDate(next.getDate() + cycleDays);
-
-    setValue(cycleOut, cycleDays + ' ' + pluralDays(cycleDays));
+    setValue(cycleOut, cur.cycle + ' ' + pluralDays(cur.cycle));
     cycleSub.textContent = subText + ' · след. коробка ' + formatDate(next);
-    setValue(priceOut, rub.format(boxPrice));
-    priceSub.textContent = num1.format(boxKg) + ' кг премиум корма для ' + pet.label + ' + сервисный сбор';
+    setValue(priceOut, rub.format(cur.box));
+    var parts = [num1.format(cur.boxKg) + ' кг корма'];
+    if (cur.filler > 0) parts.push(num1.format(cur.fillerKg) + ' кг наполнителя');
+    if (cur.treats > 0) parts.push('лакомства');
+    priceSub.textContent = parts.join(' + ') + ' + сервисный сбор';
 
-    bDaily.textContent = Math.round(daily * 1000) + ' г/день';
-    bKg.textContent = num1.format(boxKg) + ' кг';
-    bFood.textContent = rub.format(Math.round(foodCost - discount)) + (discount > 0 ? ' (−' + rub.format(Math.round(discount)) + ')' : '');
+    var chips = [];
+    var bf = Math.round((breed.factor - 1) * 100);
+    chips.push(chip(breed.reason, bf < 0 ? 'down' : (bf > 0 ? 'up' : 'neutral')));
+    if (AGES[state.age].chip) chips.push(chip(AGES[state.age].chip, state.age === 'young' ? 'up' : 'down'));
+    if (ACTIVITY[state.activity].chip) chips.push(chip(ACTIVITY[state.activity].chip, state.activity === 'high' ? 'up' : 'down'));
+    if (breed.priceMult > 1) chips.push(chip('Корм под породу +' + Math.round((breed.priceMult - 1) * 100) + '% к цене', 'neutral'));
+    if (freq === 'ai') {
+      chips.push(chip('Цикл ' + AI_MIN_DAYS + '–' + AGES[state.age].maxDays + ' дн.', 'neutral'));
+      if (state.age === 'young') chips.push(chip('Норма пересчитывается каждый месяц', 'neutral'));
+      chips.push(chip('ИИ-скидка −7%', 'down'));
+    }
+    factorChips.innerHTML = chips.join('');
+    aiFood.textContent = 'Рекомендуем: ' + breed.food + ' — ' + rub.format(Math.round(cur.pricePerKg)) + '/кг';
+
+    bDaily.textContent = Math.round(cur.daily * 1000) + ' г/день';
+    bKg.textContent = num1.format(cur.boxKg) + ' кг';
+    bFood.textContent = rub.format(Math.round(cur.food - cur.discount)) + (cur.discount > 0 ? ' (−' + rub.format(Math.round(cur.discount)) + ')' : '');
+    rowFiller.style.display = cur.filler > 0 ? '' : 'none';
+    bFiller.textContent = num1.format(cur.fillerKg) + ' кг · ' + rub.format(Math.round(cur.filler));
+    rowTreats.style.display = cur.treats > 0 ? '' : 'none';
+    bTreats.textContent = rub.format(Math.round(cur.treats));
     bFee.textContent = rub.format(SERVICE_FEE);
-    bMonth.textContent = rub.format(perMonth);
+    bMonth.textContent = rub.format(Math.round(cur.monthly));
 
-    if (weight > pet.typicalMax) {
+    fillerWrap.style.display = state.pet === 'cat' ? '' : 'none';
+    if (state.pet === 'cat') {
+      var fillerMonth = pet.fillerKgPerMonth * breed.fillerMult;
+      fillerDesc.textContent = 'комкующийся, ~' + num1.format(fillerMonth) + ' кг/мес';
+      fillerPrice.textContent = '+' + rub.format(Math.round(fillerMonth * pet.fillerPricePerKg)) + '/мес';
+    }
+    treatsPrice.textContent = '+' + rub.format(pet.treatsPerMonth) + '/мес';
+
+    sDeliveries.textContent = num1.format(Math.round(cur.perYear * 10) / 10);
+    if (freq === 'ai') {
+      sSavingLabel.textContent = 'Экономия в год';
+      sSaving.textContent = rub.format(Math.round(cur.discount * cur.perYear));
+    } else {
+      var diff = Math.round((cur.monthly - ai.monthly) * 12);
+      sSavingLabel.textContent = 'С ИИ-режимом';
+      sSaving.textContent = diff > 0 ? '−' + rub.format(diff) + '/год' : 'без разницы';
+    }
+
+    var html = '';
+    for (var i = 1; i <= 4; i++) {
+      var d = new Date();
+      d.setDate(d.getDate() + cur.cycle * i);
+      html += '<span class="sched"><small>№' + i + '</small>' + formatDate(d) + '</span>';
+    }
+    scheduleEl.innerHTML = html;
+
+    if (state.age !== 'young' && weight > breed.max) {
+      weightNote.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Вес выше нормы породы (' + breed.max + ' кг) — рекомендуем консультацию ветеринара и корм для контроля веса';
+    } else if (state.age !== 'young' && weight < breed.min) {
+      weightNote.innerHTML = '<i class="fa-solid fa-circle-info"></i> Вес ниже нормы породы (' + breed.min + ' кг) — проверьте данные или выберите «' + (state.pet === 'dog' ? 'Щенок' : 'Котенок') + '»';
+    } else if (state.pet === 'cat' && weight > 12) {
       weightNote.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Нетипичный вес для кошки — рекомендуем консультацию ветеринара';
-    } else if (petKey === 'dog' && weight >= 40) {
-      weightNote.innerHTML = '<i class="fa-solid fa-circle-info"></i> Крупная порода: корм для гигантских пород в комплекте';
     } else {
       weightNote.textContent = '';
     }
@@ -2483,10 +2585,15 @@
     weightOut.innerHTML = v + ' <small>кг</small>';
   }
 
-  function syncPetButtons() {
+  function switchPet(petKey) {
+    state.pet = petKey;
     petButtons.forEach(function (b) {
-      b.classList.toggle('active', b.getAttribute('data-pet') === petSelect.value);
+      b.classList.toggle('active', b.getAttribute('data-pet') === petKey);
     });
+    ageYoung.textContent = PETS[petKey].youngLabel;
+    state.breed = PETS[petKey].breeds[0].id;
+    renderBreeds();
+    selectBreed(state.breed, true);
   }
 
   weightInput.addEventListener('input', function () {
@@ -2494,26 +2601,22 @@
     calculate();
   });
 
-  petSelect.addEventListener('change', function () {
-    syncPetButtons();
-    if (petSelect.value === 'cat' && parseInt(weightInput.value, 10) > 12) {
-      weightInput.value = 4;
-      updateWeightUI();
-    }
-    calculate();
-  });
+  petSelect.addEventListener('change', function () { switchPet(petSelect.value); });
 
   petButtons.forEach(function (btn) {
     btn.addEventListener('click', function () {
       petSelect.value = btn.getAttribute('data-pet');
-      petSelect.dispatchEvent(new Event('change'));
+      switchPet(petSelect.value);
     });
   });
 
+  setupSegmented(ageGroup, 'age');
+  setupSegmented(activityGroup, 'activity');
   freqSelect.addEventListener('change', calculate);
+  addonFiller.addEventListener('change', calculate);
+  addonTreats.addEventListener('change', calculate);
 
-  updateWeightUI();
-  calculate();
+  switchPet(petSelect.value);
 })();
 </script>
 </body>
