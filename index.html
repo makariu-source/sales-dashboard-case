@@ -696,61 +696,6 @@
   .roadmap-step.current { background: var(--accent-soft); }
   .roadmap-step.current .q { color: var(--accent); }
 
-  /* ---------- ANALYTICS ---------- */
-  .panels {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-    margin-bottom: 24px;
-  }
-
-  .panel { padding: 36px; }
-
-  .panel-head {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 26px;
-  }
-
-  .panel-head .icon-box { margin-bottom: 0; }
-  .panel-head h3 { font-size: 1.4rem; }
-  .panel-head p { color: var(--muted); font-size: 0.88rem; }
-
-  .panel.pros:hover { border-color: rgba(16,185,129,0.4); }
-  .panel.cons:hover { border-color: rgba(244,63,94,0.4); box-shadow: 0 24px 50px -20px rgba(0,0,0,0.7), 0 0 36px -10px rgba(244,63,94,0.3); }
-
-  .main-point {
-    padding: 20px;
-    border-radius: 14px;
-    margin-bottom: 18px;
-  }
-
-  .pros .main-point { background: var(--accent-soft); border: 1px solid rgba(16,185,129,0.3); }
-  .cons .main-point { background: var(--danger-soft); border: 1px solid rgba(244,63,94,0.3); }
-
-  .main-point .tag { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; }
-  .pros .main-point .tag { color: var(--accent); }
-  .cons .main-point .tag { color: var(--danger); }
-  .main-point h4 { font-size: 1.12rem; margin: 6px 0; }
-  .main-point p { color: var(--muted); font-size: 0.92rem; }
-
-  .point-list { list-style: none; display: grid; gap: 12px; }
-
-  .point-list li { display: flex; gap: 12px; font-size: 0.94rem; color: var(--muted); }
-  .point-list li b { color: var(--text); font-weight: 600; }
-  .pros .point-list li i { color: var(--accent); margin-top: 5px; }
-  .cons .point-list li i { color: var(--danger); margin-top: 5px; }
-
-  .mitigation {
-    margin-top: 18px;
-    font-size: 0.86rem;
-    color: var(--muted);
-    padding-top: 16px;
-    border-top: 1px dashed var(--border-strong);
-  }
-  .mitigation b { color: var(--accent); }
-
   .why-popular {
     margin-top: 24px;
     padding: 40px;
@@ -818,84 +763,91 @@
   .control-card h3 { font-size: 1.12rem; margin-bottom: 8px; }
   .control-card p { color: var(--muted); font-size: 0.93rem; }
 
-  /* ---------- Market & unit economics ---------- */
-  .market-grid {
+  /* ---------- Stock checker ---------- */
+  .stock {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 24px;
-    margin-bottom: 24px;
-  }
-
-  .market { padding: 36px; display: flex; flex-direction: column; }
-
-  .stat-list { display: grid; gap: 18px; margin-bottom: 20px; }
-
-  .stat { display: grid; grid-template-columns: minmax(150px, auto) 1fr; gap: 16px; align-items: baseline; }
-
-  .stat-num {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 1.7rem;
-    font-weight: 800;
-    color: var(--accent);
-    white-space: nowrap;
-  }
-
-  .stat-label { color: var(--muted); font-size: 0.92rem; }
-
-  .market-callout {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    padding: 14px 16px;
-    border-radius: 12px;
-    background: var(--accent-soft);
-    border: 1px solid rgba(16,185,129,0.3);
-    font-weight: 600;
-    margin-bottom: 16px;
-  }
-
-  .market-callout i { color: var(--accent); }
-
-  .source { color: var(--muted); font-size: 0.8rem; margin-top: auto; }
-
-  .unit-list {
-    list-style: none;
+    background: var(--card);
     border: 1px solid var(--border);
-    border-radius: 14px;
+    border-radius: 28px;
     overflow: hidden;
-    margin-bottom: 16px;
-    font-size: 0.93rem;
   }
 
-  .unit-list li {
+  .stock-form { padding: 40px; border-right: 1px solid var(--border); }
+  .stock-result { padding: 40px; background: var(--bg-soft); display: flex; flex-direction: column; }
+
+  .segmented.seg-2 { grid-template-columns: 1fr 1fr; }
+  .segmented.seg-2 button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+
+  .stock-status {
     display: flex;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 11px 16px;
-    color: var(--muted);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .unit-list li:last-child { border-bottom: none; }
-  .unit-list li b { color: var(--text); font-weight: 600; white-space: nowrap; }
-  .unit-list li b.plus { color: var(--accent); }
-  .unit-list li b.minus { color: var(--danger); }
-  .unit-list li.total { background: var(--accent-soft); color: var(--text); font-weight: 600; }
-  .unit-list li.total b { color: var(--accent); font-size: 1.05rem; }
-
-  .unit-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 16px; }
-
-  .unit-kpis div {
-    padding: 12px;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
     border-radius: 12px;
-    background: rgba(255,255,255,0.03);
-    border: 1px solid var(--border);
-    transition: transform 0.3s var(--ease), border-color 0.3s var(--ease);
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 18px;
   }
 
-  .unit-kpis div:hover { transform: translateY(-3px); border-color: rgba(16,185,129,0.4); }
-  .unit-kpis span { display: block; color: var(--muted); font-size: 0.76rem; }
-  .unit-kpis b { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.1rem; white-space: nowrap; }
+  .stock-status.ok { background: var(--accent-soft); color: var(--accent); border: 1px solid rgba(16,185,129,0.35); }
+  .stock-status.warn { background: var(--warn-soft); color: var(--warn); border: 1px solid rgba(245,158,11,0.35); }
+  .stock-status.bad { background: var(--danger-soft); color: var(--danger); border: 1px solid rgba(244,63,94,0.35); }
+
+  .stock-days {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: clamp(2.2rem, 4vw, 3rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 14px;
+  }
+
+  .stock-days small { font-size: 1rem; color: var(--muted); font-weight: 600; letter-spacing: 0; }
+
+  .stock-bar { height: 10px; border-radius: 999px; background: rgba(255,255,255,0.06); overflow: hidden; margin-bottom: 20px; }
+  .stock-bar span { display: block; height: 100%; width: 0; border-radius: 999px; transition: width 0.5s var(--ease), background 0.3s; }
+  .stock-bar span.ok { background: linear-gradient(90deg, var(--accent), #34D399); }
+  .stock-bar span.warn { background: linear-gradient(90deg, var(--warn), #FBBF24); }
+  .stock-bar span.bad { background: var(--danger); }
+
+  /* ---------- FAQ ---------- */
+  .faq { margin-top: 56px; }
+  .faq-list { display: grid; gap: 12px; }
+
+  .faq-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: border-color 0.3s var(--ease);
+  }
+
+  .faq-item:hover { border-color: rgba(16,185,129,0.3); }
+  .faq-item.open { border-color: rgba(16,185,129,0.45); }
+
+  .faq-q {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 20px 22px;
+    background: none;
+    border: none;
+    color: var(--text);
+    text-align: left;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.02rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .faq-q i { color: var(--muted); transition: transform 0.4s var(--ease), color 0.3s; flex-shrink: 0; }
+  .faq-item.open .faq-q i { transform: rotate(180deg); color: var(--accent); }
+
+  .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.45s var(--ease); }
+  .faq-a p { padding: 0 22px 20px; color: var(--muted); }
 
   /* ---------- CALCULATOR ---------- */
   .calc-section {
@@ -1336,7 +1288,6 @@
     .grid-3 { grid-template-columns: 1fr 1fr; }
     .grid-3 .value-card:last-child { grid-column: 1 / -1; }
     .why-popular { grid-template-columns: 1fr; }
-    .market-grid { grid-template-columns: 1fr; }
     .control-grid { grid-template-columns: 1fr 1fr; }
   }
 
@@ -1358,7 +1309,8 @@
     .nav-links a { padding: 14px 16px; }
     .burger { display: grid; place-items: center; }
     .nav-cta { display: none; }
-    .split, .panels, .calc, .how-steps { grid-template-columns: 1fr; }
+    .split, .calc, .how-steps, .stock { grid-template-columns: 1fr; }
+    .stock-form { border-right: none; border-bottom: 1px solid var(--border); }
     .roadmap { grid-template-columns: 1fr; }
     .roadmap-step { border-right: none; border-bottom: 1px solid var(--border); }
     .roadmap-step:last-child { border-bottom: none; }
@@ -1373,14 +1325,12 @@
     section { padding: 64px 0; }
     .hero { padding: 48px 0 72px; }
     .grid-3 { grid-template-columns: 1fr; }
-    .card, .panel, .split-card { padding: 24px; }
+    .card, .split-card { padding: 24px; }
     .calc-form, .calc-result { padding: 26px 20px; }
     .why-popular { padding: 26px; }
-    .market { padding: 24px; }
-    .stat { grid-template-columns: 1fr; gap: 2px; }
+    .stock-form, .stock-result { padding: 26px 20px; }
     .trends { grid-template-columns: 1fr; }
     .control-grid { grid-template-columns: 1fr; }
-    .unit-kpis { grid-template-columns: 1fr 1fr; }
     .schedule-list { grid-template-columns: 1fr 1fr; }
     .mini-stats b { font-size: 0.95rem; }
     .hero-actions .btn { width: 100%; justify-content: center; }
@@ -1412,7 +1362,7 @@
       <li><a href="#value">Преимущества</a></li>
       <li><a href="#strategy">Что в коробке</a></li>
       <li><a href="#control">Контроль</a></li>
-      <li><a href="#analytics">Аналитика</a></li>
+      <li><a href="#help">Помощь</a></li>
       <li><a href="#calculator">Собрать коробку</a></li>
     </ul>
     <a href="#calculator" class="nav-cta"><i class="fa-solid fa-box-open"></i> Собрать коробку</a>
@@ -1428,7 +1378,7 @@
     <div class="orb" style="width:380px;height:380px;background:rgba(16,185,129,0.1);bottom:-120px;left:-140px;"></div>
     <div class="container hero-grid">
       <div class="reveal">
-        <span class="badge"><span class="dot"></span> Автоподписка для питомцев · v1.2</span>
+        <span class="badge"><span class="dot"></span> Автоподписка для питомцев · v1.3</span>
         <h1>Больше не нужно помнить. <span class="gradient-text">Бытовые товары по умной автоподписке</span></h1>
         <p class="hero-sub">Мы продаем не доставку, а <strong>свободу от бытовой рутины</strong>. Настроил один раз — коробка приезжает сама.</p>
         <div class="hero-actions">
@@ -1482,48 +1432,48 @@
   <section id="value">
     <div class="container">
       <div class="section-head reveal">
-        <div class="eyebrow">Суть и ценность</div>
-        <h2>Почему это не «еще один Самокат»</h2>
-        <p>Классический e-commerce конкурирует за каждую покупку заново. ЗооБокс выигрывает выбор один раз — и дальше работает в фоне жизни клиента.</p>
+        <div class="eyebrow">Преимущества</div>
+        <h2>Почему удобнее, чем заказывать самому</h2>
+        <p>На маркетплейсе каждый раз нужно вспомнить о корме, найти его и собрать корзину. ЗооБокс делает это за вас — один раз и надолго.</p>
       </div>
 
       <div class="grid-3">
         <article class="card value-card reveal">
           <div class="icon-box"><i class="fa-solid fa-brain"></i></div>
-          <span class="kicker">Для клиента</span>
+          <span class="kicker">Спокойствие</span>
           <div class="big-num gradient-text">0%</div>
           <h3>Ментальной нагрузки</h3>
-          <p>Обычная доставка заставляет вспоминать и каждый раз собирать корзину. Мы решаем проблему забывчивости.</p>
+          <p>Обычная доставка заставляет вспоминать и каждый раз собирать корзину. С ЗооБокс помнить ничего не нужно.</p>
           <ul>
             <li><i class="fa-solid fa-check"></i> Никаких «ой, корм закончился» в 23:00</li>
             <li><i class="fa-solid fa-check"></i> Не нужно собирать корзину заново</li>
-            <li><i class="fa-solid fa-check"></i> Полная автоматизация цикла пополнения</li>
+            <li><i class="fa-solid fa-check"></i> Корм приезжает сам и всегда вовремя</li>
           </ul>
         </article>
 
         <article class="card value-card reveal">
-          <div class="icon-box"><i class="fa-solid fa-chart-line"></i></div>
-          <span class="kicker">Для инвестора и жюри</span>
-          <div class="big-num gradient-text">MRR</div>
-          <h3>Экономика предсказуемости</h3>
-          <p>Predictable Recurring Revenue: мы знаем выручку следующего месяца уже сегодня. Именно это ценят фонды.</p>
+          <div class="icon-box"><i class="fa-solid fa-piggy-bank"></i></div>
+          <span class="kicker">Выгода</span>
+          <div class="big-num gradient-text">−7%</div>
+          <h3>Дешевле, чем в магазине</h3>
+          <p>Умный график подбирает большие фасовки, в которых килограмм корма дешевле, и дает скидку на каждую коробку.</p>
           <ul>
-            <li><i class="fa-solid fa-check"></i> Стабильная ежемесячная выручка</li>
-            <li><i class="fa-solid fa-check"></i> Удержание когорт вместо разовых чеков</li>
-            <li><i class="fa-solid fa-check"></i> Бенчмарк: Chewy (США) — большая часть выручки идет через Autoship</li>
+            <li><i class="fa-solid fa-check"></i> Скидка 7% на корм с умным графиком</li>
+            <li><i class="fa-solid fa-check"></i> Выгодная фасовка вместо маленьких пачек</li>
+            <li><i class="fa-solid fa-check"></i> Цена коробки известна заранее</li>
           </ul>
         </article>
 
         <article class="card value-card reveal">
-          <div class="icon-box"><i class="fa-solid fa-scale-balanced"></i></div>
-          <span class="kicker">Юнит-экономика</span>
-          <div class="big-num gradient-text">LTV ↑ CAC ↓</div>
-          <h3>Идеальный LTV/CAC</h3>
-          <p>Автоподписка снижает стоимость повторного привлечения клиента почти до нуля и максимизирует его жизненный цикл с первых месяцев.</p>
+          <div class="icon-box"><i class="fa-solid fa-heart-pulse"></i></div>
+          <span class="kicker">Здоровье</span>
+          <div class="big-num gradient-text">4 параметра</div>
+          <h3>Корм под вашего питомца</h3>
+          <p>Рассчитываем суточную норму по породе, возрасту, весу и активности — питомец не голодает и не переедает.</p>
           <ul>
-            <li><i class="fa-solid fa-check"></i> Повторная покупка без затрат на ретаргетинг</li>
-            <li><i class="fa-solid fa-check"></i> CAC 1 500 ₽ окупается за 4 месяца</li>
-            <li><i class="fa-solid fa-check"></i> LTV ≈ 4 800 ₽ за 12 месяцев — в 3 раза больше CAC</li>
+            <li><i class="fa-solid fa-check"></i> Корм под породу: мини, крупные, вислоухие</li>
+            <li><i class="fa-solid fa-check"></i> Отдельные корма для щенков, котят и пожилых</li>
+            <li><i class="fa-solid fa-check"></i> Норма пересчитывается, когда питомец растет</li>
           </ul>
         </article>
       </div>
@@ -1546,7 +1496,7 @@
             <li>Один раз указать питомца и его вес</li>
             <li>ИИ рассчитывает расход и дату доставки</li>
             <li>Коробка приезжает сама — всегда вовремя</li>
-            <li>Конкуренты исключены из цепочки выбора</li>
+            <li>Вы проводите время с питомцем, а не в магазине</li>
           </ol>
         </div>
       </div>
@@ -1726,100 +1676,127 @@
     </div>
   </section>
 
-  <!-- ================= 4. ANALYTICS ================= -->
-  <section id="analytics">
+  <!-- ================= 4. HELP ================= -->
+  <section id="help">
     <div class="container">
       <div class="section-head reveal">
-        <div class="eyebrow">Аналитика</div>
-        <h2>Плюсы, минусы и динамика во времени</h2>
-        <p>Трезвая оценка модели: что работает на нас сразу, что мешает и как баланс сил меняется по мере роста.</p>
+        <div class="eyebrow">Проверьте запас</div>
+        <h2>Хватит ли корма <span class="text-accent">до конца месяца?</span></h2>
+        <p>Укажите питомца и сколько корма осталось — покажем, когда запас закончится и до какого дня стоит оформить коробку.</p>
       </div>
 
-      <div class="market-grid">
-        <article class="card market reveal">
-          <div class="panel-head">
-            <div class="icon-box"><i class="fa-solid fa-earth-europe"></i></div>
-            <div><h3>Рынок: большой и растет</h3><p>Россия, 2025–2026</p></div>
-          </div>
-          <div class="stat-list">
-            <div class="stat">
-              <div class="stat-num">79,5 млн</div>
-              <div class="stat-label">домашних животных: 53,4 млн кошек и 26,1 млн собак</div>
-            </div>
-            <div class="stat">
-              <div class="stat-num">487 млрд ₽</div>
-              <div class="stat-label">рынок кормов в 2025 году, +15,9% за год. Корма — 83% всего рынка зоотоваров</div>
-            </div>
-            <div class="stat">
-              <div class="stat-num">94%</div>
-              <div class="stat-label">владельцев регулярно покупают готовые корма</div>
+      <div class="stock reveal">
+        <div class="stock-form">
+          <div class="field">
+            <div class="field-label"><span id="stockPetLabel">Питомец</span></div>
+            <div class="segmented seg-2" id="stockPet" role="radiogroup" aria-labelledby="stockPetLabel">
+              <button type="button" role="radio" aria-checked="true" data-value="dog" class="active"><i class="fa-solid fa-dog"></i> Собака</button>
+              <button type="button" role="radio" aria-checked="false" data-value="cat"><i class="fa-solid fa-cat"></i> Кошка</button>
             </div>
           </div>
-          <div class="market-callout"><i class="fa-solid fa-bullseye"></i> Даже 0,1% рынка — это около 490 млн ₽ в год.</div>
-          <p class="source">Оценки аналитиков — от 430 до 630 млрд ₽, берем среднюю. Источники: Strategy Partners / Зооинформ (2026), РОМИР (2025).</p>
-        </article>
 
-        <article class="card market reveal">
-          <div class="panel-head">
-            <div class="icon-box"><i class="fa-solid fa-calculator"></i></div>
-            <div><h3>Экономика одного клиента</h3><p>В месяц, при среднем чеке коробки</p></div>
+          <div class="field">
+            <div class="field-label">
+              <label for="stockWeight">Вес питомца</label>
+              <output class="weight-display" id="stockWeightOut" for="stockWeight">20 <small>кг</small></output>
+            </div>
+            <input type="range" id="stockWeight" min="1" max="50" step="1" value="20">
+            <div class="range-scale"><span>1 кг</span><span>50 кг</span></div>
           </div>
-          <ul class="unit-list">
-            <li><span>Средний чек коробки</span><b>4 000 ₽</b></li>
-            <li><span>Наша наценка (≈20%)</span><b class="plus">800 ₽</b></li>
-            <li><span>Доставка</span><b class="minus">− 300 ₽</b></li>
-            <li><span>Упаковка и эквайринг</span><b class="minus">− 150 ₽</b></li>
-            <li><span>Бренды за место в коробке</span><b class="plus">+ 50 ₽</b></li>
-            <li class="total"><span>Остается с клиента в месяц</span><b>400 ₽</b></li>
+
+          <div class="field field-last">
+            <div class="field-label">
+              <label for="stockLeft">Сколько корма осталось</label>
+              <output class="weight-display" id="stockLeftOut" for="stockLeft">3 <small>кг</small></output>
+            </div>
+            <input type="range" id="stockLeft" min="0" max="15" step="0.5" value="3">
+            <div class="range-scale"><span>0 кг</span><span>15 кг</span></div>
+          </div>
+        </div>
+
+        <div class="stock-result" aria-live="polite">
+          <div class="stock-status ok" id="stockStatus">
+            <i class="fa-solid fa-circle-check" id="stockIcon"></i>
+            <span id="stockStatusText">—</span>
+          </div>
+          <div class="stock-days"><span id="stockDays">—</span> <small>осталось</small></div>
+          <div class="stock-bar"><span id="stockBar"></span></div>
+          <ul class="breakdown">
+            <li><span>Суточная норма корма</span><b id="stockDaily">—</b></li>
+            <li><span>Корм закончится</span><b id="stockEnd">—</b></li>
+            <li class="total"><span>Оформите коробку до</span><b id="stockOrder">—</b></li>
           </ul>
-          <div class="unit-kpis">
-            <div><span>CAC</span><b>1 500 ₽</b></div>
-            <div><span>Окупаемость</span><b>4 мес</b></div>
-            <div><span>LTV (12 мес)</span><b>≈ 4 800 ₽</b></div>
-            <div><span>LTV / CAC</span><b>3×</b></div>
-          </div>
-          <p class="source">Все цифры — предварительные оценки, их нужно проверить на пилоте.</p>
-        </article>
+          <a href="#calculator" class="btn btn-primary calc-cta">Собрать коробку <i class="fa-solid fa-arrow-right"></i></a>
+          <div class="calc-foot"><i class="fa-solid fa-circle-info"></i> <span>Расчет для взрослого питомца со средней активностью. Точную норму под породу и возраст покажем при сборе коробки.</span></div>
+        </div>
       </div>
 
-      <div class="panels">
-        <article class="card panel pros reveal">
-          <div class="panel-head">
-            <div class="icon-box"><i class="fa-solid fa-thumbs-up"></i></div>
-            <div><h3>Ключевые преимущества</h3><p>Что делает модель сильной</p></div>
-          </div>
-          <div class="main-point">
-            <span class="tag">Главный плюс</span>
-            <h4>Высокий Retention и исключение конкурентов из цепочки выбора</h4>
-            <p>Клиент больше не сравнивает цены каждый месяц — повторная покупка происходит автоматически, без контакта с конкурентами.</p>
-          </div>
-          <ul class="point-list">
-            <li><i class="fa-solid fa-circle-check"></i><span><b>Предсказуемая выручка (MRR)</b> — удобно планировать закупки и финансирование.</span></li>
-            <li><i class="fa-solid fa-circle-check"></i><span><b>Точный прогноз спроса</b> — минимум неликвида и оптимальные закупки.</span></li>
-            <li><i class="fa-solid fa-circle-check"></i><span><b>Эмоциональная ценность</b> — забота о питомце без усилий.</span></li>
-            <li><i class="fa-solid fa-circle-check"></i><span><b>Два потока дохода</b> — B2C-подписка и B2B-данные для брендов.</span></li>
-          </ul>
-        </article>
+      <div class="faq reveal">
+        <h3 class="how-title">Частые вопросы</h3>
+        <div class="faq-list">
 
-        <article class="card panel cons reveal">
-          <div class="panel-head">
-            <div class="icon-box danger"><i class="fa-solid fa-triangle-exclamation"></i></div>
-            <div><h3>Слабые стороны</h3><p>Что нужно преодолеть</p></div>
+          <div class="faq-item">
+            <button type="button" class="faq-q" aria-expanded="false" aria-controls="faq-1" id="faq-btn-1">
+              <span>Сколько стоит доставка?</span>
+              <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="faq-a" id="faq-1" role="region" aria-labelledby="faq-btn-1">
+              <p>Доставка входит в сервисный сбор — 149 ₽ за коробку. Других платежей нет: полную стоимость коробки вы видите заранее при ее сборе.</p>
+            </div>
           </div>
-          <div class="main-point">
-            <span class="tag">Главный риск</span>
-            <h4>Сложность первичного вовлечения и недоверие к автосписаниям</h4>
-            <p>Люди опасаются «подписочных ловушек» и неожиданных списаний с карты — первый шаг требует доверия.</p>
+
+          <div class="faq-item">
+            <button type="button" class="faq-q" aria-expanded="false" aria-controls="faq-2" id="faq-btn-2">
+              <span>Когда списываются деньги?</span>
+              <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="faq-a" id="faq-2" role="region" aria-labelledby="faq-btn-2">
+              <p>За 3 дня до отправки придет уведомление с составом коробки и суммой. Оплата списывается только в день отправки — до этого момента можно все поменять или пропустить доставку.</p>
+            </div>
           </div>
-          <ul class="point-list">
-            <li><i class="fa-solid fa-circle-xmark"></i><span><b>Высокий порог входа</b> — нужно заполнить профиль питомца.</span></li>
-            <li><i class="fa-solid fa-circle-xmark"></i><span><b>Страх автосписаний</b> — негативный опыт с другими подписками.</span></li>
-            <li><i class="fa-solid fa-circle-xmark"></i><span><b>Зависимость от партнера-дистрибьютора</b> на старте.</span></li>
-          </ul>
-          <div class="mitigation"><b><i class="fa-solid fa-wrench"></i> Как закрываем:</b> первая коробка со скидкой, отмена в 1 клик, push за 3 дня до каждого списания и прозрачная история платежей.</div>
-        </article>
+
+          <div class="faq-item">
+            <button type="button" class="faq-q" aria-expanded="false" aria-controls="faq-3" id="faq-btn-3">
+              <span>Что делать, если корм остается или заканчивается раньше?</span>
+              <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="faq-a" id="faq-3" role="region" aria-labelledby="faq-btn-3">
+              <p>Пропустите доставку или сдвиньте дату в один клик. Умный график учтет это и подстроит следующие коробки под реальный расход вашего питомца.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-q" aria-expanded="false" aria-controls="faq-4" id="faq-btn-4">
+              <span>А если корм не подойдет питомцу?</span>
+              <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="faq-a" id="faq-4" role="region" aria-labelledby="faq-btn-4">
+              <p>Поменяйте корм перед следующей отправкой — подскажем альтернативу под породу и возраст. При смене корма переводите питомца на новый постепенно, в течение 7–10 дней.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-q" aria-expanded="false" aria-controls="faq-5" id="faq-btn-5">
+              <span>Можно ли отменить подписку?</span>
+              <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="faq-a" id="faq-5" role="region" aria-labelledby="faq-btn-5">
+              <p>Да, в любой момент и в пару кликов — без звонков в поддержку. Уже оплаченная коробка приедет, новые списания прекратятся.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-q" aria-expanded="false" aria-controls="faq-6" id="faq-btn-6">
+              <span>Куда вы доставляете?</span>
+              <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="faq-a" id="faq-6" role="region" aria-labelledby="faq-btn-6">
+              <p>На старте ЗооБокс работает в одном городе, дальше подключим новые. Коробку привезут к двери в удобное время.</p>
+            </div>
+          </div>
+
+        </div>
       </div>
-
     </div>
   </section>
 
@@ -2068,6 +2045,112 @@
       hvPercent.textContent = current + '%';
     }, 28);
   }, 500);
+
+  /* ---------- Stock checker ---------- */
+  var STOCK_PETS = {
+    dog: { kcalCoef: 110, kcalPerKg: 3700, defWeight: 20 },
+    cat: { kcalCoef: 65, kcalPerKg: 3900, defWeight: 4 }
+  };
+  var stockState = { pet: 'dog' };
+  var stockPet = document.getElementById('stockPet');
+  var stockWeight = document.getElementById('stockWeight');
+  var stockWeightOut = document.getElementById('stockWeightOut');
+  var stockLeft = document.getElementById('stockLeft');
+  var stockLeftOut = document.getElementById('stockLeftOut');
+  var stockStatus = document.getElementById('stockStatus');
+  var stockIcon = document.getElementById('stockIcon');
+  var stockStatusText = document.getElementById('stockStatusText');
+  var stockDays = document.getElementById('stockDays');
+  var stockBar = document.getElementById('stockBar');
+  var stockDaily = document.getElementById('stockDaily');
+  var stockEnd = document.getElementById('stockEnd');
+  var stockOrder = document.getElementById('stockOrder');
+  var kgFormat = new Intl.NumberFormat('ru-RU', { maximumFractionDigits: 1 });
+
+  function setRangeFill(input) {
+    var pct = ((parseFloat(input.value) - parseFloat(input.min)) / (parseFloat(input.max) - parseFloat(input.min))) * 100;
+    input.style.setProperty('--fill', pct + '%');
+  }
+
+  function updateStock() {
+    var pet = STOCK_PETS[stockState.pet];
+    var weight = parseInt(stockWeight.value, 10);
+    var left = parseFloat(stockLeft.value);
+    setRangeFill(stockWeight);
+    setRangeFill(stockLeft);
+    stockWeightOut.innerHTML = weight + ' <small>кг</small>';
+    stockLeftOut.innerHTML = kgFormat.format(left) + ' <small>кг</small>';
+
+    var daily = pet.kcalCoef * Math.pow(weight, 0.75) / pet.kcalPerKg;
+    var days = Math.floor(left / daily);
+    var end = new Date();
+    end.setDate(end.getDate() + days);
+    var order = new Date();
+    order.setDate(order.getDate() + Math.max(0, days - 3));
+
+    stockDaily.textContent = Math.round(daily * 1000) + ' г/день';
+    stockDays.textContent = days + ' ' + pluralDays(days);
+    stockBar.style.width = Math.min(100, days / 30 * 100) + '%';
+
+    var level, icon, text;
+    if (days < 1) {
+      level = 'bad'; icon = 'fa-circle-exclamation'; text = 'Корм закончился — оформите коробку сегодня';
+    } else if (days < 5) {
+      level = 'bad'; icon = 'fa-circle-exclamation'; text = 'Корм скоро закончится — оформите коробку сегодня';
+    } else if (days < 14) {
+      level = 'warn'; icon = 'fa-clock'; text = 'Пора оформлять коробку';
+    } else {
+      level = 'ok'; icon = 'fa-circle-check'; text = 'Запаса хватит надолго';
+    }
+    stockStatus.className = 'stock-status ' + level;
+    stockIcon.className = 'fa-solid ' + icon;
+    stockStatusText.textContent = text;
+    stockBar.className = level;
+    stockEnd.textContent = days < 1 ? 'уже закончился' : formatDate(end);
+    stockOrder.textContent = days <= 3 ? 'сегодня' : formatDate(order);
+  }
+
+  stockPet.querySelectorAll('button').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      stockState.pet = btn.getAttribute('data-value');
+      stockPet.querySelectorAll('button').forEach(function (b) {
+        var on = b === btn;
+        b.classList.toggle('active', on);
+        b.setAttribute('aria-checked', on ? 'true' : 'false');
+      });
+      stockWeight.value = STOCK_PETS[stockState.pet].defWeight;
+      updateStock();
+    });
+  });
+  stockWeight.addEventListener('input', updateStock);
+  stockLeft.addEventListener('input', updateStock);
+  updateStock();
+
+  /* ---------- FAQ ---------- */
+  var faqItems = document.querySelectorAll('.faq-item');
+  faqItems.forEach(function (item) {
+    var q = item.querySelector('.faq-q');
+    var a = item.querySelector('.faq-a');
+    q.addEventListener('click', function () {
+      var open = !item.classList.contains('open');
+      faqItems.forEach(function (other) {
+        if (other !== item && other.classList.contains('open')) {
+          other.classList.remove('open');
+          other.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+          other.querySelector('.faq-a').style.maxHeight = '0px';
+        }
+      });
+      item.classList.toggle('open', open);
+      q.setAttribute('aria-expanded', open ? 'true' : 'false');
+      a.style.maxHeight = open ? a.scrollHeight + 'px' : '0px';
+    });
+  });
+
+  window.addEventListener('resize', function () {
+    document.querySelectorAll('.faq-item.open .faq-a').forEach(function (a) {
+      a.style.maxHeight = a.scrollHeight + 'px';
+    });
+  });
 
   /* ---------- Calculator ---------- */
   function formatDate(d) {
