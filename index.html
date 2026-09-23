@@ -680,7 +680,7 @@
   .roadmap {
     margin-top: 32px;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 0;
     background: var(--bg-soft);
     border: 1px solid var(--border);
@@ -1030,6 +1030,123 @@
   .trend-card h4 { font-size: 0.98rem; margin-bottom: 6px; }
   .trend-card p { color: var(--muted); font-size: 0.85rem; }
 
+  /* ---------- Competitor table ---------- */
+  .table-card {
+    margin-top: 24px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 8px 8px 20px;
+  }
+
+  .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+  .comp-table { width: 100%; min-width: 560px; border-collapse: collapse; font-size: 0.93rem; }
+
+  .comp-table th, .comp-table td { padding: 14px 18px; text-align: left; border-bottom: 1px solid var(--border); }
+
+  .comp-table thead th {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-weight: 700;
+  }
+
+  .comp-table tbody th { font-weight: 500; color: var(--text); }
+  .comp-table tbody tr:last-child th, .comp-table tbody tr:last-child td { border-bottom: none; }
+  .comp-table tbody tr { transition: background 0.25s var(--ease); }
+  .comp-table tbody tr:hover { background: rgba(255,255,255,0.02); }
+
+  .comp-table .us { background: var(--accent-soft); }
+  .comp-table thead th.us { color: var(--accent); }
+
+  .comp-table .yes, .comp-table .part, .comp-table .no { display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; }
+  .comp-table .yes { color: var(--accent); font-weight: 600; }
+  .comp-table .part { color: var(--warn); }
+  .comp-table .no { color: var(--muted); }
+  .comp-table .yes i, .comp-table .part i, .comp-table .no i { font-size: 0.8rem; }
+
+  .table-note { color: var(--muted); font-size: 0.86rem; padding: 14px 18px 0; }
+
+  /* ---------- Market & unit economics ---------- */
+  .market-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 24px;
+  }
+
+  .market { padding: 36px; display: flex; flex-direction: column; }
+
+  .stat-list { display: grid; gap: 18px; margin-bottom: 20px; }
+
+  .stat { display: grid; grid-template-columns: minmax(150px, auto) 1fr; gap: 16px; align-items: baseline; }
+
+  .stat-num {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.7rem;
+    font-weight: 800;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+
+  .stat-label { color: var(--muted); font-size: 0.92rem; }
+
+  .market-callout {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 14px 16px;
+    border-radius: 12px;
+    background: var(--accent-soft);
+    border: 1px solid rgba(16,185,129,0.3);
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  .market-callout i { color: var(--accent); }
+
+  .source { color: var(--muted); font-size: 0.8rem; margin-top: auto; }
+
+  .unit-list {
+    list-style: none;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 16px;
+    font-size: 0.93rem;
+  }
+
+  .unit-list li {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 11px 16px;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .unit-list li:last-child { border-bottom: none; }
+  .unit-list li b { color: var(--text); font-weight: 600; white-space: nowrap; }
+  .unit-list li b.plus { color: var(--accent); }
+  .unit-list li b.minus { color: var(--danger); }
+  .unit-list li.total { background: var(--accent-soft); color: var(--text); font-weight: 600; }
+  .unit-list li.total b { color: var(--accent); font-size: 1.05rem; }
+
+  .unit-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 16px; }
+
+  .unit-kpis div {
+    padding: 12px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    transition: transform 0.3s var(--ease), border-color 0.3s var(--ease);
+  }
+
+  .unit-kpis div:hover { transform: translateY(-3px); border-color: rgba(16,185,129,0.4); }
+  .unit-kpis span { display: block; color: var(--muted); font-size: 0.76rem; }
+  .unit-kpis b { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.1rem; white-space: nowrap; }
+
   /* ---------- CALCULATOR ---------- */
   .calc-section {
     background: linear-gradient(180deg, transparent, rgba(16,185,129,0.04) 40%, transparent);
@@ -1335,9 +1452,7 @@
     .faq-wrap { grid-template-columns: 1fr; gap: 32px; }
     .faq-aside { position: static; }
     .why-popular { grid-template-columns: 1fr; }
-    .roadmap { grid-template-columns: 1fr 1fr; }
-    .roadmap-step:nth-child(2) { border-right: none; }
-    .roadmap-step:nth-child(-n+2) { border-bottom: 1px solid var(--border); }
+    .market-grid { grid-template-columns: 1fr; }
   }
 
   @media (max-width: 860px) {
@@ -1359,6 +1474,9 @@
     .burger { display: grid; place-items: center; }
     .nav-cta { display: none; }
     .split, .panels, .dyn-grid, .calc { grid-template-columns: 1fr; }
+    .roadmap { grid-template-columns: 1fr; }
+    .roadmap-step { border-right: none; border-bottom: 1px solid var(--border); }
+    .roadmap-step:last-child { border-bottom: none; }
     .calc-form { border-right: none; border-bottom: 1px solid var(--border); }
     .compare { grid-template-columns: 1fr; }
     .compare-vs span { width: 44px; height: 44px; }
@@ -1373,10 +1491,10 @@
     .card, .panel, .dynamics, .split-card { padding: 24px; }
     .calc-form, .calc-result { padding: 26px 20px; }
     .why-popular { padding: 26px; }
+    .market { padding: 24px; }
+    .stat { grid-template-columns: 1fr; gap: 2px; }
     .trends { grid-template-columns: 1fr; }
-    .roadmap { grid-template-columns: 1fr; }
-    .roadmap-step { border-right: none; border-bottom: 1px solid var(--border); }
-    .roadmap-step:last-child { border-bottom: none; }
+    .unit-kpis { grid-template-columns: 1fr 1fr; }
     .acc-trigger { padding: 18px; gap: 12px; font-size: 0.98rem; }
     .acc-body { padding: 0 18px 22px 18px; }
     .hero-actions .btn { width: 100%; justify-content: center; }
@@ -1434,16 +1552,16 @@
         </div>
         <div class="hero-stats">
           <div class="hero-stat">
-            <div class="num">0<span>%</span></div>
-            <div class="label">ментальной нагрузки</div>
+            <div class="num">79,5<span> млн</span></div>
+            <div class="label">домашних животных в России</div>
           </div>
           <div class="hero-stat">
-            <div class="num">1<span>×</span></div>
-            <div class="label">настройка на весь цикл</div>
+            <div class="num">487<span> млрд ₽</span></div>
+            <div class="label">рынок кормов, +15,9% за год</div>
           </div>
           <div class="hero-stat">
-            <div class="num">MRR</div>
-            <div class="label">предсказуемая выручка</div>
+            <div class="num">27<span>×</span></div>
+            <div class="label">в год семья покупает корм</div>
           </div>
         </div>
       </div>
@@ -1519,8 +1637,8 @@
           <p>Автоподписка снижает стоимость повторного привлечения клиента почти до нуля и максимизирует его жизненный цикл с первых месяцев.</p>
           <ul>
             <li><i class="fa-solid fa-check"></i> Повторная покупка без затрат на ретаргетинг</li>
-            <li><i class="fa-solid fa-check"></i> Окупаемость CAC за считанные циклы</li>
-            <li><i class="fa-solid fa-check"></i> Рост среднего чека через cross-sell в коробку</li>
+            <li><i class="fa-solid fa-check"></i> CAC 1 500 ₽ окупается за 4 месяца</li>
+            <li><i class="fa-solid fa-check"></i> LTV ≈ 4 800 ₽ за 12 месяцев — в 3 раза больше CAC</li>
           </ul>
         </article>
       </div>
@@ -1546,6 +1664,60 @@
             <li>Конкуренты исключены из цепочки выбора</li>
           </ol>
         </div>
+      </div>
+
+      <div class="table-card reveal">
+        <div class="table-scroll">
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th scope="col">Возможность</th>
+                <th scope="col" class="us">BoxFlow</th>
+                <th scope="col">Ozon / WB</th>
+                <th scope="col">Петшоп</th>
+                <th scope="col">Самокат</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Доставка корма</th>
+                <td class="us"><span class="yes"><i class="fa-solid fa-check"></i> да</span></td>
+                <td><span class="yes"><i class="fa-solid fa-check"></i> да</span></td>
+                <td><span class="yes"><i class="fa-solid fa-check"></i> да</span></td>
+                <td><span class="yes"><i class="fa-solid fa-check"></i> да</span></td>
+              </tr>
+              <tr>
+                <th scope="row">Автоповтор заказа</th>
+                <td class="us"><span class="yes"><i class="fa-solid fa-check"></i> да</span></td>
+                <td><span class="part"><i class="fa-solid fa-minus"></i> частично</span></td>
+                <td><span class="part"><i class="fa-solid fa-minus"></i> частично</span></td>
+                <td><span class="no"><i class="fa-solid fa-xmark"></i> нет</span></td>
+              </tr>
+              <tr>
+                <th scope="row">Расчет расхода по питомцу</th>
+                <td class="us"><span class="yes"><i class="fa-solid fa-check"></i> да</span></td>
+                <td><span class="no"><i class="fa-solid fa-xmark"></i> нет</span></td>
+                <td><span class="no"><i class="fa-solid fa-xmark"></i> нет</span></td>
+                <td><span class="no"><i class="fa-solid fa-xmark"></i> нет</span></td>
+              </tr>
+              <tr>
+                <th scope="row">Пропуск / сдвиг даты</th>
+                <td class="us"><span class="yes"><i class="fa-solid fa-check"></i> да</span></td>
+                <td><span class="no"><i class="fa-solid fa-xmark"></i> нет</span></td>
+                <td><span class="no"><i class="fa-solid fa-xmark"></i> нет</span></td>
+                <td><span class="no"><i class="fa-solid fa-xmark"></i> нет</span></td>
+              </tr>
+              <tr>
+                <th scope="row">Коробка «корм + наполнитель»</th>
+                <td class="us"><span class="yes"><i class="fa-solid fa-check"></i> да</span></td>
+                <td><span class="no"><i class="fa-solid fa-xmark"></i> нет</span></td>
+                <td><span class="no"><i class="fa-solid fa-xmark"></i> нет</span></td>
+                <td><span class="no"><i class="fa-solid fa-xmark"></i> нет</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="table-note">«Частично» — есть отдельные товары со скидкой за повтор, но график не подстраивается под питомца. Наше преимущество — данные о расходе конкретной семьи и договоры с брендами.</p>
       </div>
     </div>
   </section>
@@ -1587,7 +1759,7 @@
 
         <article class="card split-card muted-card reveal">
           <i class="fa-solid fa-baby-carriage split-watermark" aria-hidden="true"></i>
-          <span class="phase later"><i class="fa-solid fa-hourglass-half"></i> ЭТАП 2 · ОТЛОЖЕНО</span>
+          <span class="phase later"><i class="fa-solid fa-hourglass-half"></i> ЭТАП 3 · ОТЛОЖЕНО</span>
           <h3>Товары для мам и подгузники</h3>
           <p>Огромный рынок, но на старте он сожжет бюджет. Заходим, когда алгоритмы и логистика будут отлажены.</p>
           <ul class="reason-list">
@@ -1613,24 +1785,19 @@
 
       <div class="roadmap reveal">
         <div class="roadmap-step current">
-          <div class="q">0–6 мес · сейчас</div>
-          <div class="t">MVP: корм и наполнитель</div>
-          <div class="d">1 город, кошки и собаки, премиум-сегмент</div>
+          <div class="q">Этап 1 · сейчас</div>
+          <div class="t">Корм и наполнитель</div>
+          <div class="d">1 город, без своего склада — через дистрибьютора, сайт и чат-бот вместо приложения</div>
         </div>
         <div class="roadmap-step">
-          <div class="q">6–12 мес</div>
-          <div class="t">ИИ-прогноз + бренды</div>
-          <div class="d">Data-driven sampling, прямые контракты</div>
+          <div class="q">Этап 2</div>
+          <div class="t">Лакомства и ветаптека</div>
+          <div class="d">Расширение коробки и выход в новые города</div>
         </div>
         <div class="roadmap-step">
-          <div class="q">12–18 мес</div>
-          <div class="t">Бытовая химия</div>
-          <div class="d">Порошки, губки, бумага в ту же коробку</div>
-        </div>
-        <div class="roadmap-step">
-          <div class="q">18+ мес</div>
-          <div class="t">Товары для мам</div>
-          <div class="d">С отлаженной логистикой и данными</div>
+          <div class="q">Этап 3</div>
+          <div class="t">Товары для детей и бытовая химия</div>
+          <div class="d">Когда алгоритмы прогноза и логистика отлажены</div>
         </div>
       </div>
     </div>
@@ -1745,6 +1912,53 @@
         <div class="eyebrow">Аналитика</div>
         <h2>Плюсы, минусы и динамика во времени</h2>
         <p>Трезвая оценка модели: что работает на нас сразу, что мешает и как баланс сил меняется по мере роста.</p>
+      </div>
+
+      <div class="market-grid">
+        <article class="card market reveal">
+          <div class="panel-head">
+            <div class="icon-box"><i class="fa-solid fa-earth-europe"></i></div>
+            <div><h3>Рынок: большой и растет</h3><p>Россия, 2025–2026</p></div>
+          </div>
+          <div class="stat-list">
+            <div class="stat">
+              <div class="stat-num">79,5 млн</div>
+              <div class="stat-label">домашних животных: 53,4 млн кошек и 26,1 млн собак</div>
+            </div>
+            <div class="stat">
+              <div class="stat-num">487 млрд ₽</div>
+              <div class="stat-label">рынок кормов в 2025 году, +15,9% за год. Корма — 83% всего рынка зоотоваров</div>
+            </div>
+            <div class="stat">
+              <div class="stat-num">94%</div>
+              <div class="stat-label">владельцев регулярно покупают готовые корма</div>
+            </div>
+          </div>
+          <div class="market-callout"><i class="fa-solid fa-bullseye"></i> Даже 0,1% рынка — это около 490 млн ₽ в год.</div>
+          <p class="source">Оценки аналитиков — от 430 до 630 млрд ₽, берем среднюю. Источники: Strategy Partners / Зооинформ (2026), РОМИР (2025).</p>
+        </article>
+
+        <article class="card market reveal">
+          <div class="panel-head">
+            <div class="icon-box"><i class="fa-solid fa-calculator"></i></div>
+            <div><h3>Экономика одного клиента</h3><p>В месяц, при среднем чеке коробки</p></div>
+          </div>
+          <ul class="unit-list">
+            <li><span>Средний чек коробки</span><b>4 000 ₽</b></li>
+            <li><span>Наша наценка (≈20%)</span><b class="plus">800 ₽</b></li>
+            <li><span>Доставка</span><b class="minus">− 300 ₽</b></li>
+            <li><span>Упаковка и эквайринг</span><b class="minus">− 150 ₽</b></li>
+            <li><span>Бренды за место в коробке</span><b class="plus">+ 50 ₽</b></li>
+            <li class="total"><span>Остается с клиента в месяц</span><b>400 ₽</b></li>
+          </ul>
+          <div class="unit-kpis">
+            <div><span>CAC</span><b>1 500 ₽</b></div>
+            <div><span>Окупаемость</span><b>4 мес</b></div>
+            <div><span>LTV (12 мес)</span><b>≈ 4 800 ₽</b></div>
+            <div><span>LTV / CAC</span><b>3×</b></div>
+          </div>
+          <p class="source">Все цифры — предварительные оценки, их нужно проверить на пилоте.</p>
+        </article>
       </div>
 
       <div class="panels">
@@ -1967,7 +2181,7 @@
       <span class="logo-mark" style="width:30px;height:30px;font-size:0.8rem;"><i class="fa-solid fa-box-open"></i></span>
       <span>Box<span class="flow">Flow</span></span>
     </a>
-    <span>Pitch Deck MVP v1.0 · Бизнес-кейс умной автоподписки</span>
+    <span>Кейс-батл ВШЭ · 10 класс · 2026 · Команда: Макар Иосипян, Никита Иванов, Артем Киселев, Александр Гичкин</span>
   </div>
 </footer>
 
